@@ -1,6 +1,8 @@
 package lk.ijse.ahms.dao.custom.impl;
 
 import lk.ijse.ahms.dao.SQLUtil;
+import lk.ijse.ahms.dao.custom.EmployeeDAO;
+import lk.ijse.ahms.dao.custom.PetDAO;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.PetsDto;
 
@@ -11,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PetDAOImpl {
+public class PetDAOImpl implements PetDAO {
     public static List<PetsDto> getAllPets() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM pets");

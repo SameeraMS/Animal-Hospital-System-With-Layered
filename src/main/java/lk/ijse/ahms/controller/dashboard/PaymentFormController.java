@@ -29,6 +29,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -68,7 +69,7 @@ public class PaymentFormController {
     private PresDetailsDAOImpl presDetailsDAOImpl = new PresDetailsDAOImpl();
     private ObservableList<CartTm> obList = FXCollections.observableArrayList();
 
-    private PlaceOrderModel placeOrderModel = new PlaceOrderModel();
+
 
     public void initialize() {
         setCellValueFactory();
@@ -292,7 +293,31 @@ public class PaymentFormController {
                 var placeOrderDto = new PlaceOrderDto(payId, date, total, appointId, cartTmList);
                 boolean isSuccess = false;
                 try {
-                    isSuccess = placeOrderModel.placeOrder(placeOrderDto);
+                   // isSuccess = placeOrderModel.placeOrder(placeOrderDto);
+                    System.out.println("place order model -> "+placeOrderDto.getCartTmList());
+                    Connection connection = null;
+                    try {
+                        connection = DbConnection.getInstance().getConnection();
+                        connection.setAutoCommit(false);
+
+                        boolean isOrderSaved = paymentDAOImpl.savePayment(payId, date, total, appointId);
+                        if (isOrderSaved) {
+                            boolean isUpdated = medicineDAOImpl.updateMed(placeOrderDto.getCartTmList());
+                            if(isUpdated) {
+                                boolean isOrderDetailSaved = presDetailsDAOImpl.saveOrderDetails(placeOrderDto.getPayId(), placeOrderDto.getCartTmList());
+                                if (isOrderDetailSaved) {
+                                    connection.commit();
+                                    isSuccess = true;
+                                }
+                            }
+                        }
+                    } catch (SQLException e) {
+                        connection.rollback();
+                    } finally {
+                        connection.setAutoCommit(true);
+                    }
+
+
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }

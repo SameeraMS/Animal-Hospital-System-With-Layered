@@ -1,5 +1,8 @@
 package lk.ijse.ahms.dao.custom.impl;
 
+import lk.ijse.ahms.dao.SQLUtil;
+import lk.ijse.ahms.dao.custom.EmployeeDAO;
+import lk.ijse.ahms.dao.custom.PrescriptionDetailsDAO;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.tm.CartTm;
 
@@ -8,8 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class PresDetailsDAOImpl {
-    public boolean saveOrderDetails(String payId, List<CartTm> cartTmList) throws SQLException {
+public class PresDetailsDAOImpl implements PrescriptionDetailsDAO {
+    public boolean saveOrderDetails(String payId, List<CartTm> cartTmList) throws SQLException, ClassNotFoundException {
         
 
         for(CartTm tm : cartTmList) {
@@ -21,37 +24,18 @@ public class PresDetailsDAOImpl {
         return true;
     }
 
-    private void printDetailsSave(String payId, CartTm tm) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    private void printDetailsSave(String payId, CartTm tm) throws SQLException, ClassNotFoundException {
 
-        String sql = "INSERT INTO print VALUES(?, ?, ?, ?, ?, ?)";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1, payId);
-        pstm.setString(2, tm.getMedId());
-        pstm.setString(3, tm.getName());
-        pstm.setString(4, tm.getQty());
-        pstm.setString(5, tm.getUnitPrice());
-        pstm.setString(6, tm.getTotal());
-
-
-        pstm.executeUpdate();
+        SQLUtil.execute("INSERT INTO print VALUES(?, ?, ?, ?, ?, ?)",
+                payId, tm.getMedId(), tm.getName(),
+                tm.getQty(), tm.getUnitPrice(), tm.getTotal());
 
     }
 
 
-    private boolean saveOrderDetails(String payId, CartTm tm) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    private boolean saveOrderDetails(String payId, CartTm tm) throws SQLException, ClassNotFoundException {
 
-        String sql = "INSERT INTO prescription_details VALUES(?, ?, ?, ?)";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-            pstm.setString(1, payId);
-            pstm.setString(2, tm.getMedId());
-            pstm.setString(3, tm.getQty());
-            pstm.setString(4, tm.getUnitPrice());
-
-
-        return pstm.executeUpdate() > 0;
+        return SQLUtil.execute("INSERT INTO prescription_details VALUES(?, ?, ?, ?)",
+                payId, tm.getMedId(), tm.getQty(), tm.getUnitPrice());
     }
 }

@@ -1,5 +1,8 @@
 package lk.ijse.ahms.dao.custom.impl;
 
+import lk.ijse.ahms.dao.SQLUtil;
+import lk.ijse.ahms.dao.custom.EmployeeDAO;
+import lk.ijse.ahms.dao.custom.UserDAO;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.UserDto;
 
@@ -10,16 +13,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImpl {
+public class UserDAOImpl implements UserDAO {
 
-    public static UserDto searchByName(String name) throws SQLException {
-        Connection con = DbConnection.getInstance().getConnection();
-        String sql = "SELECT * FROM user WHERE user_name = ?";
-
-        PreparedStatement pstm = con.prepareStatement(sql);
-        pstm.setString(1, name);
-
-        ResultSet resultSet = pstm.executeQuery();
+    public static UserDto searchByName(String name) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM user WHERE user_name = ?", name);
         if(resultSet.next()) {
             return new UserDto(
                     resultSet.getString(1),
@@ -30,26 +27,20 @@ public class UserDAOImpl {
         return null;
     }
 
-    public static List<String> getUserName() throws SQLException {
-        Connection con = DbConnection.getInstance().getConnection();
-        String sql = "SELECT user_name FROM user";
+    public static List<String> getUserName() throws SQLException, ClassNotFoundException {
 
         List<String> username = new ArrayList<>();
 
-        ResultSet resultSet = con.createStatement().executeQuery(sql);
+        ResultSet resultSet = SQLUtil.execute("SELECT user_name FROM user");
         while (resultSet.next()) {
             username.add(resultSet.getString(1));
         }
         return username;
     }
 
-    public static List<UserDto> getAllUsers() throws SQLException {
-        Connection con = DbConnection.getInstance().getConnection();
+    public static List<UserDto> getAllUsers() throws SQLException, ClassNotFoundException {
 
-        String sql = "SELECT * FROM user";
-        PreparedStatement pstm = con.prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM user");
 
         List<UserDto> userList = new ArrayList<>();
 
@@ -65,56 +56,26 @@ public class UserDAOImpl {
         return userList;
     }
 
-    public static boolean changePassword(String username, String newpassword) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    public static boolean changePassword(String username, String newpassword) throws SQLException, ClassNotFoundException {
 
-        String sql = "UPDATE user SET password=? WHERE user_name=?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1, newpassword);
-        pstm.setString(2, username);
-
-        boolean ischanged = pstm.executeUpdate() > 0;
-
-        return ischanged;
+        return SQLUtil.execute("UPDATE user SET password=? WHERE user_name=?",
+                newpassword, username);
     }
 
-    public static boolean deleteUser(String id) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    public static boolean deleteUser(String id) throws SQLException, ClassNotFoundException {
 
-        String sql = "DELETE FROM user WHERE user_name=?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1, id);
-
-        boolean isDeleted = pstm.executeUpdate() > 0;
-
-        return isDeleted;
+        return SQLUtil.execute("DELETE FROM user WHERE user_name=?", id);
     }
 
-    public static boolean saveUser(UserDto dto2) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    public static boolean saveUser(UserDto dto2) throws SQLException, ClassNotFoundException {
 
-        String sql = "INSERT INTO user VALUES(?, ?, ?)";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1, dto2.getUsername());
-        pstm.setString(2, dto2.getPassword());
-        pstm.setString(3, dto2.getEmpId());
-
-        boolean isSaved = pstm.executeUpdate() > 0;
-
-        return isSaved;
+        return SQLUtil.execute("INSERT INTO user VALUES(?, ?, ?)",
+                dto2.getUsername(), dto2.getPassword(), dto2.getEmpId());
     }
 
-    public ResultSet checkCredentials(String username, String password) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    public ResultSet checkCredentials(String username, String password) throws SQLException, ClassNotFoundException {
 
-        String sql = "SELECT * FROM user WHERE user_name=?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1,username);
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM user WHERE user_name=?", username);
         return resultSet;
     }
 

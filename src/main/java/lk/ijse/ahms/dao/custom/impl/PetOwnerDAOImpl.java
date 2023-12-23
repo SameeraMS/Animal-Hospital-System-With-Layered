@@ -1,6 +1,8 @@
 package lk.ijse.ahms.dao.custom.impl;
 
 import lk.ijse.ahms.dao.SQLUtil;
+import lk.ijse.ahms.dao.custom.EmployeeDAO;
+import lk.ijse.ahms.dao.custom.PetOwnerDAO;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.PetOwnerDto;
 
@@ -11,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PetOwnerDAOImpl {
+public class PetOwnerDAOImpl implements PetOwnerDAO {
     public static boolean savePetOwner(PetOwnerDto dto) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO pet_owner VALUES(?, ?, ?, ?)",

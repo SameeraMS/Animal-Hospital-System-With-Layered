@@ -1,8 +1,10 @@
 package lk.ijse.ahms.dao.custom.impl;
 
+import lk.ijse.ahms.dao.custom.AppointmentDAO;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.AppointmentDto;
 import lk.ijse.ahms.dao.SQLUtil;
+import lk.ijse.ahms.entity.Appointment;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,15 +13,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppointmentDAOImpl {
-    public static List<AppointmentDto> getAllAppointments() throws SQLException, ClassNotFoundException {
+public class AppointmentDAOImpl implements AppointmentDAO {
+    public List<Appointment> getAll() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM appointment");
-        ArrayList<AppointmentDto> appointmentDtos = new ArrayList<>();
+        ArrayList<Appointment> appointmentDtos = new ArrayList<>();
 
         while(resultSet.next()){
             appointmentDtos.add(
-                    new AppointmentDto(
+                    new Appointment(
                             resultSet.getString(1),
                             resultSet.getString(2),
                             resultSet.getString(3),
@@ -39,7 +41,17 @@ public class AppointmentDAOImpl {
         return appointmentDtos;
     }
 
-    public static boolean saveAppointment(AppointmentDto dto) throws SQLException, ClassNotFoundException {
+    @Override
+    public Appointment getDetails(String id) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public boolean update(Appointment dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    public boolean save(Appointment dto) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO appointment VALUES(?,?,?,?,?,?,?,?,?,?,?)",
                 dto.getAppointmentId(),dto.getAmount(),dto.getDate(),
@@ -49,14 +61,14 @@ public class AppointmentDAOImpl {
 
     }
 
-    public static List<AppointmentDto> searchAppointments(String id) throws SQLException, ClassNotFoundException {
+    public List<Appointment> search(String id) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM appointment WHERE appointment_id=?", id);
-        ArrayList<AppointmentDto> appointmentDtos = new ArrayList<>();
+        ArrayList<Appointment> appointmentDtos = new ArrayList<>();
 
         while(resultSet.next()){
             appointmentDtos.add(
-                    new AppointmentDto(
+                    new Appointment(
                             resultSet.getString(1),
                             resultSet.getString(2),
                             resultSet.getString(3),
@@ -75,22 +87,22 @@ public class AppointmentDAOImpl {
     }
 
 
-    public static boolean deleteAppoint(String id) throws SQLException, ClassNotFoundException {
+    public boolean delete(String id) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("DELETE FROM appointment WHERE appointment_id=?", id);
 
     }
 
-    public static String generateNextAppointId() throws SQLException, ClassNotFoundException {
+    public String generateNextId() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT appointment_id FROM appointment ORDER BY appointment_id DESC LIMIT 1");
         if(resultSet.next()) {
-            return splitAppId(resultSet.getString(1));
+            return splitId(resultSet.getString(1));
         }
-        return splitAppId(null);
+        return splitId(null);
     }
 
-    private static String splitAppId(String currentAppId) {
+    public String splitId(String currentAppId) {
         if(currentAppId != null) {
             String[] split = currentAppId.split("A0");
 
@@ -106,12 +118,12 @@ public class AppointmentDAOImpl {
         }
     }
 
-    public static AppointmentDto searchOwnerId(String id) throws SQLException, ClassNotFoundException {
+    public static Appointment searchId(String id) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM appointment WHERE appointment_id=?", id);
 
         if(resultSet.next()){
-            return new AppointmentDto(
+            return new Appointment(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),

@@ -1,5 +1,7 @@
 package lk.ijse.ahms.dao.custom.impl;
 
+import lk.ijse.ahms.dao.SQLUtil;
+import lk.ijse.ahms.dao.custom.PrescriptionDAO;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.AppointmentDto;
 import lk.ijse.ahms.dto.PrescriptionDto;
@@ -11,33 +13,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrescriptionDAOImpl {
-    public static boolean savePrescription(PrescriptionDto dto) throws SQLException {
+public class PrescriptionDAOImpl implements PrescriptionDAO {
+    public static boolean savePrescription(PrescriptionDto dto) throws SQLException, ClassNotFoundException {
 
-        Connection connection = DbConnection.getInstance().getConnection();
-
-        String sql = "INSERT INTO prescription VALUES(?, ?, ?)";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1, dto.getPrescriptionId());
-        pstm.setString(2, dto.getDescription());
-        pstm.setString(3, dto.getAppointmentId());
-
-        boolean isSaved = pstm.executeUpdate() > 0;
-
-        return isSaved;
+        return SQLUtil.execute("INSERT INTO prescription VALUES(?, ?, ?)",
+                dto.getPrescriptionId(),dto.getDescription(),dto.getAppointmentId());
 
     }
 
-    public static PrescriptionDto searchPrescription(String presid) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    public static PrescriptionDto searchPrescription(String presid) throws SQLException, ClassNotFoundException {
 
-        String sql = "SELECT * FROM prescription WHERE presc_id=?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1, presid);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM prescription WHERE presc_id=?", presid);
 
         PrescriptionDto dto = null;
 
@@ -52,13 +38,9 @@ public class PrescriptionDAOImpl {
     }
 
 
-    public static List<AppointmentDto> getAllAppointmentId() throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    public static List<AppointmentDto> getAllAppointmentId() throws SQLException, ClassNotFoundException {
 
-        String sql = "SELECT * FROM appointment";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM appointment");
 
         ArrayList<AppointmentDto> dtoList = new ArrayList<>();
 
@@ -83,43 +65,20 @@ public class PrescriptionDAOImpl {
         return dtoList;
     }
 
-    public static boolean deletePrescription(String presid) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    public static boolean deletePrescription(String presid) throws SQLException, ClassNotFoundException {
 
-        String sql = "DELETE FROM prescription WHERE presc_id=?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1, presid);
-
-        boolean isDeleted = pstm.executeUpdate() > 0;
-
-        return isDeleted;
+        return SQLUtil.execute("DELETE FROM prescription WHERE presc_id=?", presid);
     }
 
-    public static boolean updatePrescription(PrescriptionDto dto) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    public static boolean updatePrescription(PrescriptionDto dto) throws SQLException, ClassNotFoundException {
 
-        String sql = "UPDATE prescription SET description=?, appointment_id=? WHERE presc_id=?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1, dto.getDescription());
-        pstm.setString(2, dto.getAppointmentId());
-        pstm.setString(3, dto.getPrescriptionId());
-
-        boolean isUpdated = pstm.executeUpdate() > 0;
-
-        return isUpdated;
+        return SQLUtil.execute("UPDATE prescription SET description=?, appointment_id=? WHERE presc_id=?",
+                dto.getDescription(), dto.getAppointmentId(), dto.getPrescriptionId());
     }
 
-    public static PrescriptionDto searchPrescriptionbyAppId(String appId) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    public static PrescriptionDto searchPrescriptionbyAppId(String appId) throws SQLException, ClassNotFoundException {
 
-        String sql = "SELECT * FROM prescription WHERE appointment_id=?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1, appId);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM prescription WHERE appointment_id=?", appId);
 
         PrescriptionDto dto = null;
 
@@ -133,13 +92,9 @@ public class PrescriptionDAOImpl {
         return dto;
     }
 
-    public static String generateNextPresId() throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    public static String generateNextPresId() throws SQLException, ClassNotFoundException {
 
-        String sql = "SELECT presc_id FROM prescription ORDER BY presc_id DESC LIMIT 1";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtil.execute("SELECT presc_id FROM prescription ORDER BY presc_id DESC LIMIT 1");
         if(resultSet.next()) {
             return splitPresId(resultSet.getString(1));
         }
@@ -162,13 +117,9 @@ public class PrescriptionDAOImpl {
         }
     }
 
-    public static List<PrescriptionDto> getAllPrescriptions() throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    public static List<PrescriptionDto> getAllPrescriptions() throws SQLException, ClassNotFoundException {
 
-        String sql = "SELECT * FROM prescription";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        ResultSet resultSet = pstm.executeQuery();
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM prescription");
 
         ArrayList<PrescriptionDto> dtoList = new ArrayList<>();
 

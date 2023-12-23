@@ -1,5 +1,7 @@
 package lk.ijse.ahms.dao.custom.impl;
 
+import lk.ijse.ahms.dao.custom.EmployeeDAO;
+import lk.ijse.ahms.dao.custom.MedicineDAO;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.MedicineDto;
 import lk.ijse.ahms.dto.tm.CartTm;
@@ -12,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedicineDAOImpl {
+public class MedicineDAOImpl implements MedicineDAO {
     public static boolean saveMedicine(MedicineDto dto) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = SQLUtil.execute("INSERT INTO medicine VALUES(?, ?, ?, ?, ?, ?, ?)",

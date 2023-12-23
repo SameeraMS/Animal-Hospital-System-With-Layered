@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoctorDAOImpl {
+public class DoctorDAOImpl implements DoctorDAO {
     public static boolean saveDoctor(DoctorDto dto) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = SQLUtil.execute("INSERT INTO doctor VALUES(?, ?, ?, ?)",

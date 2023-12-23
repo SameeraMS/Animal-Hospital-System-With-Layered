@@ -1,5 +1,6 @@
 package lk.ijse.ahms.dao.custom.impl;
 
+import lk.ijse.ahms.dao.custom.EmployeeDAO;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.EmployeeDto;
 import lk.ijse.ahms.dao.SQLUtil;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeDAOImpl {
+public class EmployeeDAOImpl implements EmployeeDAO {
 
     public static boolean saveEmployee(EmployeeDto dto) throws SQLException, ClassNotFoundException {
 

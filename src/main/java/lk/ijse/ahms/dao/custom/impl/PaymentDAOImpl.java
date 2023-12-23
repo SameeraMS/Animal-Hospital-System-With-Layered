@@ -1,6 +1,8 @@
 package lk.ijse.ahms.dao.custom.impl;
 
 import lk.ijse.ahms.dao.SQLUtil;
+import lk.ijse.ahms.dao.custom.EmployeeDAO;
+import lk.ijse.ahms.dao.custom.PaymentDAO;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.PaymentDto;
 
@@ -8,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaymentDAOImpl {
+public class PaymentDAOImpl implements PaymentDAO {
 
     public static List<PaymentDto> getPayment() throws SQLException, ClassNotFoundException {
 
