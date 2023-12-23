@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Prescription" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3afb802d-c24b-4c01-9c98-b25b477f94f6">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="animalhospital adapter"/>
+	<parameter name="description" class="java.lang.String"/>
+	<parameter name="PresId" class="java.lang.String"/>
+	<parameter name="AppointNo" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<image>
+				<reportElement x="15" y="0" width="70" height="60" uuid="eb1d38b5-fb5b-40ed-a792-30352e5508fb"/>
+				<imageExpression><![CDATA["/Users/sameeramadushan/Documents/final project/Animal-Hospital-Management-System/src/main/resources/asserts/images/logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="60" y="0" width="434" height="57" uuid="97861fa1-0f6b-4d7a-aa81-8c8409bd5d97"/>
+				<textElement textAlignment="Center">
+					<font size="40" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ANIMAL HOSPITAL]]></text>
+			</staticText>
+			<image>
+				<reportElement x="480" y="0" width="70" height="60" uuid="a802caa0-909e-4c9c-91c6-cdd9fe27ce2c"/>
+				<imageExpression><![CDATA["/Users/sameeramadushan/Documents/final project/Animal-Hospital-Management-System/src/main/resources/asserts/images/logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="52" splitType="Stretch">
+			<staticText>
+				<reportElement x="110" y="0" width="310" height="30" uuid="76f35304-9b03-4b8b-be2d-b43c8e652e9a"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[PRESCRIPTTION DETAILS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="90" splitType="Stretch">
+			<textField>
+				<reportElement x="102" y="10" width="100" height="18" uuid="61ee94d9-0bb8-4464-9e39-ace84144690b"/>
+				<textFieldExpression><![CDATA[$P{AppointNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="10" width="100" height="18" uuid="6c6cec0c-79dd-4e2d-ba67-f9decdd2a571"/>
+				<text><![CDATA[Appointment No :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="10" width="100" height="19" uuid="05d9bd8a-3d87-414c-99ed-840c9f999455"/>
+				<text><![CDATA[Prescription No :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="397" y="10" width="100" height="19" uuid="d615bcf1-07fc-402a-9fe4-44cd3727e647"/>
+				<textFieldExpression><![CDATA[$P{PresId}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="38" width="100" height="19" uuid="9b3aff1b-f891-4d69-bed1-acf31686b5d0"/>
+				<text><![CDATA[Description :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="40" y="58" width="390" height="31" uuid="923c50bf-80c7-4355-98e8-9b2ddef76e5e"/>
+				<textFieldExpression><![CDATA[$P{description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<line>
+				<reportElement x="20" y="10" width="519" height="1" uuid="4f6f849f-745f-4ae1-9efd-1a138ae98386"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="33" splitType="Stretch"/>
+	</summary>
+</jasperReport>

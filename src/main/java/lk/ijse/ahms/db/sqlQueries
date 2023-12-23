@@ -1,0 +1,123 @@
+drop database if exists animalhospital;
+
+create database animalhospital;
+
+use animalhospital;
+
+create table employee(
+        employee_id         varchar(10)         primary key ,
+        employee_name       varchar(100)        not null    ,
+        employee_address    varchar(100)        not null    ,
+        employee_contact_no varchar(10)         not null    ,
+        employee_email      varchar(50)         not null    ,
+        employee_type       varchar(50)         not null
+);
+
+create table user(
+    user_name           varchar(50)               primary key,
+    password            varchar(10)               not null,
+    employee_id         varchar(10)               unique,
+    constraint foreign key (employee_id ) references employee (employee_id )
+);
+
+insert into employee values ('E001','sameera','panadura','779582592','sameerams2002@gmail.com','Admin');
+
+insert into user values('c2FtZWVyYW1zMjAwMkBnbWFpbC5jb20=','MTIzNA==','E001');
+
+create table doctor(
+    doc_id      varchar(10)     primary key,
+    name        varchar(20)     not null,
+    email       varchar(30)     not null,
+    contact_no  int(11)         not null
+);
+
+create table pet_owner(
+    pet_owner_id        varchar(10)     primary key,
+    name                varchar(20)     not null,
+    email               varchar(30)     not null,
+    contact_no          int(11)         not null
+);
+
+create table pets(
+    pet_id         varchar(10)      primary key,
+    name           varchar(20)      not null,
+    age            int(4)           not null,
+    gender         varchar(20)      not null,
+    type           varchar(10)      not null,
+    pet_owner_id   varchar(10)      not null,
+    constraint foreign key (pet_owner_id) references pet_owner (pet_owner_id)
+    on delete cascade on update cascade
+);
+
+
+create table medicine(
+    med_id      varchar(10)         primary key,
+    name        varchar(20)         not null,
+    type        varchar(10)         not null,
+    qty         int                 not null,
+    price       decimal(6,2)        not null,
+    description varchar(50),
+    exp_date    date
+);
+
+
+create table appointment(
+    appointment_id      varchar(10)     primary key,
+    amount              decimal(6,2)    not null,
+    date                date            not null,
+    time                varchar(20)     not null,
+    description         varchar(50),
+    doc_id              varchar(10)     not null,
+    doc_name            varchar(20)  ,
+    pet_owner_id        varchar(10)     not null,
+    pet_owner_name      varchar(20)  ,
+    pet_id              varchar(10)     not null,
+    pet_name            varchar(20),
+    constraint foreign key (pet_id) references pets (pet_id)
+    on delete cascade on update cascade,
+    constraint foreign key (pet_owner_id) references pet_owner (pet_owner_id)
+    on delete cascade on update cascade,
+    constraint foreign key (doc_id) references doctor (doc_id)
+    on delete cascade on update cascade
+);
+
+create table payment(
+    payment_id      varchar(10)     primary key,
+    date            date,
+    amount          varchar(10)     not null,
+    appointment_id  varchar(10)     not null,
+    constraint foreign key (appointment_id) references appointment (appointment_id)
+    on delete cascade on update cascade
+);
+
+create table prescription(
+    presc_id varchar(10) primary key,
+    description varchar(100),
+    appointment_id varchar(10) not null,
+    constraint foreign key (appointment_id) references appointment (appointment_id)
+    on delete cascade on update cascade
+);
+
+create table prescription_details(
+    payment_id    varchar(10)    not null,
+    med_id      varchar(10)    not null,
+    qty         int(10)        not null,
+    unit_price  decimal(6,2),
+    constraint foreign key (payment_id) references payment (payment_id)
+    on delete cascade on update cascade,
+    constraint foreign key (med_id) references medicine (med_id)
+    on delete cascade on update cascade
+);
+
+create table print(
+        payment_id    varchar(10)    not null,
+        med_id      varchar(10)    not null,
+        med_name varchar(30),
+        qty         int(10)        not null,
+        unit_price  decimal(6,2),
+        amount decimal(6,2),
+        constraint foreign key (payment_id) references payment (payment_id)
+        on delete cascade on update cascade,
+        constraint foreign key (med_id) references medicine (med_id)
+        on delete cascade on update cascade
+);

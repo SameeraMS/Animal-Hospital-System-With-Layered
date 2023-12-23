@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="431.0" prefWidth="628.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.ahms.controller.add.AddEmployeeFormController">
+   <children>
+      <ImageView fitHeight="487.0" fitWidth="223.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../asserts/images/addemppic.jpg" />
+         </image>
+      </ImageView>
+      <JFXTextField fx:id="empName" layoutX="335.0" layoutY="117.0" onAction="#nameOnAction" prefHeight="35.0" prefWidth="271.0" promptText="Name" />
+      <JFXButton buttonType="RAISED" contentDisplay="RIGHT" layoutX="441.0" layoutY="361.0" onAction="#saveOnAction" prefHeight="48.0" prefWidth="125.0" style="-fx-background-color: #2980b9;" text="Save" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/save.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" contentDisplay="RIGHT" layoutX="288.0" layoutY="361.0" onAction="#clearOnAction" prefHeight="48.0" prefWidth="125.0" style="-fx-background-color: #7f8c8d;" text="Clear" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/clear.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXTextField fx:id="empId" layoutX="335.0" layoutY="71.0" onAction="#idOnAction" prefHeight="35.0" prefWidth="271.0" promptText="Id" />
+      <Label layoutX="218.0" layoutY="85.0" text="Emp Id">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="218.0" layoutY="130.0" text="Name ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="218.0" layoutY="174.0" text="Address">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="218.0" layoutY="218.0" text="Contact No">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="218.0" layoutY="265.0" text="Email">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="218.0" layoutY="312.0" text="Type">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="empAddress" layoutX="335.0" layoutY="160.0" onAction="#addressOnAction" prefHeight="35.0" prefWidth="271.0" promptText="Address" />
+      <JFXTextField fx:id="empTel" layoutX="335.0" layoutY="204.0" onAction="#telOnAction" prefHeight="35.0" prefWidth="271.0" promptText="Contact No" />
+      <JFXTextField fx:id="empMail" layoutX="335.0" layoutY="251.0" onAction="#mailOnAction" prefHeight="35.0" prefWidth="271.0" promptText="Email" />
+      <JFXComboBox fx:id="cmbEmpType" layoutX="335.0" layoutY="298.0" prefHeight="35.0" prefWidth="271.0" promptText="Select Type">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXComboBox>
+      <Label layoutX="247.0" layoutY="14.0" text="ADD NEW EMPLOYEE">
+         <font>
+            <Font name="Arial Black" size="25.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -1,0 +1,18 @@
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 5;
+    -fx-border-color: black;
+    -fx-background-radius: 5;
+}
+
+.date-picker {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 5;
+    -fx-border-color: black;
+    -fx-background-radius: 5;
+    -fx-font-size: 15;
+}
+
+.date-picker-popup {
+    -fx-font-size: 15px;
+}

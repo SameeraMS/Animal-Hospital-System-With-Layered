@@ -1,0 +1,6 @@
+#subroot {
+    -fx-background-color: linear-gradient(to right, #E4F1FF 0%, #F4F4F4 35%, #E4F1FF 70%); /* Set a background color */
+    -fx-border-color: #a0a0a0; /* Set a border color */
+    -fx-border-width: 3px; /* Set the border width */
+    -fx-border-radius: 50px; /* Set the border radius for rounded corners */
+}

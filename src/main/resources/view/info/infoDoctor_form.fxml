@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="348.0" prefWidth="510.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.ahms.controller.info.InfoDoctorFormController">
+   <children>
+      <ImageView fitHeight="340.0" fitWidth="651.0" layoutY="1.0" opacity="0.76" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../asserts/images/addDoc.jpg" />
+         </image>
+      </ImageView>
+      <JFXComboBox fx:id="cmbDocId" layoutX="211.0" layoutY="55.0" onAction="#cmbDocIdOnAction" prefHeight="35.0" prefWidth="271.0" promptText="Select Doctor Id">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXComboBox>
+      <JFXButton fx:id="btndelete" buttonType="RAISED" contentDisplay="RIGHT" layoutX="369.0" layoutY="265.0" onAction="#deleteOnAction" prefHeight="48.0" prefWidth="125.0" style="-fx-background-color: red;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/delete.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btnupdate" buttonType="RAISED" contentDisplay="RIGHT" layoutX="226.0" layoutY="265.0" onAction="#updateOnAction" prefHeight="48.0" prefWidth="125.0" style="-fx-background-color: #e67e22;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/update.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <Label layoutX="94.0" layoutY="61.0" text="Id">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="94.0" layoutY="106.0" text="Name ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="94.0" layoutY="152.0" text="Contact No">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="94.0" layoutY="199.0" text="Email">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txtname" layoutX="211.0" layoutY="100.0" prefHeight="35.0" prefWidth="271.0" promptText="Name" />
+      <JFXTextField fx:id="txttel" layoutX="211.0" layoutY="146.0" prefHeight="35.0" prefWidth="271.0" promptText="Contact No" />
+      <JFXTextField fx:id="txtemail" layoutX="211.0" layoutY="193.0" prefHeight="35.0" prefWidth="271.0" promptText="Email" />
+      <JFXButton fx:id="btnedit" buttonType="RAISED" contentDisplay="RIGHT" layoutX="74.0" layoutY="265.0" onAction="#editOnAction" prefHeight="48.0" prefWidth="125.0" style="-fx-background-color: grey;" text="Edit" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/edit.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <Label layoutX="181.0" layoutY="14.0" text="DOCTOR DETAILS">
+         <font>
+            <Font name="Arial Black" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

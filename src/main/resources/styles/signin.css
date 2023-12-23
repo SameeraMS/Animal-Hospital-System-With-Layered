@@ -1,0 +1,26 @@
+#btnsignin{
+    -fx-border-color: #361500;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-background-radius: 10;
+    -fx-background-color: #176B87;
+    -fx-text-fill: white;
+}
+
+.login-page-btn:hover{
+    -fx-border-color: #361500;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-background-radius: 10;
+    -fx-background-color: #176B87;
+    -fx-text-fill: white;
+
+}
+
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: black;
+    -fx-font-size: 20;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}

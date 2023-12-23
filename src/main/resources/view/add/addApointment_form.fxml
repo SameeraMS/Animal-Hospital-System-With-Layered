@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="762.0" prefWidth="558.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.ahms.controller.add.AddApointmentFormController">
+   <children>
+      <ImageView fitHeight="177.0" fitWidth="560.0" layoutX="-3.0" layoutY="624.0" opacity="0.39" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../asserts/images/wave.jpg" />
+         </image>
+      </ImageView>
+      <JFXComboBox fx:id="cmbDocId" layoutX="250.0" layoutY="247.0" onAction="#DocIdOnAction" prefHeight="40.0" prefWidth="185.0" />
+      <JFXTextField fx:id="appointmentId" layoutX="250.0" layoutY="95.0" prefHeight="40.0" prefWidth="185.0" />
+      <Label layoutX="356.0" layoutY="24.0" text="Time">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="356.0" layoutY="58.0" text="Date">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTime" layoutX="416.0" layoutY="25.0" prefHeight="17.0" prefWidth="120.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDate" layoutX="416.0" layoutY="59.0" prefHeight="17.0" prefWidth="120.0" style="-fx-background-color: white;">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="417.0" text="Pet Owner Name">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="112.0" text="Appointment No">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="467.0" text="Pet Id">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="517.0" text="Pet Name">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="567.0" text="Description">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="petOwnerName" layoutX="250.0" layoutY="400.0" prefHeight="40.0" prefWidth="185.0" />
+      <JFXComboBox fx:id="cmbPetId" layoutX="250.0" layoutY="450.0" onAction="#cmbPetIdOnAction" prefHeight="40.0" prefWidth="185.0" />
+      <JFXTextField fx:id="docName" layoutX="250.0" layoutY="297.0" prefHeight="40.0" prefWidth="185.0" />
+      <Label layoutX="55.0" layoutY="367.0" text="Pet Owner Id">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <JFXComboBox fx:id="cmbPetOwnerId" layoutX="250.0" layoutY="350.0" onAction="#cmbPetOwnerIdOnAction" prefHeight="40.0" prefWidth="185.0" />
+      <JFXTextField fx:id="petName" layoutX="250.0" layoutY="500.0" prefHeight="40.0" prefWidth="185.0" />
+      <JFXTextArea fx:id="desc" layoutX="250.0" layoutY="550.0" prefHeight="73.0" prefWidth="185.0" />
+      <Label layoutX="55.0" layoutY="314.0" text="Doctor Name">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="264.0" text="Doctor Id">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <JFXButton alignment="TOP_RIGHT" buttonType="RAISED" contentDisplay="RIGHT" graphicTextGap="8.0" layoutX="272.0" layoutY="719.0" onAction="#makeAppointmentOnAction" prefHeight="43.0" prefWidth="225.0" style="-fx-background-color: #738CF2;" text="Make Appointment">
+         <font>
+            <Font size="19.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/addappointment.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" contentDisplay="RIGHT" graphicTextGap="8.0" layoutX="52.0" layoutY="719.0" onAction="#clearOnAction" prefHeight="43.0" prefWidth="117.0" style="-fx-background-color: grey;" text="Clear">
+         <font>
+            <Font size="19.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="18.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/clear.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <Label layoutX="58.0" layoutY="649.0" text="Amount              LKR">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <JFXButton buttonType="RAISED" graphicTextGap="0.0" layoutX="476.0" layoutY="357.0" onAction="#newPetOwnerOnAction" style="-fx-background-color: green;" text=" ">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/addPetOwner.png" />
+               </image>
+            </ImageView>
+         </graphic></JFXButton>
+      <JFXButton buttonType="RAISED" graphicTextGap="0.0" layoutX="475.0" layoutY="456.0" onAction="#newPetOnAction" style="-fx-background-color: green;" text=" ">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/addpet.png" />
+               </image>
+            </ImageView>
+         </graphic></JFXButton>
+      <JFXTextField fx:id="lblAmount" layoutX="248.0" layoutY="634.0" prefHeight="40.0" prefWidth="185.0" />
+      <Label layoutX="55.0" layoutY="155.0" text="Date">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="207.0" text="Time">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="datepik" layoutX="250.0" layoutY="146.0" prefHeight="40.0" prefWidth="185.0" stylesheets="@../../styles/combobox.css" />
+      <JFXTimePicker fx:id="timepik" defaultColor="BLACK" layoutX="250.0" layoutY="197.0" prefHeight="40.0" prefWidth="185.0" />
+   </children>
+</AnchorPane>

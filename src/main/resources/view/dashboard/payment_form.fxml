@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1100.0" style="-fx-background-color: #E4F1FF; -fx-background-radius: 50;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.ahms.controller.dashboard.PaymentFormController">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="1100.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../asserts/images/payment.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="830.0" layoutY="5.0" text="Date :">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="830.0" layoutY="44.0" text="Time :">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbldate" layoutX="908.0" layoutY="4.0" prefHeight="30.0" prefWidth="146.0">
+         <font>
+            <Font size="25.0" />
+         </font></Label>
+      <Label fx:id="lbltime" layoutX="908.0" layoutY="44.0" prefHeight="30.0" prefWidth="114.0">
+         <font>
+            <Font size="25.0" />
+         </font></Label>
+      <JFXComboBox fx:id="cmbAppId" layoutX="276.0" layoutY="98.0" onAction="#appointmentIdOnAction" prefHeight="40.0" prefWidth="140.0" promptText="Choose" />
+      <JFXTextField fx:id="txtPetOwner" layoutX="592.0" layoutY="98.0" prefHeight="47.0" prefWidth="181.0">
+         <font>
+            <Font name="Arial Black" size="24.0" />
+         </font></JFXTextField>
+      <JFXTextField fx:id="txtPet" layoutX="493.0" layoutY="147.0" prefHeight="47.0" prefWidth="157.0">
+         <font>
+            <Font name="Arial Black" size="24.0" />
+         </font></JFXTextField>
+      <JFXTextField fx:id="txtpaymentId" layoutX="957.0" layoutY="96.0" prefHeight="53.0" prefWidth="98.0">
+         <font>
+            <Font name="Arial Black" size="24.0" />
+         </font></JFXTextField>
+      <JFXComboBox fx:id="cmbpresid" layoutX="276.0" layoutY="149.0" prefHeight="40.0" prefWidth="140.0" promptText="Choose" />
+      <JFXComboBox fx:id="cmbmedid" layoutX="216.0" layoutY="197.0" onAction="#medIdOnAction" prefHeight="40.0" prefWidth="140.0" promptText="Choose" />
+      <JFXTextField fx:id="txtmedname" layoutX="643.0" layoutY="196.0" prefHeight="47.0" prefWidth="108.0">
+         <font>
+            <Font name="Arial Black" size="24.0" />
+         </font></JFXTextField>
+      <Label fx:id="lblqtyOnHand" layoutX="618.0" layoutY="255.0" prefHeight="28.0" prefWidth="67.0">
+         <font>
+            <Font name="Arial Black" size="24.0" />
+         </font></Label>
+      <JFXTextField fx:id="txtqty" layoutX="693.0" layoutY="313.0" onAction="#qtyOnAction" prefHeight="40.0" prefWidth="62.0">
+         <font>
+            <Font name="Arial Black" size="24.0" />
+         </font></JFXTextField>
+      <Label fx:id="lblamount" layoutX="203.0" layoutY="253.0" prefHeight="29.0" prefWidth="139.0">
+         <font>
+            <Font name="Arial Black" size="24.0" />
+         </font></Label>
+      <Label fx:id="lbltype" layoutX="871.0" layoutY="204.0" prefHeight="29.0" prefWidth="128.0">
+         <font>
+            <Font name="Arial Black" size="24.0" />
+         </font></Label>
+      <TableView fx:id="tblcart" layoutX="55.0" layoutY="363.0" prefHeight="366.0" prefWidth="794.0" stylesheets="@../../styles/table.css">
+        <columns>
+          <TableColumn fx:id="colid" prefWidth="130.42226028442383" text="Med Id" />
+          <TableColumn fx:id="colname" prefWidth="166.5777130126953" text="Name" />
+            <TableColumn fx:id="colunitprice" minWidth="0.0" prefWidth="204.84457397460938" text="Unit Price" />
+            <TableColumn fx:id="colqty" minWidth="0.0" prefWidth="117.378173828125" text="QTY" />
+            <TableColumn fx:id="coltotal" minWidth="0.0" prefWidth="189.7564697265625" text="Total" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="btnaddtocart" buttonType="RAISED" contentDisplay="RIGHT" layoutX="870.0" layoutY="312.0" onAction="#addToCartOnAction" prefHeight="55.0" prefWidth="209.0" styleClass="btnaddtocart" stylesheets="@../../styles/button.css" text="Add to cart">
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/cart.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="17.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <JFXButton fx:id="btndelete" buttonType="RAISED" contentDisplay="RIGHT" layoutX="916.0" layoutY="536.0" onAction="#deleteOnAction" prefHeight="55.0" prefWidth="160.0" styleClass="btnDelete" stylesheets="@../../styles/button.css" text="Delete">
+         <graphic>
+            <ImageView fitHeight="34.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/delete.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="17.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <JFXButton fx:id="btnplaceorder" buttonType="RAISED" contentDisplay="RIGHT" layoutX="859.0" layoutY="713.0" onAction="#placeOrderOnAction" prefHeight="55.0" prefWidth="225.0" styleClass="btnplaceorder" stylesheets="@../../styles/button.css" text="Place Order">
+         <graphic>
+            <ImageView fitHeight="34.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/billing.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="17.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <Label fx:id="lbltotal" layoutX="678.0" layoutY="724.0" prefHeight="47.0" prefWidth="181.0">
+         <font>
+            <Font name="Arial Black" size="31.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblappointmentAmount" layoutX="306.0" layoutY="317.0" prefHeight="45.0" prefWidth="159.0">
+         <font>
+            <Font name="Arial Black" size="24.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnqr" buttonType="RAISED" contentDisplay="RIGHT" layoutX="416.0" layoutY="14.0" onAction="#qrOnAction" prefHeight="45.0" prefWidth="145.0" styleClass="btnQR" stylesheets="@../../styles/button.css" text="Qr Read">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/images/qr.png" />
+               </image>
+            </ImageView>
+         </graphic></JFXButton>
+      <JFXButton fx:id="btnbarcode" buttonType="RAISED" contentDisplay="RIGHT" layoutX="614.0" layoutY="15.0" onAction="#barcodeOnAction" prefHeight="45.0" prefWidth="145.0" styleClass="btnBarcode" stylesheets="@../../styles/button.css" text="Barcode">
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/images/barcode.png" />
+               </image>
+            </ImageView>
+         </graphic></JFXButton>
+   </children>
+</AnchorPane>

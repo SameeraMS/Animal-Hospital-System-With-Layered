@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="454.0" prefWidth="803.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.ahms.controller.info.InfoPetsFormController">
+   <children>
+      <ImageView fitHeight="487.0" fitWidth="827.0" layoutX="-3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../asserts/images/petinfo.jpg" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btndelete" buttonType="RAISED" contentDisplay="RIGHT" layoutX="339.0" layoutY="402.0" onAction="#deleteOnAction" prefHeight="48.0" prefWidth="125.0" style="-fx-background-color: red;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/delete.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btnUpdate" buttonType="RAISED" contentDisplay="RIGHT" layoutX="189.0" layoutY="402.0" onAction="#upDateOnAction" prefHeight="48.0" prefWidth="125.0" style="-fx-background-color: orange;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/clear.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btnEdit" buttonType="RAISED" contentDisplay="RIGHT" layoutX="29.0" layoutY="402.0" onAction="#editOnAction" prefHeight="48.0" prefWidth="125.0" style="-fx-background-color: #7f8c8d;" text="Edit" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/clear.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXComboBox fx:id="cmbPetId" layoutX="116.0" layoutY="40.0" onAction="#cmbPetIdOnAction" prefHeight="35.0" prefWidth="271.0" />
+      <Label layoutX="14.0" layoutY="54.0" text="Pet Id">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="98.0" text="Pet Name">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="334.0" text="Owner Id">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="138.0" text="age">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="petName" layoutX="116.0" layoutY="85.0" prefHeight="35.0" prefWidth="271.0" />
+      <JFXTextField fx:id="petAge" layoutX="116.0" layoutY="126.0" prefHeight="35.0" prefWidth="271.0" />
+      <JFXComboBox fx:id="cmbOwnerId" layoutX="138.0" layoutY="324.0" prefHeight="35.0" prefWidth="172.0" />
+      <Label layoutX="14.0" layoutY="182.0" text="Gender">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="226.0" text="Type">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="petType" layoutX="116.0" layoutY="222.0" prefHeight="35.0" prefWidth="271.0" />
+      <JFXButton fx:id="btnAdd" buttonType="RAISED" contentDisplay="RIGHT" layoutX="334.0" layoutY="319.0" onAction="#addOwnerOnAction" prefHeight="26.0" prefWidth="48.0" style="-fx-background-color: #7f8c8d;" text="+" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/clear.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXComboBox fx:id="cmbPetGender" layoutX="116.0" layoutY="171.0" prefHeight="35.0" prefWidth="271.0" />
+      <Label layoutX="154.0" layoutY="7.0" text="Pet Details">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="120.0" layoutY="280.0" text="Pet Owner Details">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

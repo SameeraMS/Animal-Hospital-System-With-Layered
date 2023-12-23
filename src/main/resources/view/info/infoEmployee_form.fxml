@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="407.0" prefWidth="538.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.ahms.controller.info.InfoEmployeeFormController">
+   <children>
+      <ImageView fitHeight="412.0" fitWidth="637.0" layoutX="-1.0" layoutY="2.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../asserts/images/empinfo.jpg" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btndelete" buttonType="RAISED" contentDisplay="RIGHT" layoutX="352.0" layoutY="327.0" onAction="#deleteOnAction" prefHeight="48.0" prefWidth="125.0" style="-fx-background-color: red;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/delete.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btnUpdate" buttonType="RAISED" contentDisplay="RIGHT" layoutX="209.0" layoutY="327.0" onAction="#updateOnAction" prefHeight="48.0" prefWidth="125.0" style="-fx-background-color: #e67e22;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/update.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <Label layoutX="43.0" layoutY="40.0" text="Id">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="43.0" layoutY="85.0" text="Name ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="43.0" layoutY="129.0" text="Address">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="43.0" layoutY="173.0" text="Contact No">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="43.0" layoutY="220.0" text="Email">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="43.0" layoutY="267.0" text="Type">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <JFXComboBox fx:id="cmbEmpId" layoutX="170.0" layoutY="30.0" onAction="#cmbEmpIdOnAction" prefHeight="35.0" prefWidth="271.0" promptText="Select Employee Id">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXComboBox>
+      <JFXTextField fx:id="txtname" layoutX="170.0" layoutY="75.0" prefHeight="35.0" prefWidth="271.0" promptText="Name" />
+      <JFXTextField fx:id="txtadress" layoutX="170.0" layoutY="119.0" prefHeight="35.0" prefWidth="271.0" promptText="Address" />
+      <JFXTextField fx:id="txttel" layoutX="170.0" layoutY="163.0" prefHeight="35.0" prefWidth="271.0" promptText="Contact No" />
+      <JFXTextField fx:id="txtemail" layoutX="170.0" layoutY="210.0" prefHeight="35.0" prefWidth="271.0" promptText="Email" />
+      <JFXComboBox fx:id="cmbEmpType" layoutX="170.0" layoutY="257.0" prefHeight="35.0" prefWidth="271.0" promptText="Select Type">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXComboBox>
+      <JFXButton fx:id="btnEdit" buttonType="RAISED" contentDisplay="RIGHT" layoutX="65.0" layoutY="327.0" onAction="#editOnAction" prefHeight="48.0" prefWidth="125.0" style="-fx-background-color: rgb(128,128,128);" text="Edit" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../asserts/icons/edit.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+   </children>
+</AnchorPane>

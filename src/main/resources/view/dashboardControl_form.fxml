@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainroot" prefHeight="800.0" prefWidth="1440.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.ahms.controller.DashboardControlsController">
+   <children>
+      <AnchorPane fx:id="subroot" layoutX="340.0" prefHeight="800.0" prefWidth="1100.0" style="-fx-background-radius: 50;" styleClass="gradient-pane" stylesheets="@../styles/dashboard.css" />
+      <JFXButton fx:id="btndashboard" alignment="BOTTOM_LEFT" buttonType="RAISED" graphicTextGap="60.0" layoutX="11.0" layoutY="118.0" onAction="#dashboardOnAction" prefHeight="60.0" prefWidth="300.0" text="Dashboard">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0">
+               <image>
+                  <Image url="@../asserts/icons/dashboard.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <JFXButton fx:id="btnpets" alignment="BOTTOM_LEFT" buttonType="RAISED" graphicTextGap="60.0" layoutX="11.0" layoutY="188.0" onAction="#petsOnAction" prefHeight="60.0" prefWidth="300.0" text="Pets">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0">
+               <image>
+                  <Image url="@../asserts/icons/pets.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <JFXButton fx:id="btnEmployee" alignment="BOTTOM_LEFT" buttonType="RAISED" graphicTextGap="60.0" layoutX="11.0" layoutY="398.0" onAction="#employeeOnAction" prefHeight="60.0" prefWidth="300.0" text="Employee">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0">
+               <image>
+                  <Image url="@../asserts/icons/employee.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <JFXButton fx:id="btnmedicine" alignment="BOTTOM_LEFT" buttonType="RAISED" graphicTextGap="60.0" layoutX="11.0" layoutY="258.0" onAction="#medicineOnAction" prefHeight="60.0" prefWidth="300.0" text="Medicine">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0">
+               <image>
+                  <Image url="@../asserts/icons/medicine.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <JFXButton fx:id="btnsettings" alignment="BOTTOM_LEFT" buttonType="RAISED" graphicTextGap="60.0" layoutX="11.0" layoutY="608.0" onAction="#settingsOnAction" prefHeight="60.0" prefWidth="300.0" text="Settings">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0">
+               <image>
+                  <Image url="@../asserts/icons/settings.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <JFXButton fx:id="btnsignout" alignment="CENTER" buttonType="RAISED" graphicTextGap="18.0" layoutX="61.0" layoutY="709.0" onAction="#signoutOnAction" onMouseEntered="#signoutOnMouseEnter" onMouseExited="#signoutOnMouseExit" prefHeight="45.0" prefWidth="187.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" text="Sign Out">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0">
+               <image>
+                  <Image url="@../asserts/icons/signout.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <JFXButton fx:id="btnappointment" alignment="BOTTOM_LEFT" buttonType="RAISED" graphicTextGap="60.0" layoutX="11.0" layoutY="468.0" onAction="#appointmentOnAction" prefHeight="60.0" prefWidth="300.0" text="Appointment">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0">
+               <image>
+                  <Image url="@../asserts/icons/appointment.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <JFXButton fx:id="btndetails" alignment="BOTTOM_LEFT" buttonType="RAISED" graphicTextGap="60.0" layoutX="11.0" layoutY="328.0" onAction="#detailsOnAction" prefHeight="60.0" prefWidth="300.0" text="Prescription">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0">
+               <image>
+                  <Image url="@../asserts/icons/details.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <Line endX="20.17242431640625" endY="606.1725463867188" layoutX="304.0" layoutY="156.0" startX="20.17242431640625" startY="-129.31417846679688" />
+      <ImageView fitHeight="94.0" fitWidth="103.0" layoutX="19.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../asserts/images/logo.jpg" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btnpayment" alignment="BOTTOM_LEFT" buttonType="RAISED" graphicTextGap="60.0" layoutX="11.0" layoutY="538.0" onAction="#paymentOnAction" prefHeight="60.0" prefWidth="300.0" text="Payment">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0">
+               <image>
+                  <Image url="@../asserts/icons/billing.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Label fx:id="lblname" layoutX="124.0" layoutY="45.0" prefHeight="46.0" prefWidth="187.0">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="123.0" layoutY="23.0" text="Hi">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

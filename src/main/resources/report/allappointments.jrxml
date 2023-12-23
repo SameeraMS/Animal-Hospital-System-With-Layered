@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="allappointments" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="05127601-dccd-40bd-9d79-7b4ef4d01cab">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="animalhospital adapter"/>
+	<queryString language="SQL">
+		<![CDATA[select * from appointment;]]>
+	</queryString>
+	<field name="appointment_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="appointment_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="appointment_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointment"/>
+	</field>
+	<field name="amount" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="amount"/>
+		<property name="com.jaspersoft.studio.field.label" value="amount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointment"/>
+	</field>
+	<field name="date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date"/>
+		<property name="com.jaspersoft.studio.field.label" value="date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointment"/>
+	</field>
+	<field name="time" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="time"/>
+		<property name="com.jaspersoft.studio.field.label" value="time"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointment"/>
+	</field>
+	<field name="description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="description"/>
+		<property name="com.jaspersoft.studio.field.label" value="description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointment"/>
+	</field>
+	<field name="doc_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="doc_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="doc_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointment"/>
+	</field>
+	<field name="doc_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="doc_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="doc_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointment"/>
+	</field>
+	<field name="pet_owner_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pet_owner_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="pet_owner_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointment"/>
+	</field>
+	<field name="pet_owner_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pet_owner_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="pet_owner_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointment"/>
+	</field>
+	<field name="pet_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pet_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="pet_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointment"/>
+	</field>
+	<field name="pet_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pet_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="pet_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="appointment"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="73" splitType="Stretch">
+			<staticText>
+				<reportElement x="60" y="0" width="434" height="57" uuid="cd846a68-a23f-45c6-8b89-52ea8f1b6c0c"/>
+				<textElement textAlignment="Center">
+					<font size="40" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ANIMAL HOSPITAL]]></text>
+			</staticText>
+			<image>
+				<reportElement x="480" y="0" width="70" height="60" uuid="43969fe0-0273-4b52-9bbe-981dc3743270"/>
+				<imageExpression><![CDATA["/Users/sameeramadushan/Documents/final project/Animal-Hospital-Management-System/src/main/resources/asserts/images/logo.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="15" y="0" width="70" height="60" uuid="262c77f5-009d-464c-8181-0306c5b99290"/>
+				<imageExpression><![CDATA["/Users/sameeramadushan/Documents/final project/Animal-Hospital-Management-System/src/main/resources/asserts/images/logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="54">
+			<staticText>
+				<reportElement x="120" y="0" width="310" height="30" uuid="0069601f-9a16-47f4-ad21-f2fae6d2c2b5"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[ALL APPOINTMENTS DETAILS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="52">
+			<staticText>
+				<reportElement x="-3" y="15" width="100" height="30" uuid="ca724114-d2a9-4f52-ae85-8f3216357280"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Appointment_Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="15" width="100" height="30" uuid="7bde0ef8-2a09-401f-8be1-eaf7688c50da"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="15" width="100" height="30" uuid="60f24f83-c182-4927-b558-1dbb45b03776"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="15" width="100" height="30" uuid="9e92c26e-175b-4c08-a270-e9ac7638d8a7"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Doctor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="15" width="105" height="30" uuid="cbde2571-dd22-4812-9d7c-965553b23107"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Owner]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="15" width="100" height="30" uuid="d02fb25a-ee1e-4caa-88c6-41c3746883d3"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pet]]></text>
+			</staticText>
+			<line>
+				<reportElement x="16" y="40" width="519" height="1" uuid="df81e9a6-7de2-447b-9e21-5b8932514298"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="7" width="100" height="24" uuid="115be7dd-a428-4870-bf92-9fc548f5dbcf"/>
+				<textFieldExpression><![CDATA[$F{appointment_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="89" y="7" width="100" height="24" uuid="bbf6f74b-7362-49f1-bfef-7cc08f5c9f57"/>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="192" y="7" width="100" height="24" uuid="59aca866-3abe-47f9-9345-5af56c6f1ffd"/>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="296" y="5" width="100" height="24" uuid="8c6f0203-1e5a-40ff-a124-fcbd5125b333"/>
+				<textFieldExpression><![CDATA[$F{doc_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="6" width="100" height="24" uuid="7f083a08-72dc-46e9-b352-a13ad12b9151"/>
+				<textFieldExpression><![CDATA[$F{pet_owner_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="495" y="7" width="100" height="24" uuid="cbd6a5d7-2b7d-4bd3-81b0-0cd70f99aa46"/>
+				<textFieldExpression><![CDATA[$F{pet_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<line>
+				<reportElement x="16" y="10" width="519" height="1" uuid="6082ac5d-0ba6-48ef-b5af-5aeef67dac48"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="22" splitType="Stretch"/>
+	</summary>
+</jasperReport>

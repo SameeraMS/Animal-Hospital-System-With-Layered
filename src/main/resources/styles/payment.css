@@ -1,0 +1,43 @@
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: black;
+    -fx-font-size: 24;
+    -fx-border-radius: 5;
+    -fx-background-radius: 10;
+    -fx-border-width: bold;
+}
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 5;
+    -fx-font-size: 24;
+    -fx-border-color: black;
+    -fx-background-radius: 5;
+    -fx-border-width: bold;
+}
+
+.label {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: black;
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+
+}
+
+#lblappointmentAmount {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: black;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+
+}
+
+#lbltotal {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: black;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+
+}
