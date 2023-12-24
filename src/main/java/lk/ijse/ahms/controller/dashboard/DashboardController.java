@@ -62,12 +62,18 @@ public class DashboardController {
 
         //pie chart
 
-        PieChart.Data slice1 = new PieChart.Data("Pets", petBO.getAllPets().size());
-        PieChart.Data slice2 = new PieChart.Data("Pet Owners", petOwnerBO.getAllOwners().size());
-        PieChart.Data slice3 = new PieChart.Data("Doctors", doctorBO.getAllDoctor().size());
-        PieChart.Data slice4 = new PieChart.Data("Employees", employeeBO.getAllEmployee().size());
 
-        piechart.getData().addAll(slice1, slice2, slice3, slice4);
+        try {
+            PieChart.Data slice1 = new PieChart.Data("Pets", petBO.getAllPet().size());
+            PieChart.Data slice2 = new PieChart.Data("Pet Owners", petOwnerBO.getAllPetOwner().size());
+            PieChart.Data slice3 = new PieChart.Data("Doctors", doctorBO.getAllDoctor().size());
+            PieChart.Data slice4 = new PieChart.Data("Employees", employeeBO.getAllEmployee().size());
+
+            piechart.getData().addAll(slice1, slice2, slice3, slice4);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
 
 
 
@@ -75,14 +81,16 @@ public class DashboardController {
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Details");
-
-        series.getData().add(new XYChart.Data<>("Pets", petBO.getAllPets().size()));
-        series.getData().add(new XYChart.Data<>("Pet Owners", petOwnerBO.getAllOwners().size()));
+        try {
+        series.getData().add(new XYChart.Data<>("Pets", petBO.getAllPet().size()));
+        series.getData().add(new XYChart.Data<>("Pet Owners", petOwnerBO.getAllPetOwner().size()));
         series.getData().add(new XYChart.Data<>("Doctors", doctorBO.getAllDoctor().size()));
         series.getData().add(new XYChart.Data<>("Employees", employeeBO.getAllEmployee().size()));
 
         linechart.getData().add(series);
-        
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void settime() {
@@ -106,11 +114,14 @@ public class DashboardController {
 
 
     private void setValues() throws SQLException {
-        lblpet.setText(String.valueOf(petBO.getAllPets().size()));
-        lblpetowner.setText(String.valueOf(petOwnerBO.getAllOwners().size()));
+        try {
+        lblpet.setText(String.valueOf(petBO.getAllPet().size()));
+        lblpetowner.setText(String.valueOf(petOwnerBO.getAllPetOwner().size()));
         lbldoc.setText(String.valueOf(doctorBO.getAllDoctor().size()));
         lblemp.setText(String.valueOf(employeeBO.getAllEmployee().size()));
-
+    } catch (ClassNotFoundException e) {
+        throw new RuntimeException(e);
+    }
 
     }
 }
