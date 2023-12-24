@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.AppointmentBO;
 import lk.ijse.ahms.controller.add.AddApointmentFormController;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.AppointmentDto;
@@ -46,8 +48,9 @@ public class AppointmentFormController {
     public JFXButton btnappointment;
     public JFXButton btnsearch;
     public JFXTextField txtrecmail;
-
     private ObservableList<AppointmentTm> obList = FXCollections.observableArrayList();
+
+    AppointmentBO appointmentBO = (AppointmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.APPOINTMENT);
 
     public void initialize() {
         cleartable();
@@ -73,7 +76,7 @@ public class AppointmentFormController {
 
 
         try {
-            List<AppointmentDto> AppointmentDtos = AppointmentDAOImpl.getAllAppointments();
+            List<AppointmentDto> AppointmentDtos = appointmentBO.getAllAppointment();
 
             for (AppointmentDto dto : AppointmentDtos) {
 
@@ -115,11 +118,10 @@ public class AppointmentFormController {
         String id = txtAppointId.getText();
 
         try {
-            List<AppointmentDto> appointmentDtos = AppointmentDAOImpl.searchAppointments(id);
+            AppointmentDto dto = appointmentBO.searchAppointment(id);
 
             ObservableList<AppointmentTm> obList1 = FXCollections.observableArrayList();
 
-            for (AppointmentDto dto : appointmentDtos) {
                 obList1.add(
                         new AppointmentTm(
                                 dto.getAppointmentId(),
@@ -130,11 +132,10 @@ public class AppointmentFormController {
                                 dto.getPetOwnerId()
                         )
                 );
-            }
+
             tblAppointments.setItems(obList1);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -159,7 +160,7 @@ public class AppointmentFormController {
                 String id = selectedItem.getId();
 
                 try {
-                    boolean isDelete = AppointmentDAOImpl.deleteAppoint(id);
+                    boolean isDelete = appointmentBO.deleteAppointment(id);
 
                     if (isDelete) {
                         new Alert(Alert.AlertType.CONFIRMATION, "Appoint Deleted!").show();

@@ -6,6 +6,7 @@ import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.MedicineDto;
 import lk.ijse.ahms.dto.tm.CartTm;
 import lk.ijse.ahms.dao.SQLUtil;
+import lk.ijse.ahms.entity.Medicine;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MedicineDAOImpl implements MedicineDAO {
-    public static boolean saveMedicine(MedicineDto dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Medicine dto) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = SQLUtil.execute("INSERT INTO medicine VALUES(?, ?, ?, ?, ?, ?, ?)",
                 dto.getMedId(),dto.getName(),dto.getType(),dto.getQty(),dto.getPrice(),dto.getDescription(),dto.getExpdate());
@@ -24,15 +25,15 @@ public class MedicineDAOImpl implements MedicineDAO {
 
     }
 
-    public static List<MedicineDto> getAllMedicine() throws SQLException, ClassNotFoundException {
+    public List<Medicine> getAll() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM medicine");
 
-        ArrayList<MedicineDto> dtoList = new ArrayList<>();
+        ArrayList<Medicine> dtoList = new ArrayList<>();
 
         while(resultSet.next()) {
             dtoList.add(
-                    new MedicineDto(
+                    new Medicine(
                             resultSet.getString(1),
                             resultSet.getString(2),
                             resultSet.getString(3),
@@ -47,12 +48,12 @@ public class MedicineDAOImpl implements MedicineDAO {
 
     }
 
-    public static MedicineDto getMedicineDetails(String id) throws SQLException, ClassNotFoundException {
+    public  Medicine search(String id) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM medicine WHERE med_id = ?", id);
 
         if(resultSet.next()) {
-            return new MedicineDto(
+            return new Medicine(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -65,7 +66,7 @@ public class MedicineDAOImpl implements MedicineDAO {
             return null;}
     }
 
-    public static boolean updateMedicine(MedicineDto dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Medicine dto) throws SQLException, ClassNotFoundException {
 
         boolean isSave = SQLUtil.execute("UPDATE medicine SET name =?, type =?, qty =?, price =?, description =?, exp_date =? WHERE med_id =?",
                 dto.getName(),dto.getType(),dto.getQty(),dto.getPrice(),dto.getDescription(),dto.getExpdate(),dto.getMedId());
@@ -74,7 +75,7 @@ public class MedicineDAOImpl implements MedicineDAO {
 
     }
 
-    public static boolean deleteMedicine(String id) throws SQLException, ClassNotFoundException {
+    public boolean delete(String id) throws SQLException, ClassNotFoundException {
 
         boolean isDelete = SQLUtil.execute("DELETE FROM medicine WHERE med_id =?",
                 id);
@@ -83,16 +84,16 @@ public class MedicineDAOImpl implements MedicineDAO {
 
     }
 
-    public static String generateNextMedId() throws SQLException, ClassNotFoundException {
+    public String generateNextId() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT med_id FROM medicine ORDER BY med_id DESC LIMIT 1");
         if(resultSet.next()) {
-            return splitmedId(resultSet.getString(1));
+            return splitId(resultSet.getString(1));
         }
-        return splitmedId(null);
+        return splitId(null);
     }
 
-    private static String splitmedId(String currentMedId) {
+    public String splitId(String currentMedId) {
         if(currentMedId != null) {
             String[] split = currentMedId.split("M0");
 
@@ -109,7 +110,7 @@ public class MedicineDAOImpl implements MedicineDAO {
     }
 
 
-    public boolean updateMed(List<CartTm> cartTmList) throws SQLException, ClassNotFoundException {
+    public boolean update(List<CartTm> cartTmList) throws SQLException, ClassNotFoundException {
         System.out.println("med model -> "+cartTmList);
         for(CartTm tm : cartTmList) {
 

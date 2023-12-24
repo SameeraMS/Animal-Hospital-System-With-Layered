@@ -5,6 +5,7 @@ import lk.ijse.ahms.dao.custom.PrescriptionDAO;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.AppointmentDto;
 import lk.ijse.ahms.dto.PrescriptionDto;
+import lk.ijse.ahms.entity.Prescription;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,21 +15,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrescriptionDAOImpl implements PrescriptionDAO {
-    public static boolean savePrescription(PrescriptionDto dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Prescription dto) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO prescription VALUES(?, ?, ?)",
                 dto.getPrescriptionId(),dto.getDescription(),dto.getAppointmentId());
 
     }
 
-    public static PrescriptionDto searchPrescription(String presid) throws SQLException, ClassNotFoundException {
+    public Prescription search(String presid) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM prescription WHERE presc_id=?", presid);
 
-        PrescriptionDto dto = null;
+        Prescription dto = null;
 
         if(resultSet.next()) {
-            dto = new PrescriptionDto(
+            dto = new Prescription(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3)
@@ -38,52 +39,25 @@ public class PrescriptionDAOImpl implements PrescriptionDAO {
     }
 
 
-    public static List<AppointmentDto> getAllAppointmentId() throws SQLException, ClassNotFoundException {
-
-        ResultSet resultSet = SQLUtil.execute("SELECT * FROM appointment");
-
-        ArrayList<AppointmentDto> dtoList = new ArrayList<>();
-
-        while(resultSet.next()) {
-            dtoList.add(
-                    new AppointmentDto(
-                            resultSet.getString(1),
-                            resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getString(4),
-                            resultSet.getString(5),
-                            resultSet.getString(6),
-                            resultSet.getString(7),
-                            resultSet.getString(8),
-                            resultSet.getString(9),
-                            resultSet.getString(10),
-                            resultSet.getString(11)
-                    )
-            );
-
-        }
-        return dtoList;
-    }
-
-    public static boolean deletePrescription(String presid) throws SQLException, ClassNotFoundException {
+    public boolean delete(String presid) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("DELETE FROM prescription WHERE presc_id=?", presid);
     }
 
-    public static boolean updatePrescription(PrescriptionDto dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Prescription dto) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("UPDATE prescription SET description=?, appointment_id=? WHERE presc_id=?",
                 dto.getDescription(), dto.getAppointmentId(), dto.getPrescriptionId());
     }
 
-    public static PrescriptionDto searchPrescriptionbyAppId(String appId) throws SQLException, ClassNotFoundException {
+    public Prescription searchPrescriptionbyAppId(String appId) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM prescription WHERE appointment_id=?", appId);
 
-        PrescriptionDto dto = null;
+        Prescription dto = null;
 
         if(resultSet.next()) {
-            dto = new PrescriptionDto(
+            dto = new Prescription(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3)
@@ -92,16 +66,16 @@ public class PrescriptionDAOImpl implements PrescriptionDAO {
         return dto;
     }
 
-    public static String generateNextPresId() throws SQLException, ClassNotFoundException {
+    public String generateNextId() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT presc_id FROM prescription ORDER BY presc_id DESC LIMIT 1");
         if(resultSet.next()) {
-            return splitPresId(resultSet.getString(1));
+            return splitId(resultSet.getString(1));
         }
-        return splitPresId(null);
+        return splitId(null);
     }
 
-    private static String splitPresId(String currentId) {
+    public String splitId(String currentId) {
         if(currentId != null) {
             String[] split = currentId.split("PR0");
 
@@ -117,15 +91,15 @@ public class PrescriptionDAOImpl implements PrescriptionDAO {
         }
     }
 
-    public static List<PrescriptionDto> getAllPrescriptions() throws SQLException, ClassNotFoundException {
+    public List<Prescription> getAll() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM prescription");
 
-        ArrayList<PrescriptionDto> dtoList = new ArrayList<>();
+        ArrayList<Prescription> dtoList = new ArrayList<>();
 
         while(resultSet.next()) {
             dtoList.add(
-                    new PrescriptionDto(
+                    new Prescription(
                             resultSet.getString(1),
                             resultSet.getString(2),
                             resultSet.getString(3)

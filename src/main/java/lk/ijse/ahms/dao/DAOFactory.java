@@ -14,11 +14,11 @@ public class DAOFactory {
     }
 
     public enum DAOTypes {
-        APPOINMENT, DOCTOR, EMPLOYEE, MEDICINE, PAYMENT, PET, PET_OWNER, PRESCRIPTION, PRESCRIPTION_DETAIL, USER
+        APPOINTMENT, DOCTOR, EMPLOYEE, MEDICINE, PAYMENT, PET, PET_OWNER, PRESCRIPTION, PRESCRIPTION_DETAIL, USER
     }
     public SuperDAO getDAO(DAOTypes daoTypes){
         switch (daoTypes){
-            case APPOINMENT:
+            case APPOINTMENT:
                 return new AppointmentDAOImpl();
             case DOCTOR:
                 return new DoctorDAOImpl();

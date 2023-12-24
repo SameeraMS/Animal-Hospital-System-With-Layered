@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.DoctorBO;
 import lk.ijse.ahms.controller.dashboard.EmployeeFormController;
 import lk.ijse.ahms.dto.DoctorDto;
 import lk.ijse.ahms.dao.custom.impl.DoctorDAOImpl;
@@ -29,6 +31,7 @@ public class AddDocFormcontroller {
 
     @Setter
     private EmployeeFormController empFormController;
+    DoctorBO doctorBO = (DoctorBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DOCTOR);
 
     public void initialize() {
         generateNextId();
@@ -37,11 +40,13 @@ public class AddDocFormcontroller {
 
     private void generateNextId() {
         try {
-            String docId = DoctorDAOImpl.generateNextDocId();
+            String docId = doctorBO.generateNextDocId();
             id.setText(docId);
             id.setEditable(false);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -88,7 +93,7 @@ public class AddDocFormcontroller {
                     if (!nid.isEmpty() && !nname.isEmpty() && !ntel.isEmpty() && !mail.isEmpty()) {
                         {
                             try {
-                                boolean isSaved = DoctorDAOImpl.saveDoctor(dto);
+                                boolean isSaved = doctorBO.saveDoctor(dto);
 
                                 if (isSaved) {
                                     // new Alert(Alert.AlertType.CONFIRMATION, "Doctor saved!").show();

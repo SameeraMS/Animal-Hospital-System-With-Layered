@@ -5,6 +5,7 @@ import lk.ijse.ahms.dao.custom.EmployeeDAO;
 import lk.ijse.ahms.dao.custom.PaymentDAO;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.PaymentDto;
+import lk.ijse.ahms.entity.Payment;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,15 +13,15 @@ import java.util.List;
 
 public class PaymentDAOImpl implements PaymentDAO {
 
-    public static List<PaymentDto> getPayment() throws SQLException, ClassNotFoundException {
+    public List<Payment> getAll() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM payment order by amount asc limit 5");
 
-        ArrayList<PaymentDto> dtoList = new ArrayList<>();
+        ArrayList<Payment> dtoList = new ArrayList<>();
 
         while(resultSet.next()) {
             dtoList.add(
-                    new PaymentDto(
+                    new Payment(
                             resultSet.getString(1),
                             resultSet.getString(2),
                             resultSet.getString(3),
@@ -33,16 +34,26 @@ public class PaymentDAOImpl implements PaymentDAO {
 
     }
 
-    public String generateNextPayId() throws SQLException, ClassNotFoundException {
+    @Override
+    public boolean update(Payment dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    public String generateNextId() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT payment_id FROM payment ORDER BY payment_id DESC LIMIT 1");
         if(resultSet.next()) {
-            return splitPayId(resultSet.getString(1));
+            return splitId(resultSet.getString(1));
         }
-        return splitPayId(null);
+        return splitId(null);
     }
 
-    private String splitPayId(String currentPayId) {
+    public String splitId(String currentPayId) {
         if(currentPayId != null) {
             String[] split = currentPayId.split("P0");
 
@@ -58,10 +69,15 @@ public class PaymentDAOImpl implements PaymentDAO {
         }
     }
 
+    @Override
+    public Payment search(String id) throws SQLException, ClassNotFoundException {
+        return null;
+    }
 
-    public boolean savePayment(String payId, String date, String amount, String appointId) throws SQLException, ClassNotFoundException {
+
+    public boolean save(Payment ent) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO payment VALUES(?, ?, ?, ?)",
-                payId, date, amount, appointId);
+                ent.getPaymentId(), ent.getDate(), ent.getAmount(), ent.getAppointmentId());
     }
 }

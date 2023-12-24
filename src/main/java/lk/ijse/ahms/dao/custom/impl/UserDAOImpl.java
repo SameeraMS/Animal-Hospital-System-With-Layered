@@ -5,6 +5,7 @@ import lk.ijse.ahms.dao.custom.EmployeeDAO;
 import lk.ijse.ahms.dao.custom.UserDAO;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.UserDto;
+import lk.ijse.ahms.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,10 +16,10 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
 
-    public static UserDto searchByName(String name) throws SQLException, ClassNotFoundException {
+    public User search(String name) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM user WHERE user_name = ?", name);
         if(resultSet.next()) {
-            return new UserDto(
+            return new User(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3)
@@ -27,7 +28,7 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
-    public static List<String> getUserName() throws SQLException, ClassNotFoundException {
+    public List<String> getUserName() throws SQLException, ClassNotFoundException {
 
         List<String> username = new ArrayList<>();
 
@@ -38,15 +39,15 @@ public class UserDAOImpl implements UserDAO {
         return username;
     }
 
-    public static List<UserDto> getAllUsers() throws SQLException, ClassNotFoundException {
+    public List<User> getAll() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM user");
 
-        List<UserDto> userList = new ArrayList<>();
+        List<User> userList = new ArrayList<>();
 
         while (resultSet.next()) {
             userList.add(
-                    new UserDto(
+                    new User(
                             resultSet.getString(1),
                             resultSet.getString(2),
                             resultSet.getString(3)
@@ -56,18 +57,34 @@ public class UserDAOImpl implements UserDAO {
         return userList;
     }
 
-    public static boolean changePassword(String username, String newpassword) throws SQLException, ClassNotFoundException {
+    @Override
+    public boolean update(User dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    public boolean changePassword(String username, String newpassword) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("UPDATE user SET password=? WHERE user_name=?",
                 newpassword, username);
     }
 
-    public static boolean deleteUser(String id) throws SQLException, ClassNotFoundException {
+    public boolean delete(String id) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("DELETE FROM user WHERE user_name=?", id);
     }
 
-    public static boolean saveUser(UserDto dto2) throws SQLException, ClassNotFoundException {
+    @Override
+    public String generateNextId() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public String splitId(String id) {
+        return null;
+    }
+
+
+    public boolean save(User dto2) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO user VALUES(?, ?, ?)",
                 dto2.getUsername(), dto2.getPassword(), dto2.getEmpId());

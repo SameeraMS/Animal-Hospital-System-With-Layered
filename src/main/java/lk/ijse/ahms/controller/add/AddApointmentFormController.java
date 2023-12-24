@@ -17,6 +17,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.AppointmentBO;
+import lk.ijse.ahms.bo.custom.DoctorBO;
+import lk.ijse.ahms.bo.custom.PetBO;
+import lk.ijse.ahms.bo.custom.PetOwnerBO;
 import lk.ijse.ahms.controller.dashboard.AppointmentFormController;
 import lk.ijse.ahms.dto.AppointmentDto;
 import lk.ijse.ahms.dto.DoctorDto;
@@ -61,8 +66,10 @@ public class AddApointmentFormController {
     @Setter
     private AppointmentFormController appointmentFormController;
 
-
-
+    AppointmentBO appointmentBO = (AppointmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.APPOINTMENT);
+    PetBO petBO = (PetBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET);
+    PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
+    DoctorBO doctorBO = (DoctorBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DOCTOR);
 
 
     public void initialize() {
@@ -77,7 +84,7 @@ public class AddApointmentFormController {
 
     private void generateNextId() {
         try {
-            String appId = AppointmentDAOImpl.generateNextAppointId();
+            String appId = appointmentBO.generateNextAppointmentId();
             appointmentId.setText(appId);
             appointmentId.setEditable(false);
         } catch (SQLException e) {
@@ -99,7 +106,7 @@ public class AddApointmentFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<PetsDto> idList = PetDAOImpl.getAllPets();
+            List<PetsDto> idList = petBO.getAllPet();
 
             for (PetsDto dto : idList) {
                 obList.add(dto.getPetId());
@@ -108,6 +115,8 @@ public class AddApointmentFormController {
             cmbPetId.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -115,7 +124,7 @@ public class AddApointmentFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<PetOwnerDto> idList = PetOwnerDAOImpl.getAllOwners();
+            List<PetOwnerDto> idList = petOwnerBO.getAllPetOwner();
 
             for (PetOwnerDto dto : idList) {
                 obList.add(dto.getOwnerId());
@@ -124,6 +133,8 @@ public class AddApointmentFormController {
             cmbPetOwnerId.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -131,7 +142,7 @@ public class AddApointmentFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<DoctorDto> idList = DoctorDAOImpl.getAllDoctor();
+            List<DoctorDto> idList = doctorBO.getAllDoctor();
 
             for (DoctorDto dto : idList) {
                 obList.add(dto.getDocId());
@@ -139,6 +150,8 @@ public class AddApointmentFormController {
 
             cmbDocId.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -169,11 +182,13 @@ public class AddApointmentFormController {
 
         try {
             if (id != null) {
-                DoctorDto dto = DoctorDAOImpl.getDocDetails(id);
+                DoctorDto dto = doctorBO.searchDoctor(id);
 
                 docName.setText(dto.getName());
             }
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -183,11 +198,13 @@ public class AddApointmentFormController {
 
         try {
             if (id != null) {
-                PetsDto dto = PetDAOImpl.getPetsDetails(id);
+                PetsDto dto = petBO.searchPet(id);
 
                 petName.setText(dto.getName());
             }
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -197,11 +214,13 @@ public class AddApointmentFormController {
 
         try {
             if (id != null) {
-                PetOwnerDto dto = PetOwnerDAOImpl.getOwnerDetails(id);
+                PetOwnerDto dto = petOwnerBO.searchPetOwner(id);
 
                 petOwnerName.setText(dto.getName());
             }
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -226,7 +245,7 @@ public class AddApointmentFormController {
 
             if(!id.isEmpty() && !amount.isEmpty() && !date.isEmpty() && !time.isEmpty() && !description.isEmpty() && !docid.isEmpty() && !petid.isEmpty() && !petownerid.isEmpty()) {
                 try {
-                    boolean isSaved = AppointmentDAOImpl.saveAppointment(dto);
+                    boolean isSaved = appointmentBO.saveAppointment(dto);
 
                     if (isSaved) {
                         //    new Alert(Alert.AlertType.CONFIRMATION, "Appointment saved!").show();
@@ -249,7 +268,7 @@ public class AddApointmentFormController {
                                 e.printStackTrace();
                             }
 
-                            PetOwnerDto newdto = PetOwnerDAOImpl.getOwnerDetails(petownerid);
+                            PetOwnerDto newdto = petOwnerBO.searchPetOwner(petownerid);
 
                             assert newdto != null;
                             String email = newdto.getEmail();

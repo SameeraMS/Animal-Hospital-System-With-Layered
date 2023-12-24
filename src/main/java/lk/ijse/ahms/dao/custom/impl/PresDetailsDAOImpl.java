@@ -24,7 +24,7 @@ public class PresDetailsDAOImpl implements PrescriptionDetailsDAO {
         return true;
     }
 
-    private void printDetailsSave(String payId, CartTm tm) throws SQLException, ClassNotFoundException {
+    public void printDetailsSave(String payId, CartTm tm) throws SQLException, ClassNotFoundException {
 
         SQLUtil.execute("INSERT INTO print VALUES(?, ?, ?, ?, ?, ?)",
                 payId, tm.getMedId(), tm.getName(),
@@ -33,7 +33,7 @@ public class PresDetailsDAOImpl implements PrescriptionDetailsDAO {
     }
 
 
-    private boolean saveOrderDetails(String payId, CartTm tm) throws SQLException, ClassNotFoundException {
+    public boolean saveOrderDetails(String payId, CartTm tm) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO prescription_details VALUES(?, ?, ?, ?)",
                 payId, tm.getMedId(), tm.getQty(), tm.getUnitPrice());

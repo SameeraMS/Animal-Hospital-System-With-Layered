@@ -8,6 +8,11 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.DoctorBO;
+import lk.ijse.ahms.bo.custom.EmployeeBO;
+import lk.ijse.ahms.bo.custom.PetBO;
+import lk.ijse.ahms.bo.custom.PetOwnerBO;
 import lk.ijse.ahms.dao.custom.impl.DoctorDAOImpl;
 import lk.ijse.ahms.dao.custom.impl.EmployeeDAOImpl;
 import lk.ijse.ahms.dao.custom.impl.PetDAOImpl;
@@ -32,6 +37,11 @@ public class DashboardController {
     public PieChart piechart;
     public LineChart linechart;
 
+    PetBO petBO = (PetBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET);
+    PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
+    DoctorBO doctorBO = (DoctorBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DOCTOR);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
+
 
     public void initialize() throws SQLException, IOException {
         setValues();
@@ -52,10 +62,10 @@ public class DashboardController {
 
         //pie chart
 
-        PieChart.Data slice1 = new PieChart.Data("Pets", PetDAOImpl.getAllPets().size());
-        PieChart.Data slice2 = new PieChart.Data("Pet Owners", PetOwnerDAOImpl.getAllOwners().size());
-        PieChart.Data slice3 = new PieChart.Data("Doctors", DoctorDAOImpl.getAllDoctor().size());
-        PieChart.Data slice4 = new PieChart.Data("Employees", EmployeeDAOImpl.getAllEmployee().size());
+        PieChart.Data slice1 = new PieChart.Data("Pets", petBO.getAllPets().size());
+        PieChart.Data slice2 = new PieChart.Data("Pet Owners", petOwnerBO.getAllOwners().size());
+        PieChart.Data slice3 = new PieChart.Data("Doctors", doctorBO.getAllDoctor().size());
+        PieChart.Data slice4 = new PieChart.Data("Employees", employeeBO.getAllEmployee().size());
 
         piechart.getData().addAll(slice1, slice2, slice3, slice4);
 
@@ -66,10 +76,10 @@ public class DashboardController {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Details");
 
-        series.getData().add(new XYChart.Data<>("Pets", PetDAOImpl.getAllPets().size()));
-        series.getData().add(new XYChart.Data<>("Pet Owners", PetOwnerDAOImpl.getAllOwners().size()));
-        series.getData().add(new XYChart.Data<>("Doctors", DoctorDAOImpl.getAllDoctor().size()));
-        series.getData().add(new XYChart.Data<>("Employees", EmployeeDAOImpl.getAllEmployee().size()));
+        series.getData().add(new XYChart.Data<>("Pets", petBO.getAllPets().size()));
+        series.getData().add(new XYChart.Data<>("Pet Owners", petOwnerBO.getAllOwners().size()));
+        series.getData().add(new XYChart.Data<>("Doctors", doctorBO.getAllDoctor().size()));
+        series.getData().add(new XYChart.Data<>("Employees", employeeBO.getAllEmployee().size()));
 
         linechart.getData().add(series);
         
@@ -96,10 +106,10 @@ public class DashboardController {
 
 
     private void setValues() throws SQLException {
-        lblpet.setText(String.valueOf(PetDAOImpl.getAllPets().size()));
-        lblpetowner.setText(String.valueOf(PetOwnerDAOImpl.getAllOwners().size()));
-        lbldoc.setText(String.valueOf(DoctorDAOImpl.getAllDoctor().size()));
-        lblemp.setText(String.valueOf(EmployeeDAOImpl.getAllEmployee().size()));
+        lblpet.setText(String.valueOf(petBO.getAllPets().size()));
+        lblpetowner.setText(String.valueOf(petOwnerBO.getAllOwners().size()));
+        lbldoc.setText(String.valueOf(doctorBO.getAllDoctor().size()));
+        lblemp.setText(String.valueOf(employeeBO.getAllEmployee().size()));
 
 
     }

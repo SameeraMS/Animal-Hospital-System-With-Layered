@@ -41,10 +41,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
         return appointmentDtos;
     }
 
-    @Override
-    public Appointment getDetails(String id) throws SQLException {
-        return null;
-    }
+
 
     @Override
     public boolean update(Appointment dto) throws SQLException, ClassNotFoundException {
@@ -61,30 +58,6 @@ public class AppointmentDAOImpl implements AppointmentDAO {
 
     }
 
-    public List<Appointment> search(String id) throws SQLException, ClassNotFoundException {
-
-        ResultSet resultSet = SQLUtil.execute("SELECT * FROM appointment WHERE appointment_id=?", id);
-        ArrayList<Appointment> appointmentDtos = new ArrayList<>();
-
-        while(resultSet.next()){
-            appointmentDtos.add(
-                    new Appointment(
-                            resultSet.getString(1),
-                            resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getString(4),
-                            resultSet.getString(5),
-                            resultSet.getString(6),
-                            resultSet.getString(7),
-                            resultSet.getString(8),
-                            resultSet.getString(9),
-                            resultSet.getString(10),
-                            resultSet.getString(11)
-                    )
-            );
-        }
-        return appointmentDtos;
-    }
 
 
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
@@ -118,7 +91,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
         }
     }
 
-    public static Appointment searchId(String id) throws SQLException, ClassNotFoundException {
+    public Appointment search(String id) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM appointment WHERE appointment_id=?", id);
 

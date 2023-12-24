@@ -8,6 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.EmployeeBO;
 import lk.ijse.ahms.controller.dashboard.EmployeeFormController;
 import lk.ijse.ahms.dto.EmployeeDto;
 import lk.ijse.ahms.dao.custom.impl.EmployeeDAOImpl;
@@ -35,6 +37,7 @@ public class AddEmployeeFormController {
 
     @FXML
     private JFXComboBox<String> cmbEmpType;
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
 
 
     public void initialize() {
@@ -44,11 +47,13 @@ public class AddEmployeeFormController {
 
     private void generateNextId() {
         try {
-            String Id = EmployeeDAOImpl.generateNextempId();
+            String Id = employeeBO.generateNextEmployeeId();
             empId.setText(Id);
             empId.setEditable(false);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -94,7 +99,7 @@ public class AddEmployeeFormController {
 
                         if (!id.isEmpty() && !name.isEmpty() && !address.isEmpty() && !tel.isEmpty() && !mail.isEmpty() && !type.isEmpty()) {
                             try {
-                                boolean isSaved = EmployeeDAOImpl.saveEmployee(dto);
+                                boolean isSaved = employeeBO.saveEmployee(dto);
 
                                 if (isSaved) {
                                     //  new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
