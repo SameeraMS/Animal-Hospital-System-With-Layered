@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.PetOwnerBO;
 import lk.ijse.ahms.controller.dashboard.PetsFormController;
 import lk.ijse.ahms.controller.info.InfoPetsFormController;
 import lk.ijse.ahms.dto.PetOwnerDto;
@@ -32,17 +34,21 @@ public class AddPetOwnerFormController {
     @Setter
     private AddApointmentFormController addApointmentFormController;
 
+    PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
+
     public void initialize() {
         generateNextId();
     }
 
     private void generateNextId() {
         try {
-            String payId = PetOwnerDAOImpl.generateNextId();
+            String payId = petOwnerBO.generateNextPetOwnerId();
             ownerId.setText(payId);
             ownerId.setEditable(false);
         } catch (SQLException e) {
             new SystemAlert(Alert.AlertType.ERROR,"Error",e.getMessage(), ButtonType.OK).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -88,7 +94,7 @@ public class AddPetOwnerFormController {
 
                     if(!id.isEmpty() && !name.isEmpty() && !email.isEmpty() && !tel.isEmpty()) {
                         try {
-                            boolean isSaved = PetOwnerDAOImpl.savePetOwner(dto);
+                            boolean isSaved = petOwnerBO.savePetOwner(dto);
 
                             if (isSaved) {
                                 new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Pet Owner saved Successfully..!", ButtonType.OK).show();
@@ -108,6 +114,8 @@ public class AddPetOwnerFormController {
                             }
                         } catch (SQLException e) {
                             new SystemAlert(Alert.AlertType.ERROR,"Error",e.getMessage(), ButtonType.OK).show();
+                        } catch (ClassNotFoundException e) {
+                            throw new RuntimeException(e);
                         }
                     } else {
                         new SystemAlert(Alert.AlertType.INFORMATION,"Information","Please Fill All Details..!", ButtonType.OK).show();

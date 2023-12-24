@@ -11,6 +11,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.image.Image;
 import lk.ijse.ahms.barcode.Barcode_genarate;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.MedicineBO;
 import lk.ijse.ahms.controller.dashboard.MedicineFormcontroller;
 import lk.ijse.ahms.dto.MedicineDto;
 import lk.ijse.ahms.dao.custom.impl.MedicineDAOImpl;
@@ -40,10 +42,10 @@ public class AddMedicineFormController {
     @FXML
     private JFXTextField medDesc;
 
-
     @Setter
     private MedicineFormcontroller medFormController;
 
+    MedicineBO medicineBO = (MedicineBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MEDICINE);
     public void initialize() {
         generatenextId();
         loadCmbBox();
@@ -51,11 +53,13 @@ public class AddMedicineFormController {
 
     private void generatenextId() {
         try {
-            String payId = MedicineDAOImpl.generateNextMedId();
+            String payId = medicineBO.generateNextMedicineId();
             medId.setText(payId);
             medId.setEditable(false);
         } catch (SQLException e) {
             new SystemAlert(Alert.AlertType.ERROR,"Error",e.getMessage(), ButtonType.OK).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -93,7 +97,7 @@ public class AddMedicineFormController {
 
                 if(!id.isEmpty() && !name.isEmpty() && !type.isEmpty() && !price.isEmpty() && !desc.isEmpty() && !expDate.isEmpty() && !qty.isEmpty()) {
                     try {
-                        boolean isSaved = MedicineDAOImpl.saveMedicine(dto);
+                        boolean isSaved = medicineBO.saveMedicine(dto);
 
                         if (isSaved) {
                             new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Medicine saved Successfully..!", ButtonType.OK).show();

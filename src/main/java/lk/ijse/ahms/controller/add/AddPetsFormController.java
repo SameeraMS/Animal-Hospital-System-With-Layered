@@ -11,6 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.PetBO;
+import lk.ijse.ahms.bo.custom.PetOwnerBO;
 import lk.ijse.ahms.controller.dashboard.PetsFormController;
 import lk.ijse.ahms.dto.PetOwnerDto;
 import lk.ijse.ahms.dto.PetsDto;
@@ -37,6 +40,9 @@ public class AddPetsFormController {
 
     @Setter
     private AddApointmentFormController addApointmentFormController;
+    PetBO petBO = (PetBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET);
+
+    PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
 
     public void initialize() {
         generatenextId();
@@ -47,11 +53,13 @@ public class AddPetsFormController {
 
     private void generatenextId() {
         try {
-            String payId = PetDAOImpl.generateNextId();
+            String payId = petBO.generateNextPetId();
             petId.setText(payId);
             petId.setEditable(false);
         } catch (SQLException e) {
             new SystemAlert(Alert.AlertType.ERROR,"Error", e.getMessage(), ButtonType.OK).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -63,7 +71,7 @@ public class AddPetsFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<PetOwnerDto> idList = PetOwnerDAOImpl.getAllOwners();
+            List<PetOwnerDto> idList = petOwnerBO.getAllPetOwner();
 
             for (PetOwnerDto dto : idList) {
                 obList.add(dto.getOwnerId());
@@ -71,6 +79,8 @@ public class AddPetsFormController {
 
             cmbOwnerId.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -98,7 +108,7 @@ public class AddPetsFormController {
 
                 if(!id.isEmpty() && !name.isEmpty() && !age.isEmpty() && !ownerId.isEmpty() && !type.isEmpty() && !gender.isEmpty()) {
                     try {
-                        boolean isSaved = PetDAOImpl.savePet(dto);
+                        boolean isSaved = petBO.savePet(dto);
 
                         if (isSaved) {
                             //      new Alert(Alert.AlertType.CONFIRMATION, "Pet saved!").show();
@@ -114,6 +124,8 @@ public class AddPetsFormController {
                         }
                     } catch (SQLException e) {
                         new SystemAlert(Alert.AlertType.ERROR,"Error", e.getMessage(), ButtonType.OK).show();
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
                     }
                 } else {
                     new SystemAlert(Alert.AlertType.INFORMATION,"Information","Please Fill All Details..!", ButtonType.OK).show();
