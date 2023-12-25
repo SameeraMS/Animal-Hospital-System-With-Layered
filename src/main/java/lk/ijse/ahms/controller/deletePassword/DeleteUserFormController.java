@@ -12,6 +12,7 @@ import lk.ijse.ahms.controller.dashboard.SettingsFormController;
 import lk.ijse.ahms.dto.UserDto;
 import lk.ijse.ahms.dao.custom.impl.UserDAOImpl;
 import lk.ijse.ahms.smtp.Mail;
+import lk.ijse.ahms.util.SecurityUtil;
 import lk.ijse.ahms.util.SystemAlert;
 import lombok.Setter;
 
@@ -42,15 +43,15 @@ public class DeleteUserFormController {
                     try {
                         UserDto dto = userBO.searchUser(id);
 
-                        UserDto dto1 = userBO.searchUser("sameerams2002@gmail.com");
+                        UserDto dto1 = userBO.searchUser(SecurityUtil.encoder("sameerams2002@gmail.com"));
 
-                        if (password.equals(dto.getPassword()) | password.equals(dto1.getPassword())) {
+                        if (password.equals(SecurityUtil.decoder(dto.getPassword())) | password.equals(SecurityUtil.decoder(dto1.getPassword()))) {
                             boolean isDelete = userBO.deleteUser(id);
 
                             if (isDelete) {
                                 new SystemAlert(Alert.AlertType.CONFIRMATION, "Confirmation","User Deleted!",ButtonType.OK).show();
 
-                                String email = id;
+                                String email = SecurityUtil.decoder(id);
                                 String subject = "Animal Hospital System";
                                 String message = "sorry..! \n\n You are no longer a member of our system. \n\n Please contact us for more information.";
 

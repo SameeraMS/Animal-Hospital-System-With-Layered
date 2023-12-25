@@ -302,7 +302,7 @@ public class PaymentFormController {
         System.out.println("place order on action -> "+cartTmList);
                 var placeOrderDto = new PlaceOrderDto(payId, date, total, appointId, cartTmList);
                 boolean isSuccess = false;
-                Connection connection = null;
+
                 try {
                    // isSuccess = placeOrderModel.placeOrder(placeOrderDto);
                     System.out.println("place order model -> "+placeOrderDto.getCartTmList());
@@ -313,8 +313,6 @@ public class PaymentFormController {
                     throw new RuntimeException(ex);
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
-                }finally {
-                    connection.setAutoCommit(true);
                 }
         if (isSuccess) {
                     new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Order Placed Successfully..!",ButtonType.OK).show();

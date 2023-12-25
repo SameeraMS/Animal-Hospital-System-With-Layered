@@ -7,6 +7,7 @@ import lk.ijse.ahms.dto.PetOwnerDto;
 import lk.ijse.ahms.entity.PetOwner;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PetOwnerBOImpl implements PetOwnerBO {
@@ -21,7 +22,7 @@ public class PetOwnerBOImpl implements PetOwnerBO {
     @Override
     public List<PetOwnerDto> getAllPetOwner() throws SQLException, ClassNotFoundException {
         List<PetOwner> all = petOwnerDAO.getAll();
-        List<PetOwnerDto> petOwnerDtos = null;
+        List<PetOwnerDto> petOwnerDtos = new ArrayList<>();
         for (PetOwner petOwner : all) {
             petOwnerDtos.add(new PetOwnerDto(
                     petOwner.getOwnerId(),petOwner.getName(),petOwner.getEmail(),petOwner.getTel()

@@ -5,9 +5,11 @@ import lk.ijse.ahms.dao.DAOFactory;
 import lk.ijse.ahms.dao.custom.UserDAO;
 import lk.ijse.ahms.dto.UserDto;
 import lk.ijse.ahms.entity.User;
+import lk.ijse.ahms.util.SecurityUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserBOImpl implements UserBO {
@@ -22,7 +24,7 @@ public class UserBOImpl implements UserBO {
     @Override
     public List<UserDto> getAllUser() throws SQLException, ClassNotFoundException {
         List<User> all = userDAO.getAll();
-        List<UserDto> userDtos = null;
+        List<UserDto> userDtos = new ArrayList<>();
         for (User user : all) {
             userDtos.add(new UserDto(
                     user.getUsername(),user.getPassword(),user.getEmpId()
@@ -51,9 +53,13 @@ public class UserBOImpl implements UserBO {
     @Override
     public UserDto searchUser(String id) throws SQLException, ClassNotFoundException {
         User user = userDAO.search(id);
-        return new UserDto(
-                user.getUsername(),user.getPassword(),user.getEmpId()
-        );
+        if (user == null) {
+            return null;
+        }else {
+            return new UserDto(
+                    user.getUsername(),user.getPassword(),user.getEmpId()
+            );
+        }
     }
 
     @Override

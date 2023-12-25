@@ -34,9 +34,11 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
                 if (isOrderDetailSaved) {
                     connection.commit();
                     isSuccess = true;
+                    connection.setAutoCommit(true);
                 }
             }
         }
+        connection.setAutoCommit(true);
         return isSuccess;
     }
 }

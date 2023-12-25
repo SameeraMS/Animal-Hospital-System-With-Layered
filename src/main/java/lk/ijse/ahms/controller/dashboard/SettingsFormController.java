@@ -178,9 +178,10 @@ public class SettingsFormController {
         focusedIndex = tblUser.getSelectionModel().getSelectedIndex();
         UserTm selectedItem = (UserTm) tblUser.getSelectionModel().getSelectedItem();
 
-        id = selectedItem.getUsername();
+        id = SecurityUtil.encoder(selectedItem.getUsername());
 
-        if (id.equals("sameerams2002@gmail.com")) {
+
+        if (id.equals(SecurityUtil.encoder("sameerams2002@gmail.com"))) {
             new SystemAlert(Alert.AlertType.ERROR, "Error", "You cannot delete Admin!", ButtonType.OK).show();
         } else{
 
@@ -220,7 +221,7 @@ public class SettingsFormController {
 
             if (!username.isEmpty() && !password.isEmpty() && !password2.isEmpty() && !empId.isEmpty()) {
                 try {
-                    UserDto dto = userBO.searchUser(username);
+                    UserDto dto = userBO.searchUser(SecurityUtil.encoder(username));
 
                     if (dto == null) {
                         if (password.equals(password2)) {

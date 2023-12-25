@@ -2,15 +2,17 @@ package lk.ijse.ahms.bo.custom.impl;
 
 import lk.ijse.ahms.bo.BOFactory;
 import lk.ijse.ahms.bo.custom.DoctorBO;
+import lk.ijse.ahms.dao.DAOFactory;
 import lk.ijse.ahms.dao.custom.DoctorDAO;
 import lk.ijse.ahms.dto.DoctorDto;
 import lk.ijse.ahms.entity.Doctor;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DoctorBOImpl implements DoctorBO {
-    DoctorDAO doctorDAO = (DoctorDAO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DOCTOR);
+    DoctorDAO doctorDAO = (DoctorDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.DOCTOR);
     @Override
     public boolean saveDoctor(DoctorDto dto) throws SQLException, ClassNotFoundException {
         return doctorDAO.save(new Doctor(dto.getDocId(),dto.getName(),dto.getEmail(),dto.getTel()));
@@ -19,7 +21,7 @@ public class DoctorBOImpl implements DoctorBO {
     @Override
     public List<DoctorDto> getAllDoctor() throws SQLException, ClassNotFoundException {
         List<Doctor> all = doctorDAO.getAll();
-        List<DoctorDto> doctorDtos = null;
+        List<DoctorDto> doctorDtos = new ArrayList<>();
         for (Doctor doctor : all) {
             doctorDtos.add(new DoctorDto(doctor.getDocId(),doctor.getName(),doctor.getEmail(),doctor.getTel()));
         }

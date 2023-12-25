@@ -7,6 +7,7 @@ import lk.ijse.ahms.dto.PrescriptionDto;
 import lk.ijse.ahms.entity.Prescription;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PrescriptionBOImpl implements PrescriptionBO {
@@ -22,7 +23,7 @@ public class PrescriptionBOImpl implements PrescriptionBO {
     @Override
     public List<PrescriptionDto> getAllPrescription() throws SQLException, ClassNotFoundException {
         List<Prescription> all = prescriptionDAO.getAll();
-        List<PrescriptionDto> prescriptionDtos = null;
+        List<PrescriptionDto> prescriptionDtos = new ArrayList<>();
         for (Prescription prescription : all) {
             prescriptionDtos.add(new PrescriptionDto(
                     prescription.getPrescriptionId(),prescription.getDescription(),prescription.getAppointmentId()
