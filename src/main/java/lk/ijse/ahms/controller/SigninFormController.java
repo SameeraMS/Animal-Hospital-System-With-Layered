@@ -12,6 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.EmployeeBO;
+import lk.ijse.ahms.bo.custom.UserBO;
 import lk.ijse.ahms.dto.EmployeeDto;
 import lk.ijse.ahms.dao.custom.impl.EmployeeDAOImpl;
 import lk.ijse.ahms.dao.custom.impl.UserDAOImpl;
@@ -29,7 +32,8 @@ public class SigninFormController {
     public PasswordField txtpassword;
     public ImageView imageview1;
     public static String newmail;
-    UserDAOImpl usermodel = new UserDAOImpl();
+    UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
 
     public void initialize(){
         txtusername.requestFocus();
@@ -59,7 +63,7 @@ public class SigninFormController {
             try {
 
                 String enun = SecurityUtil.encoder(getun);
-                ResultSet resultSet = usermodel.checkCredentials(enun, getpw);
+                ResultSet resultSet = userBO.checkCredentials(enun, getpw);
 
                 if (resultSet.next()) {
                     String name = SecurityUtil.decoder(resultSet.getString(1));
@@ -80,7 +84,7 @@ public class SigninFormController {
                         stage.setScene(scene);
                         stage.setTitle("dashboard");
 
-                            EmployeeDto dto = EmployeeDAOImpl.getEmployeeDetails(id);
+                            EmployeeDto dto = employeeBO.searchEmployee(id);
                             dash.setLblname(dto.getName());
 
 
@@ -111,6 +115,8 @@ public class SigninFormController {
 
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
