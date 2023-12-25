@@ -13,6 +13,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.MedicineBO;
 import lk.ijse.ahms.controller.add.AddMedicineFormController;
 import lk.ijse.ahms.controller.info.InfoMedicineFormController;
 import lk.ijse.ahms.dto.MedicineDto;
@@ -34,7 +36,7 @@ public class MedicineFormcontroller {
     public TableColumn colQty;
     public JFXTextField txtsearchid;
     public JFXButton btnsearch;
-    private MedicineDAOImpl medicineDAOImpl = new MedicineDAOImpl();
+    MedicineBO medicineBO = (MedicineBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MEDICINE);
 
     public void initialize() {
         tblMed.getItems().clear();
@@ -57,7 +59,7 @@ public class MedicineFormcontroller {
         ObservableList<MedicineTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<MedicineDto> medicineDtos = MedicineDAOImpl.getAllMedicine();
+            List<MedicineDto> medicineDtos = medicineBO.getAllMedicine();
 
             for (MedicineDto dto : medicineDtos) {
 
@@ -75,6 +77,8 @@ public class MedicineFormcontroller {
             }
             tblMed.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -120,7 +124,7 @@ public class MedicineFormcontroller {
         String id = txtsearchid.getText();
 
         try {
-            MedicineDto dtos = MedicineDAOImpl.getMedicineDetails(id);
+            MedicineDto dtos = medicineBO.searchMedicine(id);
 
             if (dtos == null) {
                 new Alert(Alert.AlertType.ERROR, "Medicine not found").show();
@@ -143,6 +147,8 @@ public class MedicineFormcontroller {
                 tblMed.setItems(obList1);
             }
             } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 

@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.*;
 import lk.ijse.ahms.controller.barcode.BarcodeReadController;
 import lk.ijse.ahms.dao.custom.impl.*;
 import lk.ijse.ahms.db.DbConnection;
@@ -63,12 +65,13 @@ public class PaymentFormController {
     public JFXButton btnaddtocart;
     public JFXButton btnplaceorder;
     public JFXButton btnqr;
-
-    private PaymentDAOImpl paymentDAOImpl = new PaymentDAOImpl();
-    private MedicineDAOImpl medicineDAOImpl = new MedicineDAOImpl();
-    private PresDetailsDAOImpl presDetailsDAOImpl = new PresDetailsDAOImpl();
     private ObservableList<CartTm> obList = FXCollections.observableArrayList();
-
+    PaymentBO paymentBO = (PaymentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PAYMENT);
+    MedicineBO medicineBO = (MedicineBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MEDICINE);
+    PrescriptionDetailsBO presDetailsBO = (PrescriptionDetailsBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PRESCRIPTION_DETAIL);
+    AppointmentBO appointmentBO = (AppointmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.APPOINTMENT);
+    PrescriptionBO prescriptionBO = (PrescriptionBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PRESCRIPTION);
+    PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
 
 
     public void initialize() {
@@ -90,11 +93,13 @@ public class PaymentFormController {
 
     private void generateNextPayId() {
         try {
-            String payId = paymentDAOImpl.generateNextPayId();
+            String payId = paymentBO.generateNextPaymentId();
             txtpaymentId.setText(payId);
             txtpaymentId.setEditable(false);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -123,7 +128,7 @@ public class PaymentFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<MedicineDto> idList = MedicineDAOImpl.getAllMedicine();
+            List<MedicineDto> idList = medicineBO.getAllMedicine();
 
             for (MedicineDto dto : idList) {
                 obList.add(dto.getMedId());
@@ -132,6 +137,8 @@ public class PaymentFormController {
             cmbmedid.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -139,7 +146,7 @@ public class PaymentFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<AppointmentDto> idList = AppointmentDAOImpl.getAllAppointments();
+            List<AppointmentDto> idList = appointmentBO.getAllAppointment();
 
             for (AppointmentDto dto : idList) {
                 obList.add(dto.getAppointmentId());
@@ -159,14 +166,14 @@ public class PaymentFormController {
 
         try {
             if (AppId != null) {
-                List<AppointmentDto> dto = AppointmentDAOImpl.searchAppointments(AppId);
+                AppointmentDto dto = appointmentBO.searchAppointment(AppId);
 
-                txtPetOwner.setText(dto.get(0).getPetOwnerName());
-                txtPet.setText(dto.get(0).getPetName());
-                lblappointmentAmount.setText(dto.get(0).getAmount());
-                lbltotal.setText(dto.get(0).getAmount());
+                txtPetOwner.setText(dto.getPetOwnerName());
+                txtPet.setText(dto.getPetName());
+                lblappointmentAmount.setText(dto.getAmount());
+                lbltotal.setText(dto.getAmount());
 
-                PrescriptionDto presDto = PrescriptionDAOImpl.searchPrescriptionbyAppId(AppId);
+                PrescriptionDto presDto = prescriptionBO.searchPrescriptionbyAppId(AppId);
 
                 ObservableList<String> obList = FXCollections.observableArrayList();
 
@@ -193,7 +200,7 @@ public class PaymentFormController {
 
         try {
             if (id != null) {
-                MedicineDto dto = MedicineDAOImpl.getMedicineDetails(id);
+                MedicineDto dto = medicineBO.searchMedicine(id);
 
                 txtmedname.setText(dto.getName());
                 lblqtyOnHand.setText(dto.getQty());
@@ -204,6 +211,8 @@ public class PaymentFormController {
             txtqty.requestFocus();
 
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -338,10 +347,10 @@ public class PaymentFormController {
 
 
         try {
-            AppointmentDto dto = AppointmentDAOImpl.searchOwnerId(appointmentId);
+            AppointmentDto dto = appointmentBO.searchAppointment(appointmentId);
             String ownerId = dto.getPetOwnerId();
 
-            PetOwnerDto ownerDto = PetOwnerDAOImpl.getOwnerDetails(ownerId);
+            PetOwnerDto ownerDto = petOwnerBO.searchPetOwner(ownerId);
             String email = ownerDto.getEmail();
 
             String subject = "Payment Done Successfully";
@@ -464,13 +473,13 @@ public class PaymentFormController {
 
         try {
             if (AppId != null) {
-                List<AppointmentDto> dto = AppointmentDAOImpl.searchAppointments(AppId);
+                AppointmentDto dto = appointmentBO.searchAppointment(AppId);
 
-                txtPetOwner.setText(dto.get(0).getPetOwnerName());
-                txtPet.setText(dto.get(0).getPetName());
-                lblappointmentAmount.setText(dto.get(0).getAmount());
+                txtPetOwner.setText(dto.getPetOwnerName());
+                txtPet.setText(dto.getPetName());
+                lblappointmentAmount.setText(dto.getAmount());
 
-                PrescriptionDto presDto = PrescriptionDAOImpl.searchPrescriptionbyAppId(AppId);
+                PrescriptionDto presDto = prescriptionBO.searchPrescriptionbyAppId(AppId);
 
                 ObservableList<String> obList = FXCollections.observableArrayList();
 

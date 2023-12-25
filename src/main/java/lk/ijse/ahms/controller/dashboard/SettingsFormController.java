@@ -14,13 +14,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.EmployeeBO;
+import lk.ijse.ahms.bo.custom.UserBO;
 import lk.ijse.ahms.controller.SigninFormController;
 import lk.ijse.ahms.controller.deletePassword.DeleteUserFormController;
 import lk.ijse.ahms.dto.EmployeeDto;
 import lk.ijse.ahms.dto.UserDto;
 import lk.ijse.ahms.dto.tm.UserTm;
-import lk.ijse.ahms.dao.custom.impl.EmployeeDAOImpl;
-import lk.ijse.ahms.dao.custom.impl.UserDAOImpl;
 import lk.ijse.ahms.regex.Regex;
 import lk.ijse.ahms.smtp.Mail;
 import lk.ijse.ahms.util.SecurityUtil;
@@ -54,6 +55,8 @@ public class SettingsFormController {
     private SigninFormController signinFormController;
 
     public ObservableList<UserTm> obList = FXCollections.observableArrayList();
+    UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
 
     public void initialize() {
         tblUser.getItems().clear();
@@ -69,12 +72,14 @@ public class SettingsFormController {
         ObservableList<String> obList1 = FXCollections.observableArrayList();
 
         try {
-            List<EmployeeDto> idList = EmployeeDAOImpl.getAllEmployee();
+            List<EmployeeDto> idList = employeeBO.getAllEmployee();
             for (EmployeeDto dto : idList) {
                 obList1.add(dto.getId());
             }
             cmbEmpId.setItems(obList1);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -89,7 +94,7 @@ public class SettingsFormController {
         System.out.println("Loading all Users");
 
         try {
-            List<UserDto> userDtos = UserDAOImpl.getAllUsers();
+            List<UserDto> userDtos = userBO.getAllUser();
 
             for (UserDto dto : userDtos) {
 
@@ -102,6 +107,8 @@ public class SettingsFormController {
             }
             tblUser.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -125,10 +132,10 @@ public class SettingsFormController {
 
         if (!password.isEmpty() && !newpassword.isEmpty() && !newpassword2.isEmpty()) {
             try {
-                UserDto dto = UserDAOImpl.searchByName(SecurityUtil.encoder(username));
+                UserDto dto = userBO.searchUser(SecurityUtil.encoder(username));
                 if (SecurityUtil.decoder(dto.getPassword()).equals(password)) {
                     if (newpassword.equals(newpassword2)) {
-                        boolean isChanged = UserDAOImpl.changePassword(dto.getUsername(), SecurityUtil.encoder(newpassword));
+                        boolean isChanged = userBO.changePassword(dto.getUsername(), SecurityUtil.encoder(newpassword));
                         if (isChanged) {
                        //     new Alert(Alert.AlertType.CONFIRMATION, "Password changed!").show();
                             new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Password changed Successfully..!", ButtonType.OK).show();
@@ -159,6 +166,8 @@ public class SettingsFormController {
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
 
         }
@@ -176,7 +185,7 @@ public class SettingsFormController {
         } else{
 
             try {
-                UserDto dto = UserDAOImpl.searchByName(id);
+                UserDto dto = userBO.searchUser(id);
 
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("/view/deleteUser/deleteUser_form.fxml"));
                 Parent root = fxmlLoader.load();
@@ -192,8 +201,10 @@ public class SettingsFormController {
 
             } catch (SQLException | IOException ex) {
                 throw new RuntimeException(ex);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
-    }
+        }
 
 
     }
@@ -209,7 +220,7 @@ public class SettingsFormController {
 
             if (!username.isEmpty() && !password.isEmpty() && !password2.isEmpty() && !empId.isEmpty()) {
                 try {
-                    UserDto dto = UserDAOImpl.searchByName(username);
+                    UserDto dto = userBO.searchUser(username);
 
                     if (dto == null) {
                         if (password.equals(password2)) {
@@ -218,7 +229,7 @@ public class SettingsFormController {
                             String pass = SecurityUtil.encoder(password);
 
                             UserDto dto2 = new UserDto(user, pass, empId);
-                            boolean isSaved = UserDAOImpl.saveUser(dto2);
+                            boolean isSaved = userBO.saveUser(dto2);
 
                             if (isSaved) {
                                 //      new Alert(Alert.AlertType.CONFIRMATION, "User Saved!").show();
@@ -251,6 +262,8 @@ public class SettingsFormController {
                         }
                     }
                 } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }

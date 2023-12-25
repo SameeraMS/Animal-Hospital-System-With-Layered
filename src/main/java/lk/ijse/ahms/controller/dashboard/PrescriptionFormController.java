@@ -7,6 +7,10 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.AppointmentBO;
+import lk.ijse.ahms.bo.custom.PetOwnerBO;
+import lk.ijse.ahms.bo.custom.PrescriptionBO;
 import lk.ijse.ahms.dto.AppointmentDto;
 import lk.ijse.ahms.dto.PetOwnerDto;
 import lk.ijse.ahms.dto.PrescriptionDto;
@@ -38,6 +42,9 @@ public class PrescriptionFormController {
     public JFXButton btndelete;
     public JFXButton btnClear;
     public JFXComboBox cmbPres;
+    PrescriptionBO prescriptionBO = (PrescriptionBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PRESCRIPTION);
+    AppointmentBO appointmentBO = (AppointmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.APPOINTMENT);
+    PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
 
 
     public  void initialize() {
@@ -49,35 +56,41 @@ public class PrescriptionFormController {
     private void loadAllPresId() {
 
         try {
-            List<PrescriptionDto> dto = PrescriptionDAOImpl.getAllPrescriptions();
+            List<PrescriptionDto> dto = prescriptionBO.getAllPrescription();
 
             for (PrescriptionDto d : dto) {
                 cmbPres.getItems().add(d.getPrescriptionId());
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     private void generateNextId() {
         try {
-            String presId = PrescriptionDAOImpl.generateNextPresId();
+            String presId = prescriptionBO.generateNextPrescriptionId();
             txtPresId.setText(presId);
             txtPresId.setEditable(false);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     private void loadAllAppId() {
 
         try {
-            List<AppointmentDto> dto = PrescriptionDAOImpl.getAllAppointmentId();
+            List<AppointmentDto> dto = appointmentBO.getAllAppointment();
 
             for (AppointmentDto d : dto) {
                 cmbAppointment.getItems().add(d.getAppointmentId());
             }
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -91,7 +104,7 @@ public class PrescriptionFormController {
 
         if (!prescriptionId.isEmpty() && !description.isEmpty() && !appointmentId.isEmpty()) {
             try {
-                boolean isSaved = PrescriptionDAOImpl.savePrescription(dto);
+                boolean isSaved = prescriptionBO.savePrescription(dto);
 
                 if (isSaved) {
                     new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Prescription Saved Successfully..!", ButtonType.OK).show();
@@ -101,6 +114,8 @@ public class PrescriptionFormController {
                     new SystemAlert(Alert.AlertType.ERROR,"Error","Prescription Not Saved..!", ButtonType.OK).show();
                 }
             } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
 
@@ -122,7 +137,7 @@ public class PrescriptionFormController {
         String presid = txtsearch.getText();
 
         try {
-            PrescriptionDto dto = PrescriptionDAOImpl.searchPrescription(presid);
+            PrescriptionDto dto = prescriptionBO.searchPrescription(presid);
 
             if (dto == null) {
                 new SystemAlert(Alert.AlertType.ERROR,"Error","Prescription Not Found..!", ButtonType.OK).show();
@@ -133,6 +148,8 @@ public class PrescriptionFormController {
             }
 
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -146,7 +163,7 @@ public class PrescriptionFormController {
 
         if (!presid.isEmpty() && !description.isEmpty() && !appointmentId.isEmpty()) {
             try {
-                boolean isUpdate = PrescriptionDAOImpl.updatePrescription(dto);
+                boolean isUpdate = prescriptionBO.updatePrescription(dto);
 
                 if (isUpdate) {
                     new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Prescription Updated Successfully..!", ButtonType.OK).show();
@@ -157,6 +174,8 @@ public class PrescriptionFormController {
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -165,7 +184,7 @@ public class PrescriptionFormController {
         String presid = txtPresId.getText();
 
         try {
-            boolean isDelete = PrescriptionDAOImpl.deletePrescription(presid);
+            boolean isDelete = prescriptionBO.deletePrescription(presid);
 
             if (isDelete) {
                 new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Prescription Deleted Successfully..!", ButtonType.OK).show();
@@ -175,6 +194,8 @@ public class PrescriptionFormController {
                 new SystemAlert(Alert.AlertType.ERROR,"Error","Prescription Not Deleted..!", ButtonType.OK).show();
             }
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -217,10 +238,10 @@ public class PrescriptionFormController {
 
             String pdfOutputPath = filePath + prescriptionId + ".pdf";
 
-            AppointmentDto dto = AppointmentDAOImpl.searchOwnerId(appointmentId);
+            AppointmentDto dto = appointmentBO.searchAppointment(appointmentId);
             String petOwnerId = dto.getPetOwnerId();
 
-            PetOwnerDto ownerDetails = PetOwnerDAOImpl.getOwnerDetails(petOwnerId);
+            PetOwnerDto ownerDetails = petOwnerBO.searchPetOwner(petOwnerId);
 
             String email = ownerDetails.getEmail();
 
@@ -251,7 +272,7 @@ public class PrescriptionFormController {
         String presId = (String) cmbPres.getValue();
 
         try {
-            PrescriptionDto dto = PrescriptionDAOImpl.searchPrescription(presId);
+            PrescriptionDto dto = prescriptionBO.searchPrescription(presId);
 
                 txtDesc.setText(dto.getDescription());
                 txtPresId.setText(dto.getPrescriptionId());
@@ -259,6 +280,8 @@ public class PrescriptionFormController {
 
 
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

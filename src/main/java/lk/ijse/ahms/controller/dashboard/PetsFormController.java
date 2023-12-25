@@ -10,6 +10,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.PetBO;
 import lk.ijse.ahms.controller.add.AddPetOwnerFormController;
 import lk.ijse.ahms.controller.add.AddPetsFormController;
 import lk.ijse.ahms.controller.info.InfoPetOwnerFormController;
@@ -29,6 +31,8 @@ public class PetsFormController {
     public TableColumn colAge;
     public TableColumn colGender;
     public TableColumn colType;
+
+    PetBO petBO = (PetBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET);
 
     public void initialize() {
         tblPets.getItems().clear();
@@ -50,7 +54,7 @@ public class PetsFormController {
         ObservableList<PetsTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<PetsDto> petsDtos = PetDAOImpl.getAllPets();
+            List<PetsDto> petsDtos = petBO.getAllPet();
 
             for (PetsDto dto : petsDtos) {
 
@@ -66,6 +70,8 @@ public class PetsFormController {
             }
             tblPets.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

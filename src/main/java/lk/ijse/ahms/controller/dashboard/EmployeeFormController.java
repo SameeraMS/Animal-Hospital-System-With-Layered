@@ -10,6 +10,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.DoctorBO;
+import lk.ijse.ahms.bo.custom.EmployeeBO;
 import lk.ijse.ahms.controller.add.AddDocFormcontroller;
 import lk.ijse.ahms.controller.add.AddEmployeeFormController;
 import lk.ijse.ahms.controller.info.InfoDoctorFormController;
@@ -36,7 +39,9 @@ public class EmployeeFormController {
     public TableColumn colDocId;
     public TableColumn colDocName;
     public TableColumn colDocTel;
-    private EmployeeDAOImpl employeeDAOImpl = new EmployeeDAOImpl();
+
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
+    DoctorBO doctorBO = (DoctorBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DOCTOR);
 
     public  void initialize() {
         tblDoc.getItems().clear();
@@ -59,7 +64,7 @@ public class EmployeeFormController {
         ObservableList<DoctorTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<DoctorDto> doctorDtos = DoctorDAOImpl.getAllDoctor();
+            List<DoctorDto> doctorDtos = doctorBO.getAllDoctor();
 
             for (DoctorDto dto : doctorDtos) {
 
@@ -73,6 +78,8 @@ public class EmployeeFormController {
             }
             tblDoc.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -89,7 +96,7 @@ public class EmployeeFormController {
         ObservableList<EmployeeTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<EmployeeDto> employeeDtos = employeeDAOImpl.getAllEmployee();
+            List<EmployeeDto> employeeDtos = employeeBO.getAllEmployee();
 
             for (EmployeeDto dto : employeeDtos) {
 
@@ -104,6 +111,8 @@ public class EmployeeFormController {
             }
             tblEmployee.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
