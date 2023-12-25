@@ -72,6 +72,7 @@ public class PaymentFormController {
     AppointmentBO appointmentBO = (AppointmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.APPOINTMENT);
     PrescriptionBO prescriptionBO = (PrescriptionBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PRESCRIPTION);
     PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
+    PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PLACE_ORDER);
 
 
     public void initialize() {
@@ -301,36 +302,21 @@ public class PaymentFormController {
         System.out.println("place order on action -> "+cartTmList);
                 var placeOrderDto = new PlaceOrderDto(payId, date, total, appointId, cartTmList);
                 boolean isSuccess = false;
+                Connection connection = null;
                 try {
                    // isSuccess = placeOrderModel.placeOrder(placeOrderDto);
                     System.out.println("place order model -> "+placeOrderDto.getCartTmList());
-                    Connection connection = null;
-                    try {
-                        connection = DbConnection.getInstance().getConnection();
-                        connection.setAutoCommit(false);
 
-                        boolean isOrderSaved = paymentDAOImpl.savePayment(payId, date, total, appointId);
-                        if (isOrderSaved) {
-                            boolean isUpdated = medicineDAOImpl.updateMed(placeOrderDto.getCartTmList());
-                            if(isUpdated) {
-                                boolean isOrderDetailSaved = presDetailsDAOImpl.saveOrderDetails(placeOrderDto.getPayId(), placeOrderDto.getCartTmList());
-                                if (isOrderDetailSaved) {
-                                    connection.commit();
-                                    isSuccess = true;
-                                }
-                            }
-                        }
-                    } catch (SQLException e) {
-                        connection.rollback();
-                    } finally {
-                        connection.setAutoCommit(true);
-                    }
-
+                    isSuccess = placeOrderBO.saveOrder(placeOrderDto);
 
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }finally {
+                    connection.setAutoCommit(true);
                 }
-                if (isSuccess) {
+        if (isSuccess) {
                     new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Order Placed Successfully..!",ButtonType.OK).show();
 
                     String outputPath = printBill(payId, total, appointId,appFee);
