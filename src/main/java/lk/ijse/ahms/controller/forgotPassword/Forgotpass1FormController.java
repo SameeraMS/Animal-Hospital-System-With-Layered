@@ -17,6 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.UserBO;
 import lk.ijse.ahms.dto.UserDto;
 import lk.ijse.ahms.dao.custom.impl.UserDAOImpl;
 import lk.ijse.ahms.util.JavaMailUtil;
@@ -47,6 +49,7 @@ public class Forgotpass1FormController implements Initializable {
     @FXML
     private Label lblEmail;
     private Button btn;
+    UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
 
     @SneakyThrows
     @Override
@@ -64,11 +67,13 @@ public class Forgotpass1FormController implements Initializable {
             int otp = new Random().nextInt(9000) + 1000;
             comUserName.setStyle("-fx-background-color: null");
             try {
-                UserDto user = UserDAOImpl.searchByName(SecurityUtil.encoder(Username));
+                UserDto user = userBO.searchUser(SecurityUtil.encoder(Username));
                 fillItemFields(user);
             } catch (SQLException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "SQL Error!").show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
             JavaMailUtil.sendMail(lblEmail.getText(),otp);
             OTP=otp;
@@ -102,7 +107,7 @@ public class Forgotpass1FormController implements Initializable {
 
     public void loadUserNames() throws SQLException {
         try{
-            List<String> name = UserDAOImpl.getUserName();
+            List<String> name = userBO.getUserName();
             ObservableList<String> obList = FXCollections.observableArrayList();
 
             for (String un : name){
@@ -112,6 +117,8 @@ public class Forgotpass1FormController implements Initializable {
         }catch (SQLException e){
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "SQL Error !!").show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

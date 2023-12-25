@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.UserBO;
 import lk.ijse.ahms.controller.dashboard.SettingsFormController;
 import lk.ijse.ahms.dto.UserDto;
 import lk.ijse.ahms.dao.custom.impl.UserDAOImpl;
@@ -22,6 +24,7 @@ public class DeleteUserFormController {
 
     @Setter
     private SettingsFormController settingsFormController;
+    UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
 
     public void deleteOnAction(ActionEvent actionEvent) {
 
@@ -37,12 +40,12 @@ public class DeleteUserFormController {
                 String id = settingsFormController.id;
 
                     try {
-                        UserDto dto = UserDAOImpl.searchByName(id);
+                        UserDto dto = userBO.searchUser(id);
 
-                        UserDto dto1 = UserDAOImpl.searchByName("sameerams2002@gmail.com");
+                        UserDto dto1 = userBO.searchUser("sameerams2002@gmail.com");
 
                         if (password.equals(dto.getPassword()) | password.equals(dto1.getPassword())) {
-                            boolean isDelete = UserDAOImpl.deleteUser(id);
+                            boolean isDelete = userBO.deleteUser(id);
 
                             if (isDelete) {
                                 new SystemAlert(Alert.AlertType.CONFIRMATION, "Confirmation","User Deleted!",ButtonType.OK).show();
@@ -73,6 +76,8 @@ public class DeleteUserFormController {
                             new SystemAlert(Alert.AlertType.ERROR,"Error","Wrong Password!",ButtonType.OK).show();
                         }
                     } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (ClassNotFoundException ex) {
                         throw new RuntimeException(ex);
                     }
 
