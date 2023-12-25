@@ -13,6 +13,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.PetBO;
+import lk.ijse.ahms.bo.custom.PetOwnerBO;
 import lk.ijse.ahms.controller.add.AddPetOwnerFormController;
 import lk.ijse.ahms.controller.dashboard.PetsFormController;
 import lk.ijse.ahms.dto.PetOwnerDto;
@@ -40,6 +43,8 @@ public class InfoPetsFormController {
     public JFXComboBox<String> cmbPetId;
     @Setter
     private PetsFormController petsFormController;
+    PetBO petBO = (PetBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET);
+    PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
 
     public void initialize() {
             loadAllPetId();
@@ -49,12 +54,14 @@ public class InfoPetsFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<PetsDto> idList = PetDAOImpl.getAllPets();
+            List<PetsDto> idList = petBO.getAllPet();
             for (PetsDto dto : idList) {
                 obList.add(dto.getPetId());
             }
             cmbPetId.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -71,7 +78,7 @@ public class InfoPetsFormController {
 
             if (type1.orElse(no) == yes) {
                     try {
-                        boolean isDelete = PetDAOImpl.deletePet(id);
+                        boolean isDelete = petBO.deletePet(id);
 
                         if (isDelete) {
                             new SystemAlert(Alert.AlertType.CONFIRMATION,"deleted","Pet Deleted successfully",ButtonType.OK).show();
@@ -82,6 +89,8 @@ public class InfoPetsFormController {
                         }
                     } catch (SQLException a) {
                         new Alert(Alert.AlertType.ERROR, a.getMessage()).show();
+                    } catch (ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
                     }
 
             }
@@ -115,7 +124,7 @@ public class InfoPetsFormController {
 
                     var dto = new PetsDto(id, name, age, gender, type, ownerId);
 
-                    boolean isSaved = PetDAOImpl.updatePet(dto);
+                    boolean isSaved = petBO.updatePet(dto);
 
                     if (isSaved) {
                         new SystemAlert(Alert.AlertType.CONFIRMATION,"updated","Pet Updated successfully",ButtonType.OK).show();
@@ -126,6 +135,8 @@ public class InfoPetsFormController {
                     }
                 } catch (SQLException a) {
                     new Alert(Alert.AlertType.ERROR, a.getMessage()).show();
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });
@@ -152,7 +163,7 @@ public class InfoPetsFormController {
                         ObservableList<String> obList2 = FXCollections.observableArrayList();
 
                         try {
-                            List<PetOwnerDto> idList = PetOwnerDAOImpl.getAllOwners();
+                            List<PetOwnerDto> idList = petOwnerBO.getAllPetOwner();
                             for (PetOwnerDto dto : idList) {
                                 obList2.add(dto.getOwnerId());
                             }
@@ -160,6 +171,8 @@ public class InfoPetsFormController {
 
                         } catch (SQLException e1) {
                             throw new RuntimeException(e1);
+                        } catch (ClassNotFoundException ex) {
+                            throw new RuntimeException(ex);
                         }
 
                     }
@@ -188,7 +201,7 @@ public class InfoPetsFormController {
 
         try {
             if(id!=null){
-                PetsDto dto = PetDAOImpl.getPetsDetails(id);
+                PetsDto dto = petBO.searchPet(id);
 
                 petName.setText(dto.getName());
                 petAge.setText(dto.getAge());
@@ -216,6 +229,8 @@ public class InfoPetsFormController {
         }
         catch (SQLException e) {
                       throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

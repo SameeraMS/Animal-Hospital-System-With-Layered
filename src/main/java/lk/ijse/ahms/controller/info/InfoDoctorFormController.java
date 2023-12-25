@@ -9,6 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.DoctorBO;
 import lk.ijse.ahms.controller.dashboard.EmployeeFormController;
 import lk.ijse.ahms.dto.DoctorDto;
 import lk.ijse.ahms.dao.custom.impl.DoctorDAOImpl;
@@ -32,6 +34,8 @@ public class InfoDoctorFormController {
     @Setter
     private EmployeeFormController empFormController;
 
+    DoctorBO doctorBO = (DoctorBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DOCTOR);
+
     public void initialize(){
         setAllDocId();
     }
@@ -40,7 +44,7 @@ public class InfoDoctorFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<DoctorDto> idList = DoctorDAOImpl.getAllDoctor();
+            List<DoctorDto> idList = doctorBO.getAllDoctor();
 
             for (DoctorDto dto : idList) {
                 obList.add(dto.getDocId());
@@ -48,6 +52,8 @@ public class InfoDoctorFormController {
 
             cmbDocId.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -63,7 +69,7 @@ public class InfoDoctorFormController {
 
             if (type1.orElse(no) == yes) {
                     try {
-                        boolean isDelete = DoctorDAOImpl.deleteDoctor(id);
+                        boolean isDelete = doctorBO.deleteDoctor(id);
 
                         if (isDelete) {
                             new SystemAlert(Alert.AlertType.CONFIRMATION,"Deleted", "Doctor Deleted!",ButtonType.OK).show();
@@ -98,7 +104,7 @@ public class InfoDoctorFormController {
 
                     var dto = new DoctorDto(id, name, mail, tel);
 
-                    boolean isSaved = DoctorDAOImpl.updateDoctor(dto);
+                    boolean isSaved = doctorBO.updateDoctor(dto);
 
                     if (isSaved) {
                         new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Doctor updated Successfully..!", ButtonType.OK).show();
@@ -142,7 +148,7 @@ public class InfoDoctorFormController {
 
         try {
             if(id!=null) {
-                DoctorDto dto = DoctorDAOImpl.getDocDetails(id);
+                DoctorDto dto = doctorBO.searchDoctor(id);
 
                 txtname.setText(dto.getName());
                 txttel.setText(dto.getTel());
@@ -152,6 +158,8 @@ public class InfoDoctorFormController {
             }
         }
         catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

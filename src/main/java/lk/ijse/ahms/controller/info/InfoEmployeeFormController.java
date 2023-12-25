@@ -9,6 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.EmployeeBO;
 import lk.ijse.ahms.controller.dashboard.EmployeeFormController;
 import lk.ijse.ahms.dto.EmployeeDto;
 import lk.ijse.ahms.dao.custom.impl.EmployeeDAOImpl;
@@ -29,6 +31,7 @@ public class InfoEmployeeFormController {
     public JFXButton btndelete;
     public JFXButton btnUpdate;
     public JFXButton btnEdit;
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
 
     @Setter
     private EmployeeFormController empFormController;
@@ -41,12 +44,14 @@ public class InfoEmployeeFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<EmployeeDto> idList = EmployeeDAOImpl.getAllEmployee();
+            List<EmployeeDto> idList = employeeBO.getAllEmployee();
             for (EmployeeDto dto : idList) {
                 obList.add(dto.getId());
             }
             cmbEmpId.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -57,7 +62,7 @@ public class InfoEmployeeFormController {
 
         try {
           if(id!=null){
-              EmployeeDto dto = EmployeeDAOImpl.getEmployeeDetails(id);
+              EmployeeDto dto = employeeBO.searchEmployee(id);
 
               txtname.setText(dto.getName());
               txtadress.setText(dto.getAddress());
@@ -76,6 +81,8 @@ public class InfoEmployeeFormController {
         }
         catch (SQLException e) {
  //           throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -140,7 +147,7 @@ public class InfoEmployeeFormController {
 
                     var dto = new EmployeeDto(id, name, address, tel, mail, type);
 
-                    boolean isSaved = EmployeeDAOImpl.updateEmployee(dto);
+                    boolean isSaved = employeeBO.updateEmployee(dto);
 
                     if (isSaved) {
                         new SystemAlert(Alert.AlertType.CONFIRMATION, "updated","Employee updated!", ButtonType.OK).show();
@@ -179,7 +186,7 @@ public class InfoEmployeeFormController {
             if (type1.orElse(no) == yes) {
                 if(!type.equals("Admin")) {
                     try {
-                        boolean isDelete = EmployeeDAOImpl.deleteEmployee(id);
+                        boolean isDelete = employeeBO.deleteEmployee(id);
 
                         if (isDelete) {
                             new SystemAlert(Alert.AlertType.CONFIRMATION, "Deleted", "Employee Deleted!", ButtonType.OK).show();

@@ -10,6 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.MedicineBO;
 import lk.ijse.ahms.controller.dashboard.MedicineFormcontroller;
 import lk.ijse.ahms.dto.MedicineDto;
 import lk.ijse.ahms.dao.custom.impl.MedicineDAOImpl;
@@ -33,6 +35,8 @@ public class InfoMedicineFormController {
     public JFXButton btnUpdate;
     public JFXButton btndelete;
 
+    MedicineBO medicineBO = (MedicineBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MEDICINE);
+
     @Setter
     private MedicineFormcontroller medFormController;
 
@@ -44,12 +48,14 @@ public class InfoMedicineFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<MedicineDto> idList = MedicineDAOImpl.getAllMedicine();
+            List<MedicineDto> idList = medicineBO.getAllMedicine();
             for (MedicineDto dto : idList) {
                 obList.add(dto.getMedId());
             }
             medId.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -61,7 +67,7 @@ public class InfoMedicineFormController {
 
         try {
             if(id!=null){
-                MedicineDto dto = MedicineDAOImpl.getMedicineDetails(id);
+                MedicineDto dto = medicineBO.searchMedicine(id);
 
                 medName.setText(dto.getName());
                 medQty.setText(dto.getQty());
@@ -81,6 +87,8 @@ public class InfoMedicineFormController {
         }
         catch (SQLException e) {
             //           throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -140,7 +148,7 @@ public class InfoMedicineFormController {
 
                     var dto = new MedicineDto(id, name, type, qty, price, desc, expdate);
 
-                    boolean isSaved = MedicineDAOImpl.updateMedicine(dto);
+                    boolean isSaved = medicineBO.updateMedicine(dto);
 
                     if (isSaved) {
                         new SystemAlert(Alert.AlertType.CONFIRMATION,"updated","Medicine updated Successfully..",ButtonType.OK).show();
@@ -177,7 +185,7 @@ public class InfoMedicineFormController {
             if (type1.orElse(no) == yes) {
 
                     try {
-                        boolean isDelete = MedicineDAOImpl.deleteMedicine(id);
+                        boolean isDelete = medicineBO.deleteMedicine(id);
 
                         if (isDelete) {
                             new SystemAlert(Alert.AlertType.CONFIRMATION,"deleted","Medicine Deleted Successfully..",ButtonType.OK).show();

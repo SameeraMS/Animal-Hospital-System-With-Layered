@@ -9,6 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.PetOwnerBO;
 import lk.ijse.ahms.controller.dashboard.PetsFormController;
 import lk.ijse.ahms.dto.PetOwnerDto;
 import lk.ijse.ahms.dao.custom.impl.PetOwnerDAOImpl;
@@ -27,6 +29,7 @@ public class InfoPetOwnerFormController {
     public JFXTextField ownerName;
     public JFXTextField ownerMail;
     public JFXTextField ownerTel;
+    PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
 
     @Setter
     private PetsFormController petsFormController;
@@ -40,13 +43,15 @@ public class InfoPetOwnerFormController {
         ObservableList<String> obList = FXCollections.observableArrayList();
 
         try {
-            List<PetOwnerDto> idList = PetOwnerDAOImpl.getAllOwners();
+            List<PetOwnerDto> idList = petOwnerBO.getAllPetOwner();
 
             for (PetOwnerDto dto : idList) {
                 obList.add(dto.getOwnerId());
             }
             cmbOwnerId.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -63,7 +68,7 @@ public class InfoPetOwnerFormController {
 
             if (type1.orElse(no) == yes) {
                     try {
-                        boolean isDelete = PetOwnerDAOImpl.deletePetOwner(id);
+                        boolean isDelete = petOwnerBO.deletePetOwner(id);
 
                         if (isDelete) {
                             new SystemAlert(Alert.AlertType.CONFIRMATION,"deleted","PetOwner Deleted Successfully..",ButtonType.OK).show();
@@ -74,6 +79,8 @@ public class InfoPetOwnerFormController {
                         }
                     } catch (SQLException a) {
                         new Alert(Alert.AlertType.ERROR, a.getMessage()).show();
+                    } catch (ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
                     }
 
             }
@@ -129,7 +136,7 @@ public class InfoPetOwnerFormController {
 
                     var dto = new PetOwnerDto(id, name, mail, tel);
 
-                    boolean isSaved = PetOwnerDAOImpl.updatePetOwner(dto);
+                    boolean isSaved = petOwnerBO.updatePetOwner(dto);
 
                     if (isSaved) {
                         new SystemAlert(Alert.AlertType.CONFIRMATION,"updated","PetOwner Updated Successfully..",ButtonType.OK).show();
@@ -140,6 +147,8 @@ public class InfoPetOwnerFormController {
                     }
                 } catch (SQLException a) {
                     new Alert(Alert.AlertType.ERROR, a.getMessage()).show();
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });
@@ -151,7 +160,7 @@ public class InfoPetOwnerFormController {
 
         try {
             if(id!=null){
-                PetOwnerDto dto = PetOwnerDAOImpl.getOwnerDetails(id);
+                PetOwnerDto dto = petOwnerBO.searchPetOwner(id);
 
                 ownerName.setText(dto.getName());
                 ownerMail.setText(dto.getEmail());
@@ -162,6 +171,8 @@ public class InfoPetOwnerFormController {
         }
         catch (SQLException e) {
                        throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }
