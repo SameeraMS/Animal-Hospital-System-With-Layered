@@ -27,10 +27,6 @@ import lk.ijse.ahms.dto.AppointmentDto;
 import lk.ijse.ahms.dto.DoctorDto;
 import lk.ijse.ahms.dto.PetOwnerDto;
 import lk.ijse.ahms.dto.PetsDto;
-import lk.ijse.ahms.dao.custom.impl.AppointmentDAOImpl;
-import lk.ijse.ahms.dao.custom.impl.DoctorDAOImpl;
-import lk.ijse.ahms.dao.custom.impl.PetDAOImpl;
-import lk.ijse.ahms.dao.custom.impl.PetOwnerDAOImpl;
 import lk.ijse.ahms.qr.QRGenerator;
 import lk.ijse.ahms.regex.Regex;
 import lk.ijse.ahms.smtp.Mail;
@@ -65,7 +61,6 @@ public class AddApointmentFormController {
     public JFXTimePicker timepik;
     @Setter
     private AppointmentFormController appointmentFormController;
-
     AppointmentBO appointmentBO = (AppointmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.APPOINTMENT);
     PetBO petBO = (PetBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET);
     PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
@@ -89,7 +84,6 @@ public class AddApointmentFormController {
             appointmentId.setEditable(false);
         } catch (SQLException e) {
             new SystemAlert(Alert.AlertType.ERROR,"Error", e.getMessage(),ButtonType.OK).show();
-
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -111,11 +105,8 @@ public class AddApointmentFormController {
             for (PetsDto dto : idList) {
                 obList.add(dto.getPetId());
             }
-
             cmbPetId.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -129,11 +120,8 @@ public class AddApointmentFormController {
             for (PetOwnerDto dto : idList) {
                 obList.add(dto.getOwnerId());
             }
-
             cmbPetOwnerId.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -147,11 +135,8 @@ public class AddApointmentFormController {
             for (DoctorDto dto : idList) {
                 obList.add(dto.getDocId());
             }
-
             cmbDocId.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -183,12 +168,9 @@ public class AddApointmentFormController {
         try {
             if (id != null) {
                 DoctorDto dto = doctorBO.searchDoctor(id);
-
                 docName.setText(dto.getName());
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -199,12 +181,9 @@ public class AddApointmentFormController {
         try {
             if (id != null) {
                 PetsDto dto = petBO.searchPet(id);
-
                 petName.setText(dto.getName());
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -215,12 +194,9 @@ public class AddApointmentFormController {
         try {
             if (id != null) {
                 PetOwnerDto dto = petOwnerBO.searchPetOwner(id);
-
                 petOwnerName.setText(dto.getName());
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -248,8 +224,6 @@ public class AddApointmentFormController {
                     boolean isSaved = appointmentBO.saveAppointment(dto);
 
                     if (isSaved) {
-                        //    new Alert(Alert.AlertType.CONFIRMATION, "Appointment saved!").show();
-                      //  new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Appointment saved Successfully..!", ButtonType.OK).show();
                         appointmentFormController.initialize();
 
                         //make Qr
@@ -335,7 +309,6 @@ public class AddApointmentFormController {
         AddPetOwnerFormController ownr =  fxmlLoader.getController();
         ownr.setAddApointmentFormController(this);
 
-
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -349,7 +322,6 @@ public class AddApointmentFormController {
 
         AddPetsFormController ownr =  fxmlLoader.getController();
         ownr.setAddApointmentFormController(this);
-
 
         Scene scene = new Scene(root);
         Stage stage = new Stage();

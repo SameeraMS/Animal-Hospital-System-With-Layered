@@ -11,18 +11,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.ahms.bo.BOFactory;
+import lk.ijse.ahms.bo.custom.UserBO;
+import lk.ijse.ahms.dto.UserDto;
 import lk.ijse.ahms.smtp.Mail;
 import lk.ijse.ahms.util.SecurityUtil;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class ForgotPassword3Contoller implements Initializable {
+    UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
     private final static String URL = "jdbc:mysql://localhost:3306/animalhospital";
     private final static Properties props = new Properties();
 
@@ -114,14 +115,11 @@ public class ForgotPassword3Contoller implements Initializable {
         if (password.equalsIgnoreCase(reEnterPassword)) {
 
             String npass = SecurityUtil.encoder(password);
-            try (Connection con = DriverManager.getConnection(URL, props)) {
-                String sql = "UPDATE user SET password = ? WHERE user_name = ?";
+            try {
+                UserDto user = new UserDto(userName, npass, null);
+                boolean isUpdate = userBO.updateUser(user);
 
-                PreparedStatement pstm = con.prepareStatement(sql);
-                pstm.setString(1, npass);
-                pstm.setString(2, userName);
-
-                if (pstm.executeUpdate() > 0) {
+                if (isUpdate) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Password Updated!!").show();
 
                     String email = SecurityUtil.decoder(userName);
@@ -144,6 +142,8 @@ public class ForgotPassword3Contoller implements Initializable {
                 }
                 txtReEnterPassword.setStyle("-fx-background-color: none;");
                 txtReEnterPassword1.setStyle("-fx-background-color: none;");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
             root.getScene().getWindow().hide();
 //            Parent root = FXMLLoader.load(getClass().getResource("/view/LoginForm.fxml"));

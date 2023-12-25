@@ -11,14 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PetBOImpl implements PetBO {
-
     PetDAO petDAO = (PetDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.PET);
     @Override
     public boolean savePet(PetsDto dto) throws SQLException, ClassNotFoundException {
         return petDAO.save(new Pet(dto.getPetId(),dto.getName(),dto.getAge(),dto.getGender(),
                 dto.getType(),dto.getOwnerId()));
     }
-
     @Override
     public List<PetsDto> getAllPet() throws SQLException, ClassNotFoundException {
         List<Pet> all = petDAO.getAll();
@@ -29,23 +27,19 @@ public class PetBOImpl implements PetBO {
         }
         return petsDtos;
     }
-
     @Override
     public boolean updatePet(PetsDto dto) throws SQLException, ClassNotFoundException {
         return petDAO.update(new Pet(dto.getPetId(),dto.getName(),dto.getAge(),dto.getGender(),
                 dto.getType(),dto.getOwnerId()));
     }
-
     @Override
     public boolean deletePet(String id) throws SQLException, ClassNotFoundException {
         return petDAO.delete(id);
     }
-
     @Override
     public String generateNextPetId() throws SQLException, ClassNotFoundException {
         return petDAO.generateNextId();
     }
-
     @Override
     public PetsDto searchPet(String id) throws SQLException, ClassNotFoundException {
         Pet pet = petDAO.search(id);

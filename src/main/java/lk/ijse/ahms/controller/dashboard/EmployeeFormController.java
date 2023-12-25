@@ -21,8 +21,6 @@ import lk.ijse.ahms.dto.DoctorDto;
 import lk.ijse.ahms.dto.EmployeeDto;
 import lk.ijse.ahms.dto.tm.DoctorTm;
 import lk.ijse.ahms.dto.tm.EmployeeTm;
-import lk.ijse.ahms.dao.custom.impl.DoctorDAOImpl;
-import lk.ijse.ahms.dao.custom.impl.EmployeeDAOImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -39,9 +37,9 @@ public class EmployeeFormController {
     public TableColumn colDocId;
     public TableColumn colDocName;
     public TableColumn colDocTel;
-
     EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
     DoctorBO doctorBO = (DoctorBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DOCTOR);
+
 
     public  void initialize() {
         tblDoc.getItems().clear();
@@ -77,9 +75,7 @@ public class EmployeeFormController {
                 );
             }
             tblDoc.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -110,9 +106,7 @@ public class EmployeeFormController {
                 );
             }
             tblEmployee.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

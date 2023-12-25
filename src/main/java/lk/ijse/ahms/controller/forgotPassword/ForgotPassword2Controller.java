@@ -23,7 +23,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ForgotPassword2Controller implements Initializable {
-
     public AnchorPane AnchorPaneFogotPassword2;
     public Label lblotp;
     public Label lblStatus;

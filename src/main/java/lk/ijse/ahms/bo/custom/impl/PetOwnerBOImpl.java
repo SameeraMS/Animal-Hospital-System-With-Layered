@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PetOwnerBOImpl implements PetOwnerBO {
-
     PetOwnerDAO petOwnerDAO = (PetOwnerDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.PET_OWNER);
     @Override
     public boolean savePetOwner(PetOwnerDto dto) throws SQLException, ClassNotFoundException {

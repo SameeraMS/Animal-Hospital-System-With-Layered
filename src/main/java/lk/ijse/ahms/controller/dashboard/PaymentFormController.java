@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import lk.ijse.ahms.bo.BOFactory;
 import lk.ijse.ahms.bo.custom.*;
 import lk.ijse.ahms.controller.barcode.BarcodeReadController;
-import lk.ijse.ahms.dao.custom.impl.*;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.*;
 import lk.ijse.ahms.dto.tm.CartTm;
@@ -31,7 +30,6 @@ import net.sf.jasperreports.view.JasperViewer;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -40,7 +38,6 @@ import java.util.*;
 public class PaymentFormController {
     public Label lbldate;
     public static String scan;
-
     public Label lbltime;
     public JFXComboBox<String> cmbAppId;
     public JFXTextField txtPetOwner;
@@ -68,7 +65,6 @@ public class PaymentFormController {
     private ObservableList<CartTm> obList = FXCollections.observableArrayList();
     PaymentBO paymentBO = (PaymentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PAYMENT);
     MedicineBO medicineBO = (MedicineBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MEDICINE);
-    PrescriptionDetailsBO presDetailsBO = (PrescriptionDetailsBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PRESCRIPTION_DETAIL);
     AppointmentBO appointmentBO = (AppointmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.APPOINTMENT);
     PrescriptionBO prescriptionBO = (PrescriptionBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PRESCRIPTION);
     PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
@@ -136,9 +132,7 @@ public class PaymentFormController {
             }
 
             cmbmedid.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -154,9 +148,7 @@ public class PaymentFormController {
             }
 
             cmbAppId.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -187,9 +179,7 @@ public class PaymentFormController {
                 }
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -245,7 +235,6 @@ public class PaymentFormController {
                 }
             }
 
-
             var cartTm = new CartTm(medid, medname, String.valueOf(unitPrice), String.valueOf(qty), String.valueOf(tot));
 
             obList.add(cartTm);
@@ -257,8 +246,6 @@ public class PaymentFormController {
         } else {
             new SystemAlert(Alert.AlertType.ERROR, "Out of stock", "Out of stock", ButtonType.OK).show();
         }
-
-
     }
 
     private void calculateTotal() {
@@ -304,15 +291,12 @@ public class PaymentFormController {
                 boolean isSuccess = false;
 
                 try {
-                   // isSuccess = placeOrderModel.placeOrder(placeOrderDto);
                     System.out.println("place order model -> "+placeOrderDto.getCartTmList());
 
                     isSuccess = placeOrderBO.saveOrder(placeOrderDto);
 
-                } catch (SQLException ex) {
+                } catch (SQLException | ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
                 }
         if (isSuccess) {
                     new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Order Placed Successfully..!",ButtonType.OK).show();
@@ -321,14 +305,11 @@ public class PaymentFormController {
                     sendBill(appointId,outputPath);
                     clearall();
                 }
-
-
     }
 
     private void sendBill(String appointId, String outputPath) {
         String pdfOutputPath = outputPath;
         String appointmentId = appointId;
-
 
         try {
             AppointmentDto dto = appointmentBO.searchAppointment(appointmentId);
@@ -354,13 +335,9 @@ public class PaymentFormController {
             thread.setDaemon(true);
             thread.start();
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     private String printBill(String payId, String total, String appointId, String appFee) throws JRException, SQLException {
@@ -375,26 +352,7 @@ public class PaymentFormController {
         InputStream resourceAsStream = getClass().getResourceAsStream("/report/Bill.jrxml");
         JasperDesign load = JRXmlLoader.load(resourceAsStream);
 
-        /*
-        JRDesignQuery jrDesignQuery = new JRDesignQuery();
-        jrDesignQuery.setText("select\n" +
-                "    p.payment_id,\n" +
-                "    p.med_id,\n" +
-                "    p.med_name,\n" +
-                "    p.qty,\n" +
-                "    p.unit_price,\n" +
-                "    p.amount\n" +
-                "from print p\n" +
-                "         join payment pa\n" +
-                "              on p.payment_id = pa.payment_id\n" +
-                "where p.payment_id ='"+ payId +"'");
-        load.setQuery(jrDesignQuery);
-
-         */
-
         JasperReport jasperReport = JasperCompileManager.compileReport(load);
-      //  JasperPrint jasperPrint = JasperFillManager.fillReport(
-       //         jasperReport, hashMap, new JREmptyDataSource());
         JasperPrint jasperPrint = JasperFillManager.fillReport(
                 jasperReport,
                 hashMap,
@@ -443,8 +401,6 @@ public class PaymentFormController {
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
-
-
     }
 
     public void setAppId(String c) {
@@ -476,9 +432,7 @@ public class PaymentFormController {
                 }
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 

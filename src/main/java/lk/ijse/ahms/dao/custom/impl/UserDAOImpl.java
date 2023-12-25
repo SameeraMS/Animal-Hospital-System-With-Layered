@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
-
+    @Override
     public User search(String name) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM user WHERE user_name = ?", name);
         if(resultSet.next()) {
@@ -27,7 +27,7 @@ public class UserDAOImpl implements UserDAO {
         }
         return null;
     }
-
+    @Override
     public List<String> getUserName() throws SQLException, ClassNotFoundException {
 
         List<String> username = new ArrayList<>();
@@ -38,7 +38,7 @@ public class UserDAOImpl implements UserDAO {
         }
         return username;
     }
-
+    @Override
     public List<User> getAll() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM user");
@@ -59,15 +59,15 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean update(User dto) throws SQLException, ClassNotFoundException {
-        return false;
+        return SQLUtil.execute("UPDATE user SET password = ? WHERE user_name = ?", dto.getPassword(), dto.getUsername());
     }
-
+    @Override
     public boolean changePassword(String username, String newpassword) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("UPDATE user SET password=? WHERE user_name=?",
                 newpassword, username);
     }
-
+    @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("DELETE FROM user WHERE user_name=?", id);
@@ -83,13 +83,13 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
-
+    @Override
     public boolean save(User dto2) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO user VALUES(?, ?, ?)",
                 dto2.getUsername(), dto2.getPassword(), dto2.getEmpId());
     }
-
+    @Override
     public ResultSet checkCredentials(String username, String password) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM user WHERE user_name=?", username);

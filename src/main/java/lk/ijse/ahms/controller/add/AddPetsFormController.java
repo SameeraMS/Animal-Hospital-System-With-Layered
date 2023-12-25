@@ -17,8 +17,6 @@ import lk.ijse.ahms.bo.custom.PetOwnerBO;
 import lk.ijse.ahms.controller.dashboard.PetsFormController;
 import lk.ijse.ahms.dto.PetOwnerDto;
 import lk.ijse.ahms.dto.PetsDto;
-import lk.ijse.ahms.dao.custom.impl.PetDAOImpl;
-import lk.ijse.ahms.dao.custom.impl.PetOwnerDAOImpl;
 import lk.ijse.ahms.regex.Regex;
 import lk.ijse.ahms.util.SystemAlert;
 import lombok.Setter;
@@ -34,15 +32,13 @@ public class AddPetsFormController {
     public JFXComboBox<String> cmbOwnerId;
     public JFXTextField petType;
     public JFXComboBox<String> cmbGender;
-
     @Setter
     private PetsFormController petsFormController;
-
     @Setter
     private AddApointmentFormController addApointmentFormController;
     PetBO petBO = (PetBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET);
-
     PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
+
 
     public void initialize() {
         generatenextId();
@@ -78,9 +74,7 @@ public class AddPetsFormController {
             }
 
             cmbOwnerId.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -89,8 +83,6 @@ public class AddPetsFormController {
     public void idOnAction(ActionEvent actionEvent) {
 
     }
-
-
 
     public void saveOnAction(ActionEvent actionEvent) {
 
@@ -111,7 +103,6 @@ public class AddPetsFormController {
                         boolean isSaved = petBO.savePet(dto);
 
                         if (isSaved) {
-                            //      new Alert(Alert.AlertType.CONFIRMATION, "Pet saved!").show();
                             new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Pet saved Successfully..!", ButtonType.OK).show();
                             clearFields();
 
@@ -130,7 +121,6 @@ public class AddPetsFormController {
                 } else {
                     new SystemAlert(Alert.AlertType.INFORMATION,"Information","Please Fill All Details..!", ButtonType.OK).show();
                 }
-
             }else {
                 new SystemAlert(Alert.AlertType.INFORMATION,"Information","Invalid Age!..!", ButtonType.OK).show();
             }

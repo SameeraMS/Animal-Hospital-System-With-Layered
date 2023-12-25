@@ -15,7 +15,6 @@ import lk.ijse.ahms.bo.BOFactory;
 import lk.ijse.ahms.bo.custom.MedicineBO;
 import lk.ijse.ahms.controller.dashboard.MedicineFormcontroller;
 import lk.ijse.ahms.dto.MedicineDto;
-import lk.ijse.ahms.dao.custom.impl.MedicineDAOImpl;
 import lk.ijse.ahms.regex.Regex;
 import lk.ijse.ahms.util.SystemAlert;
 import lombok.Setter;
@@ -26,26 +25,21 @@ public class AddMedicineFormController {
 
     public JFXTextField medqty;
     public DatePicker medExpDate;
-
     @FXML
     private JFXTextField medId;
-
     @FXML
     private JFXTextField medName;
-
     @FXML
     private JFXTextField medPrice;
-
     @FXML
     private JFXComboBox<String> cmbType;
-
     @FXML
     private JFXTextField medDesc;
-
     @Setter
     private MedicineFormcontroller medFormController;
-
     MedicineBO medicineBO = (MedicineBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MEDICINE);
+
+
     public void initialize() {
         generatenextId();
         loadCmbBox();
@@ -111,7 +105,6 @@ public class AddMedicineFormController {
                             medFormController.initialize();
                             initialize();
 
-
                         }
                     } catch (SQLException | ClassNotFoundException e) {
                         new SystemAlert(Alert.AlertType.ERROR,"Error",e.getMessage(), ButtonType.OK).show();
@@ -125,7 +118,6 @@ public class AddMedicineFormController {
         }else{
             new SystemAlert(Alert.AlertType.INFORMATION,"Information","Please Enter Valid Price..!", ButtonType.OK).show();
         }
-
     }
 
     public void clearOnAction(ActionEvent actionEvent) {
@@ -141,8 +133,4 @@ public class AddMedicineFormController {
         medExpDate.setValue(null);
         medqty.clear();
     }
-
-
-
-
 }

@@ -22,10 +22,10 @@ import java.util.Optional;
 public class DeleteUserFormController {
     public JFXTextField txtPass;
     public JFXButton btnDelete;
-
     @Setter
     private SettingsFormController settingsFormController;
     UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
+
 
     public void deleteOnAction(ActionEvent actionEvent) {
 
@@ -76,15 +76,11 @@ public class DeleteUserFormController {
                         } else {
                             new SystemAlert(Alert.AlertType.ERROR,"Error","Wrong Password!",ButtonType.OK).show();
                         }
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (ClassNotFoundException ex) {
+                    } catch (SQLException | ClassNotFoundException ex) {
                         throw new RuntimeException(ex);
                     }
-
             }
             });
-
     }
 
     private void clearFields() {

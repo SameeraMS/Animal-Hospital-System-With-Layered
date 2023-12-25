@@ -46,17 +46,14 @@ public class SettingsFormController {
     public TableColumn colEmpId;
     public JFXButton btnDelete;
     public JFXTextField txtPassword2;
-
     public String id;
-
     public int focusedIndex;
-
     @Setter
     private SigninFormController signinFormController;
-
     public ObservableList<UserTm> obList = FXCollections.observableArrayList();
     UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.USER);
     EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
+
 
     public void initialize() {
         tblUser.getItems().clear();
@@ -65,7 +62,6 @@ public class SettingsFormController {
         loadEmployee();
 
     }
-
     private void loadEmployee() {
         System.out.println("Loading all Employee");
 
@@ -77,9 +73,7 @@ public class SettingsFormController {
                 obList1.add(dto.getId());
             }
             cmbEmpId.setItems(obList1);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -106,9 +100,7 @@ public class SettingsFormController {
                 );
             }
             tblUser.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -137,7 +129,6 @@ public class SettingsFormController {
                     if (newpassword.equals(newpassword2)) {
                         boolean isChanged = userBO.changePassword(dto.getUsername(), SecurityUtil.encoder(newpassword));
                         if (isChanged) {
-                       //     new Alert(Alert.AlertType.CONFIRMATION, "Password changed!").show();
                             new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Password changed Successfully..!", ButtonType.OK).show();
 
                             String email = username;
@@ -164,9 +155,7 @@ public class SettingsFormController {
                 } else {
                     new SystemAlert(Alert.AlertType.ERROR,"Error","Current password is incorrect!", ButtonType.OK).show();
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
 
@@ -200,14 +189,10 @@ public class SettingsFormController {
                 stage.centerOnScreen();
                 stage.show();
 
-            } catch (SQLException | IOException ex) {
+            } catch (SQLException | IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
             }
         }
-
-
     }
 
     public void saveUserOnAction(ActionEvent actionEvent) {
@@ -233,7 +218,6 @@ public class SettingsFormController {
                             boolean isSaved = userBO.saveUser(dto2);
 
                             if (isSaved) {
-                                //      new Alert(Alert.AlertType.CONFIRMATION, "User Saved!").show();
                                 new SystemAlert(Alert.AlertType.CONFIRMATION, "Confirmation", "User saved Successfully..!", ButtonType.OK).show();
 
                                 String email = username;
@@ -257,23 +241,16 @@ public class SettingsFormController {
                                 clearFields();
                             }
                         } else {
-                            //  new Alert(Alert.AlertType.ERROR, "Passwords do not match!").show();
                             new SystemAlert(Alert.AlertType.ERROR, "Error", "Passwords do not match!", ButtonType.OK).show();
-
                         }
                     }
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
+                } catch (SQLException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }
         }else {
             new SystemAlert(Alert.AlertType.ERROR, "Error", "Invalid Username(Email address)!", ButtonType.OK).show();
         }
-
-
-
     }
 
     private void clearFields() {

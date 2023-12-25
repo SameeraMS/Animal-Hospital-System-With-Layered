@@ -15,13 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrescriptionDAOImpl implements PrescriptionDAO {
+    @Override
     public boolean save(Prescription dto) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO prescription VALUES(?, ?, ?)",
                 dto.getPrescriptionId(),dto.getDescription(),dto.getAppointmentId());
 
     }
-
+    @Override
     public Prescription search(String presid) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM prescription WHERE presc_id=?", presid);
@@ -38,18 +39,18 @@ public class PrescriptionDAOImpl implements PrescriptionDAO {
         return dto;
     }
 
-
+    @Override
     public boolean delete(String presid) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("DELETE FROM prescription WHERE presc_id=?", presid);
     }
-
+    @Override
     public boolean update(Prescription dto) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("UPDATE prescription SET description=?, appointment_id=? WHERE presc_id=?",
                 dto.getDescription(), dto.getAppointmentId(), dto.getPrescriptionId());
     }
-
+    @Override
     public Prescription searchPrescriptionbyAppId(String appId) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM prescription WHERE appointment_id=?", appId);
@@ -65,7 +66,7 @@ public class PrescriptionDAOImpl implements PrescriptionDAO {
         }
         return dto;
     }
-
+    @Override
     public String generateNextId() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT presc_id FROM prescription ORDER BY presc_id DESC LIMIT 1");
@@ -74,7 +75,7 @@ public class PrescriptionDAOImpl implements PrescriptionDAO {
         }
         return splitId(null);
     }
-
+    @Override
     public String splitId(String currentId) {
         if(currentId != null) {
             String[] split = currentId.split("PR0");
@@ -90,7 +91,7 @@ public class PrescriptionDAOImpl implements PrescriptionDAO {
             return "PR001";
         }
     }
-
+    @Override
     public List<Prescription> getAll() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM prescription");

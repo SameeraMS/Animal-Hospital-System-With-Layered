@@ -9,7 +9,6 @@ import lk.ijse.ahms.bo.BOFactory;
 import lk.ijse.ahms.bo.custom.DoctorBO;
 import lk.ijse.ahms.controller.dashboard.EmployeeFormController;
 import lk.ijse.ahms.dto.DoctorDto;
-import lk.ijse.ahms.dao.custom.impl.DoctorDAOImpl;
 import lk.ijse.ahms.regex.Regex;
 import lk.ijse.ahms.util.SystemAlert;
 import lombok.Setter;
@@ -19,19 +18,16 @@ import java.sql.SQLException;
 public class AddDocFormcontroller {
     @FXML
     private JFXTextField id;
-
     @FXML
     private JFXTextField name;
-
     @FXML
     private JFXTextField tel;
-
     @FXML
     private JFXTextField email;
-
     @Setter
     private EmployeeFormController empFormController;
     DoctorBO doctorBO = (DoctorBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DOCTOR);
+
 
     public void initialize() {
         generateNextId();
@@ -120,8 +116,5 @@ public class AddDocFormcontroller {
         } else {
             new SystemAlert(Alert.AlertType.INFORMATION,"Information","Please Enter Valid Mobile Number..!", ButtonType.OK).show();
         }
-
-
-
     }
 }

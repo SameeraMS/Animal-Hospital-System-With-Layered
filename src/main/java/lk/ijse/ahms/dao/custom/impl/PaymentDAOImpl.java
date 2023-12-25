@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentDAOImpl implements PaymentDAO {
-
+    @Override
     public List<Payment> getAll() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM payment order by amount asc limit 5");
@@ -43,7 +43,7 @@ public class PaymentDAOImpl implements PaymentDAO {
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
         return false;
     }
-
+    @Override
     public String generateNextId() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT payment_id FROM payment ORDER BY payment_id DESC LIMIT 1");
@@ -52,7 +52,7 @@ public class PaymentDAOImpl implements PaymentDAO {
         }
         return splitId(null);
     }
-
+    @Override
     public String splitId(String currentPayId) {
         if(currentPayId != null) {
             String[] split = currentPayId.split("P0");
@@ -74,7 +74,7 @@ public class PaymentDAOImpl implements PaymentDAO {
         return null;
     }
 
-
+    @Override
     public boolean save(Payment ent) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO payment VALUES(?, ?, ?, ?)",

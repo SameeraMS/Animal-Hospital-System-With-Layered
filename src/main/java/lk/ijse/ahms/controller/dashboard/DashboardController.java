@@ -13,10 +13,6 @@ import lk.ijse.ahms.bo.custom.DoctorBO;
 import lk.ijse.ahms.bo.custom.EmployeeBO;
 import lk.ijse.ahms.bo.custom.PetBO;
 import lk.ijse.ahms.bo.custom.PetOwnerBO;
-import lk.ijse.ahms.dao.custom.impl.DoctorDAOImpl;
-import lk.ijse.ahms.dao.custom.impl.EmployeeDAOImpl;
-import lk.ijse.ahms.dao.custom.impl.PetDAOImpl;
-import lk.ijse.ahms.dao.custom.impl.PetOwnerDAOImpl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -61,8 +57,6 @@ public class DashboardController {
     private void setchart() throws SQLException {
 
         //pie chart
-
-
         try {
             PieChart.Data slice1 = new PieChart.Data("Pets", petBO.getAllPet().size());
             PieChart.Data slice2 = new PieChart.Data("Pet Owners", petOwnerBO.getAllPetOwner().size());
@@ -74,11 +68,7 @@ public class DashboardController {
             throw new RuntimeException(e);
         }
 
-
-
-
         //line chart
-
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Details");
         try {

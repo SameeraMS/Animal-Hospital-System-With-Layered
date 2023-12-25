@@ -13,7 +13,6 @@ import lk.ijse.ahms.bo.BOFactory;
 import lk.ijse.ahms.bo.custom.DoctorBO;
 import lk.ijse.ahms.controller.dashboard.EmployeeFormController;
 import lk.ijse.ahms.dto.DoctorDto;
-import lk.ijse.ahms.dao.custom.impl.DoctorDAOImpl;
 import lk.ijse.ahms.util.SystemAlert;
 import lombok.Setter;
 
@@ -157,9 +156,7 @@ public class InfoDoctorFormController {
                 setEdit(false);
             }
         }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MedicineDAOImpl implements MedicineDAO {
+    @Override
     public boolean save(Medicine dto) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = SQLUtil.execute("INSERT INTO medicine VALUES(?, ?, ?, ?, ?, ?, ?)",
@@ -24,7 +25,7 @@ public class MedicineDAOImpl implements MedicineDAO {
         return isSaved;
 
     }
-
+    @Override
     public List<Medicine> getAll() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM medicine");
@@ -47,7 +48,7 @@ public class MedicineDAOImpl implements MedicineDAO {
         return dtoList;
 
     }
-
+    @Override
     public  Medicine search(String id) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM medicine WHERE med_id = ?", id);
@@ -65,7 +66,7 @@ public class MedicineDAOImpl implements MedicineDAO {
         } else {
             return null;}
     }
-
+    @Override
     public boolean update(Medicine dto) throws SQLException, ClassNotFoundException {
 
         boolean isSave = SQLUtil.execute("UPDATE medicine SET name =?, type =?, qty =?, price =?, description =?, exp_date =? WHERE med_id =?",
@@ -74,7 +75,7 @@ public class MedicineDAOImpl implements MedicineDAO {
         return isSave;
 
     }
-
+    @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
 
         boolean isDelete = SQLUtil.execute("DELETE FROM medicine WHERE med_id =?",
@@ -83,7 +84,7 @@ public class MedicineDAOImpl implements MedicineDAO {
         return isDelete;
 
     }
-
+    @Override
     public String generateNextId() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT med_id FROM medicine ORDER BY med_id DESC LIMIT 1");
@@ -92,7 +93,7 @@ public class MedicineDAOImpl implements MedicineDAO {
         }
         return splitId(null);
     }
-
+    @Override
     public String splitId(String currentMedId) {
         if(currentMedId != null) {
             String[] split = currentMedId.split("M0");
@@ -108,8 +109,7 @@ public class MedicineDAOImpl implements MedicineDAO {
             return "M001";
         }
     }
-
-
+    @Override
     public boolean update(List<CartTm> cartTmList) throws SQLException, ClassNotFoundException {
         System.out.println("med model -> "+cartTmList);
         for(CartTm tm : cartTmList) {
@@ -121,7 +121,7 @@ public class MedicineDAOImpl implements MedicineDAO {
         }
         return true;
     }
-
+    @Override
     public boolean updateQty(String medid, String qty) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("UPDATE medicine SET qty = qty - ? WHERE med_id = ?", qty, medid);

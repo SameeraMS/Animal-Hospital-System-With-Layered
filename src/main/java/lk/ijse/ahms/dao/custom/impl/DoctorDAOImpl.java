@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DoctorDAOImpl implements DoctorDAO {
+    @Override
     public boolean save(Doctor dto) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = SQLUtil.execute("INSERT INTO doctor VALUES(?, ?, ?, ?)",
@@ -23,7 +24,7 @@ public class DoctorDAOImpl implements DoctorDAO {
 
 
     }
-
+    @Override
     public List<Doctor> getAll() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM doctor");
@@ -42,7 +43,7 @@ public class DoctorDAOImpl implements DoctorDAO {
         }
         return dtoList;
     }
-
+    @Override
     public Doctor search(String id) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM doctor WHERE doc_id = ?", id);
@@ -57,7 +58,7 @@ public class DoctorDAOImpl implements DoctorDAO {
         } else {
             return null;}
     }
-
+    @Override
     public boolean update(Doctor dto) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = SQLUtil.execute("UPDATE doctor SET name =?, email =?, contact_no =? WHERE doc_id =?",
@@ -66,7 +67,7 @@ public class DoctorDAOImpl implements DoctorDAO {
         return isSaved;
 
     }
-
+    @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
 
         boolean isDelete = SQLUtil.execute("DELETE FROM doctor WHERE doc_id =?",
@@ -75,7 +76,7 @@ public class DoctorDAOImpl implements DoctorDAO {
         return isDelete;
 
     }
-
+    @Override
     public String generateNextId() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT doc_id FROM doctor ORDER BY doc_id DESC LIMIT 1");
@@ -84,7 +85,7 @@ public class DoctorDAOImpl implements DoctorDAO {
         }
         return splitId(null);
     }
-
+    @Override
     public String splitId(String currentDocId) {
         if(currentDocId != null) {
             String[] split = currentDocId.split("D0");

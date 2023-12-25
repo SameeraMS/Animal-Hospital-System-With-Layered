@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrescriptionBOImpl implements PrescriptionBO {
-
     PrescriptionDAO prescriptionDAO = (PrescriptionDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.PRESCRIPTION);
     @Override
     public boolean savePrescription(PrescriptionDto dto) throws SQLException, ClassNotFoundException {

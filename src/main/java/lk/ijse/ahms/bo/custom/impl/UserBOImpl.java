@@ -5,7 +5,6 @@ import lk.ijse.ahms.dao.DAOFactory;
 import lk.ijse.ahms.dao.custom.UserDAO;
 import lk.ijse.ahms.dto.UserDto;
 import lk.ijse.ahms.entity.User;
-import lk.ijse.ahms.util.SecurityUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserBOImpl implements UserBO {
-
     UserDAO userDAO = (UserDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.USER);
     @Override
     public boolean saveUser(UserDto dto) throws SQLException, ClassNotFoundException {

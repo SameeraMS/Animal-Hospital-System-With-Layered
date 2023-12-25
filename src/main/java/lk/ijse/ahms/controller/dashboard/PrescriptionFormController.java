@@ -14,9 +14,6 @@ import lk.ijse.ahms.bo.custom.PrescriptionBO;
 import lk.ijse.ahms.dto.AppointmentDto;
 import lk.ijse.ahms.dto.PetOwnerDto;
 import lk.ijse.ahms.dto.PrescriptionDto;
-import lk.ijse.ahms.dao.custom.impl.AppointmentDAOImpl;
-import lk.ijse.ahms.dao.custom.impl.PetOwnerDAOImpl;
-import lk.ijse.ahms.dao.custom.impl.PrescriptionDAOImpl;
 import lk.ijse.ahms.smtp.Mail;
 import lk.ijse.ahms.util.SystemAlert;
 import net.sf.jasperreports.engine.*;
@@ -31,7 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PrescriptionFormController {
-
 
     public JFXTextField txtPresId;
     public JFXComboBox<String> cmbAppointment;
@@ -61,9 +57,7 @@ public class PrescriptionFormController {
             for (PrescriptionDto d : dto) {
                 cmbPres.getItems().add(d.getPrescriptionId());
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -88,9 +82,7 @@ public class PrescriptionFormController {
             for (AppointmentDto d : dto) {
                 cmbAppointment.getItems().add(d.getAppointmentId());
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -113,9 +105,7 @@ public class PrescriptionFormController {
                 } else {
                     new SystemAlert(Alert.AlertType.ERROR,"Error","Prescription Not Saved..!", ButtonType.OK).show();
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
 
@@ -147,9 +137,7 @@ public class PrescriptionFormController {
                 cmbAppointment.setValue(dto.getAppointmentId());
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -172,9 +160,7 @@ public class PrescriptionFormController {
                 } else {
                     new SystemAlert(Alert.AlertType.ERROR,"Error","Prescription Not Updated..!", ButtonType.OK).show();
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -193,9 +179,7 @@ public class PrescriptionFormController {
             } else {
                 new SystemAlert(Alert.AlertType.ERROR,"Error","Prescription Not Deleted..!", ButtonType.OK).show();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -279,9 +263,7 @@ public class PrescriptionFormController {
                 cmbAppointment.setValue(dto.getAppointmentId());
 
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

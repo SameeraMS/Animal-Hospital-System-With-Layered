@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
-
+    @Override
     public boolean save(Employee dto) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = SQLUtil.execute("INSERT INTO employee VALUES(?, ?, ?, ?, ?, ?)",
@@ -22,7 +22,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
         return isSaved;
     }
-
+    @Override
     public List<Employee> getAll() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM employee");
@@ -45,7 +45,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 
     }
-
+    @Override
     public Employee search(String id) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM employee WHERE employee_id = ?", id);
@@ -62,7 +62,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         } else {
             return null;}
     }
-
+    @Override
     public boolean update(Employee dto) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = SQLUtil.execute("UPDATE employee SET employee_name =?, employee_address =?, employee_contact_no =?, employee_email =?, employee_type =? WHERE employee_id =?",
@@ -71,7 +71,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return isSaved;
 
     }
-
+    @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
 
         boolean isDelete = SQLUtil.execute("DELETE FROM employee WHERE employee_id =?",
@@ -80,7 +80,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return isDelete;
 
     }
-
+    @Override
     public String generateNextId() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT employee_id FROM employee ORDER BY employee_id DESC LIMIT 1");
@@ -89,7 +89,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         }
         return splitId(null);
     }
-
+    @Override
     public String splitId(String currentempId) {
         if(currentempId != null) {
             String[] split = currentempId.split("E0");

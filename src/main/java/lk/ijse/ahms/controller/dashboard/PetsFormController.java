@@ -18,7 +18,6 @@ import lk.ijse.ahms.controller.info.InfoPetOwnerFormController;
 import lk.ijse.ahms.controller.info.InfoPetsFormController;
 import lk.ijse.ahms.dto.PetsDto;
 import lk.ijse.ahms.dto.tm.PetsTm;
-import lk.ijse.ahms.dao.custom.impl.PetDAOImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -31,8 +30,8 @@ public class PetsFormController {
     public TableColumn colAge;
     public TableColumn colGender;
     public TableColumn colType;
-
     PetBO petBO = (PetBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET);
+
 
     public void initialize() {
         tblPets.getItems().clear();
@@ -69,9 +68,7 @@ public class PetsFormController {
                 );
             }
             tblPets.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

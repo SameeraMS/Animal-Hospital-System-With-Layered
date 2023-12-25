@@ -9,7 +9,6 @@ import lk.ijse.ahms.bo.custom.PetOwnerBO;
 import lk.ijse.ahms.controller.dashboard.PetsFormController;
 import lk.ijse.ahms.controller.info.InfoPetsFormController;
 import lk.ijse.ahms.dto.PetOwnerDto;
-import lk.ijse.ahms.dao.custom.impl.PetOwnerDAOImpl;
 import lk.ijse.ahms.regex.Regex;
 import lk.ijse.ahms.util.SystemAlert;
 import lombok.Setter;
@@ -21,20 +20,16 @@ public class AddPetOwnerFormController {
     public JFXTextField ownerName;
     public JFXTextField ownerEmail;
     public JFXTextField ownerTel;
-
     @Setter
     private InfoPetsFormController infoPetFormController;
-
     @Setter
     private PetsFormController PetFormController;
-
     @Setter
     private AddPetsFormController addPetFormController;
-
     @Setter
     private AddApointmentFormController addApointmentFormController;
-
     PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
+
 
     public void initialize() {
         generateNextId();
@@ -100,7 +95,6 @@ public class AddPetOwnerFormController {
                                 new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Pet Owner saved Successfully..!", ButtonType.OK).show();
                                 clearFields();
 
-
                                 if(infoPetFormController != null) {
                                     infoPetFormController.initialize();
                                 } else if(addPetFormController != null) {
@@ -129,7 +123,5 @@ public class AddPetOwnerFormController {
         }else{
             new SystemAlert(Alert.AlertType.INFORMATION,"Information","Invalid Name!", ButtonType.OK).show();
         }
-
-
     }
 }

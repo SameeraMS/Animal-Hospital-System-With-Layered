@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PetDAOImpl implements PetDAO {
+    @Override
     public List<Pet> getAll() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM pets");
@@ -35,7 +36,7 @@ public class PetDAOImpl implements PetDAO {
         }
         return dtoList;
     }
-
+    @Override
     public boolean save(Pet dto) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO pets VALUES(?,?,?,?,?,?)",
@@ -43,7 +44,7 @@ public class PetDAOImpl implements PetDAO {
                 dto.getGender(),dto.getType(),dto.getOwnerId());
 
     }
-
+    @Override
     public Pet search(String id) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM pets WHERE pet_id=?", id);
@@ -63,19 +64,19 @@ public class PetDAOImpl implements PetDAO {
 
         return dto;
     }
-
+    @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("DELETE FROM pets WHERE pet_id=?", id);
     }
-
+    @Override
     public boolean update(Pet dto) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("UPDATE pets SET name=?, age=?, gender=?, type=?, pet_owner_id=? WHERE pet_id=?",
                 dto.getName(),dto.getAge(),dto.getGender(),
                 dto.getType(),dto.getOwnerId(),dto.getPetId());
     }
-
+    @Override
     public String generateNextId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT pet_id FROM pets ORDER BY pet_id DESC LIMIT 1");
         if(resultSet.next()) {
@@ -83,7 +84,7 @@ public class PetDAOImpl implements PetDAO {
         }
         return splitId(null);
     }
-
+    @Override
     public String splitId(String currentId) {
         if(currentId != null) {
             String[] split = currentId.split("PE0");

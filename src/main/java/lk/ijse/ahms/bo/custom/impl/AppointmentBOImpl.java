@@ -12,8 +12,6 @@ import java.util.List;
 
 public class AppointmentBOImpl implements AppointmentBO {
     AppointmentDAO appointmentDAO = (AppointmentDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.APPOINTMENT);
-
-
     @Override
     public List<AppointmentDto> getAllAppointment() throws SQLException, ClassNotFoundException {
         List<Appointment> all = appointmentDAO.getAll();
@@ -26,11 +24,8 @@ public class AppointmentBOImpl implements AppointmentBO {
                     appointment.getDoctorName(),appointment.getPetOwnerId(),appointment.getPetOwnerName(),
                     appointment.getPetId(),appointment.getPetName()));
         }
-
         return appointmentDtos;
     }
-
-
     @Override
     public boolean updateAppointment(AppointmentDto dto) throws SQLException, ClassNotFoundException {
         return appointmentDAO.update(new Appointment(
@@ -39,7 +34,6 @@ public class AppointmentBOImpl implements AppointmentBO {
                 dto.getDoctorName(),dto.getPetOwnerId(),dto.getPetOwnerName(),
                 dto.getPetId(),dto.getPetName()));
     }
-
     @Override
     public boolean saveAppointment(AppointmentDto dto) throws SQLException, ClassNotFoundException {
         return appointmentDAO.save(new Appointment(
@@ -49,17 +43,14 @@ public class AppointmentBOImpl implements AppointmentBO {
                 dto.getPetId(),dto.getPetName()
         ));
     }
-
     @Override
     public boolean deleteAppointment(String id) throws SQLException, ClassNotFoundException {
         return appointmentDAO.delete(id);
     }
-
     @Override
     public String generateNextAppointmentId() throws SQLException, ClassNotFoundException {
         return appointmentDAO.generateNextId();
     }
-
     @Override
     public AppointmentDto searchAppointment(String id) throws SQLException, ClassNotFoundException {
         Appointment search = appointmentDAO.search(id);

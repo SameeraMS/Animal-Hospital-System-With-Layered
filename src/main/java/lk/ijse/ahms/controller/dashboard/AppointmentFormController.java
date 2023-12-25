@@ -17,7 +17,6 @@ import lk.ijse.ahms.controller.add.AddApointmentFormController;
 import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.AppointmentDto;
 import lk.ijse.ahms.dto.tm.AppointmentTm;
-import lk.ijse.ahms.dao.custom.impl.AppointmentDAOImpl;
 import lk.ijse.ahms.qr.QrScanController;
 import lk.ijse.ahms.regex.Regex;
 import lk.ijse.ahms.smtp.Mail;
@@ -49,7 +48,6 @@ public class AppointmentFormController {
     public JFXButton btnsearch;
     public JFXTextField txtrecmail;
     private ObservableList<AppointmentTm> obList = FXCollections.observableArrayList();
-
     AppointmentBO appointmentBO = (AppointmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.APPOINTMENT);
 
     public void initialize() {
@@ -74,7 +72,6 @@ public class AppointmentFormController {
     private void loadAllAppointments() {
         System.out.println("Loading all Appointments");
 
-
         try {
             List<AppointmentDto> AppointmentDtos = appointmentBO.getAllAppointment();
 
@@ -92,9 +89,7 @@ public class AppointmentFormController {
                 );
             }
             tblAppointments.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -171,8 +166,6 @@ public class AppointmentFormController {
                 } catch (SQLException | ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
-
-
             }
         });
 
@@ -260,7 +253,6 @@ public class AppointmentFormController {
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
-
 
     }
 

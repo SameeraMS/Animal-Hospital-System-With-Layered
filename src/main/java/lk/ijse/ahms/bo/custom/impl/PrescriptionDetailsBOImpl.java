@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class PrescriptionDetailsBOImpl implements PrescriptionDetailsBO {
-
     PrescriptionDetailsDAO prescriptionDetailsDAO = (PrescriptionDetailsDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.PRESCRIPTION_DETAIL);
     @Override
     public boolean saveOrderDetails(String payId, List<CartTm> cartTmList) throws SQLException, ClassNotFoundException {

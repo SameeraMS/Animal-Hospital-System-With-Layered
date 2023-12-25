@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentBOImpl implements PaymentBO {
-
     PaymentDAO paymentDAO = (PaymentDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.PAYMENT);
     @Override
     public boolean savePayment(PaymentDto dto) throws SQLException, ClassNotFoundException {
@@ -19,7 +18,6 @@ public class PaymentBOImpl implements PaymentBO {
                 dto.getPaymentId(),dto.getDate(),dto.getAmount(),dto.getAppointmentId()
         ));
     }
-
     @Override
     public List<PaymentDto> getAllPayment() throws SQLException, ClassNotFoundException {
         List<Payment> all = paymentDAO.getAll();
@@ -30,27 +28,22 @@ public class PaymentBOImpl implements PaymentBO {
                     payment.getPaymentId(),payment.getDate(),payment.getAmount(),payment.getAppointmentId()
             ));
         }
-
         return paymentDtos;
     }
-
     @Override
     public boolean updatePayment(PaymentDto dto) throws SQLException, ClassNotFoundException {
         return paymentDAO.update(new Payment(
                 dto.getPaymentId(),dto.getDate(),dto.getAmount(),dto.getAppointmentId()
         ));
     }
-
     @Override
     public boolean deletePayment(String id) throws SQLException, ClassNotFoundException {
         return paymentDAO.delete(id);
     }
-
     @Override
     public String generateNextPaymentId() throws SQLException, ClassNotFoundException {
         return paymentDAO.generateNextId();
     }
-
     @Override
     public PaymentDto searchPayment(String id) throws SQLException, ClassNotFoundException {
         Payment payment = paymentDAO.search(id);

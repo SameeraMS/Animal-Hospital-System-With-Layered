@@ -20,7 +20,6 @@ import javafx.util.Duration;
 import lk.ijse.ahms.bo.BOFactory;
 import lk.ijse.ahms.bo.custom.UserBO;
 import lk.ijse.ahms.dto.UserDto;
-import lk.ijse.ahms.dao.custom.impl.UserDAOImpl;
 import lk.ijse.ahms.util.JavaMailUtil;
 import lk.ijse.ahms.util.SecurityUtil;
 import lombok.SneakyThrows;
@@ -40,12 +39,10 @@ public class Forgotpass1FormController implements Initializable {
     public AnchorPane root;
     @FXML
     private ComboBox<String> comUserName;
-
     @FXML
     private Button btnSendOTP;
     public static int OTP;
     public static String userName;
-
     @FXML
     private Label lblEmail;
     private Button btn;
@@ -94,7 +91,6 @@ public class Forgotpass1FormController implements Initializable {
                 parentContainer.getChildren().remove(AnchorPaneFogotPassword);
             });
             timeline.play();
-
 
         }else {
             comUserName.setStyle("-fx-background-color: Red");

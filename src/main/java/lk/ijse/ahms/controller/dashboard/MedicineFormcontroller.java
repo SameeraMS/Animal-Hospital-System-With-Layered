@@ -38,6 +38,7 @@ public class MedicineFormcontroller {
     public JFXButton btnsearch;
     MedicineBO medicineBO = (MedicineBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.MEDICINE);
 
+
     public void initialize() {
         tblMed.getItems().clear();
         setCellValueFactoryMedicine();
@@ -76,9 +77,7 @@ public class MedicineFormcontroller {
                 );
             }
             tblMed.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -146,12 +145,9 @@ public class MedicineFormcontroller {
 
                 tblMed.setItems(obList1);
             }
-            } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+            } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
 
     }
 

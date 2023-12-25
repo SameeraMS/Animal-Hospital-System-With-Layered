@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MedicineBOImpl implements MedicineBO {
-
     MedicineDAO medicineDAO = (MedicineDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.MEDICINE);
     @Override
     public boolean saveMedicine(MedicineDto dto) throws SQLException, ClassNotFoundException {
@@ -21,7 +20,6 @@ public class MedicineBOImpl implements MedicineBO {
                 dto.getExpdate()
         ));
     }
-
     @Override
     public List<MedicineDto> getAllMedicine() throws SQLException, ClassNotFoundException {
         List<Medicine> all = medicineDAO.getAll();
@@ -34,10 +32,8 @@ public class MedicineBOImpl implements MedicineBO {
                     medicine.getExpdate()
             ));
         }
-
         return medicineDtos;
     }
-
     @Override
     public boolean updateMedicine(MedicineDto dto) throws SQLException, ClassNotFoundException {
         return medicineDAO.update(new Medicine(
@@ -46,17 +42,14 @@ public class MedicineBOImpl implements MedicineBO {
                 dto.getExpdate()
         ));
     }
-
     @Override
     public boolean deleteMedicine(String id) throws SQLException, ClassNotFoundException {
         return medicineDAO.delete(id);
     }
-
     @Override
     public String generateNextMedicineId() throws SQLException, ClassNotFoundException {
         return medicineDAO.generateNextId();
     }
-
     @Override
     public MedicineDto searchMedicine(String id) throws SQLException, ClassNotFoundException {
         Medicine medicine = medicineDAO.search(id);

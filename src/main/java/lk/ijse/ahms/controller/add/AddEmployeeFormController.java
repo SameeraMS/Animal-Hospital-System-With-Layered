@@ -12,7 +12,6 @@ import lk.ijse.ahms.bo.BOFactory;
 import lk.ijse.ahms.bo.custom.EmployeeBO;
 import lk.ijse.ahms.controller.dashboard.EmployeeFormController;
 import lk.ijse.ahms.dto.EmployeeDto;
-import lk.ijse.ahms.dao.custom.impl.EmployeeDAOImpl;
 import lk.ijse.ahms.regex.Regex;
 import lk.ijse.ahms.util.SystemAlert;
 import lombok.Setter;
@@ -22,19 +21,14 @@ import java.sql.SQLException;
 public class AddEmployeeFormController {
     @FXML
     private JFXTextField empId;
-
     @FXML
     private JFXTextField empName;
-
     @FXML
     private JFXTextField empAddress;
-
     @FXML
     private JFXTextField empTel;
-
     @FXML
     private JFXTextField empMail;
-
     @FXML
     private JFXComboBox<String> cmbEmpType;
     EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
@@ -102,7 +96,6 @@ public class AddEmployeeFormController {
                                 boolean isSaved = employeeBO.saveEmployee(dto);
 
                                 if (isSaved) {
-                                    //  new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
                                     new SystemAlert(Alert.AlertType.CONFIRMATION,"Confirmation","Employee saved Successfully..!", ButtonType.OK).show();
 
                                     clearfields();
@@ -128,7 +121,6 @@ public class AddEmployeeFormController {
         } else {
             new SystemAlert(Alert.AlertType.ERROR,"Information","Please Enter Valid Name..!", ButtonType.OK).show();
         }
-
     }
 
     public void clearOnAction(javafx.event.ActionEvent actionEvent) {

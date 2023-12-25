@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class PresDetailsDAOImpl implements PrescriptionDetailsDAO {
+    @Override
     public boolean saveOrderDetails(String payId, List<CartTm> cartTmList) throws SQLException, ClassNotFoundException {
         
 
@@ -23,7 +24,7 @@ public class PresDetailsDAOImpl implements PrescriptionDetailsDAO {
         }
         return true;
     }
-
+    @Override
     public void printDetailsSave(String payId, CartTm tm) throws SQLException, ClassNotFoundException {
 
         SQLUtil.execute("INSERT INTO print VALUES(?, ?, ?, ?, ?, ?)",
@@ -32,7 +33,7 @@ public class PresDetailsDAOImpl implements PrescriptionDetailsDAO {
 
     }
 
-
+    @Override
     public boolean saveOrderDetails(String payId, CartTm tm) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO prescription_details VALUES(?, ?, ?, ?)",

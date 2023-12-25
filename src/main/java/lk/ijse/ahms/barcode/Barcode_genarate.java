@@ -34,8 +34,8 @@ public class Barcode_genarate {
             BitmapCanvasProvider canvas = new BitmapCanvasProvider(baos, "image/x-png", 500, BufferedImage.TYPE_BYTE_BINARY, false, 0);
             code128.generateBarcode(canvas, myString);
             canvas.finish();
-            //write to png file
 
+            //write to png file
             FileOutputStream fos = new FileOutputStream("/Users/sameeramadushan/Documents/final project/barcodes/"+image_name);
             fos.write(baos.toByteArray());
 

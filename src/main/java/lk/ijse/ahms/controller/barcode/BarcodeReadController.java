@@ -42,22 +42,16 @@ public class BarcodeReadController {
 
     @FXML
     private JFXButton btnBack;
-
     @FXML
     private JFXButton btnStart;
-
     @FXML
     private JFXButton btnStop;
-
     @FXML
     private ImageView imageView;
-
     @FXML
     private AnchorPane minipane;
-
     @FXML
     private ProgressBar progress;
-
     @FXML
     private JFXTextArea txtArea;
     private  boolean isReading = false;
@@ -65,12 +59,8 @@ public class BarcodeReadController {
     private WebcamPanel webcamPanel;
     @FXML
     private AnchorPane mainPane;
-
     @Setter
     private PaymentFormController paymentFormController;
-
-
-
 
 
     public void initialize(){
@@ -87,8 +77,6 @@ public class BarcodeReadController {
     public void startBtnOnAction(ActionEvent actionEvent) {
         progress.setVisible(true);
         isReading = (!isReading) ? startWebcam() : stopWebcam();
-
-
     }
 
     private boolean stopWebcam() {
@@ -111,7 +99,6 @@ public class BarcodeReadController {
             Dimension size = WebcamResolution.VGA.getSize();
             webcam = Webcam.getDefault();
             webcam.setViewSize(size);
-
 
             webcamPanel = new WebcamPanel(webcam);
             webcamPanel.setPreferredSize(size);
@@ -144,13 +131,6 @@ public class BarcodeReadController {
                                 paymentFormController.cmbmedid.setValue(id);
                                 paymentFormController.medIdOnAction(new ActionEvent());
 
-
-
-
-
-
-
-
                                 new Alert(Alert.AlertType.INFORMATION, "Data Scanned Successfully!").showAndWait();
                             } else {
                                 new Alert(Alert.AlertType.ERROR, "No Data Found!").showAndWait();
@@ -172,12 +152,6 @@ public class BarcodeReadController {
         stopWebcam();
 
     }
-
-
-
-
-
-
 
     public void btnOnBack(ActionEvent actionEvent) throws IOException {
         mainPane.getChildren().clear();
