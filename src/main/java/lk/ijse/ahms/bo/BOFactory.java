@@ -14,7 +14,7 @@ public class BOFactory {
         return (boFactory == null) ? boFactory = new BOFactory() : boFactory;
     }
     public enum BOTypes {
-        APPOINTMENT, DOCTOR, EMPLOYEE, MEDICINE, PAYMENT, PET, PET_OWNER, PRESCRIPTION, PRESCRIPTION_DETAIL, USER, PLACE_ORDER
+        APPOINTMENT, DOCTOR, EMPLOYEE, MEDICINE, PAYMENT, PET, PET_OWNER, PRESCRIPTION, PRESCRIPTION_DETAIL, USER, PLACE_ORDER, REPORT
     }
 
     public SuperBO getBO(BOTypes boTypes){
@@ -41,6 +41,8 @@ public class BOFactory {
                 return new UserBOImpl();
             case PLACE_ORDER:
                 return new PlaceOrderBOImpl();
+            case REPORT:
+                return new ReportBOImpl();
             default:
                 return null;
         }

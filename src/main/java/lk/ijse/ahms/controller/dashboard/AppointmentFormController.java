@@ -13,8 +13,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import lk.ijse.ahms.bo.BOFactory;
 import lk.ijse.ahms.bo.custom.AppointmentBO;
+import lk.ijse.ahms.bo.custom.ReportBO;
 import lk.ijse.ahms.controller.add.AddApointmentFormController;
-import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.AppointmentDto;
 import lk.ijse.ahms.dto.tm.AppointmentTm;
 import lk.ijse.ahms.qr.QrScanController;
@@ -22,13 +22,9 @@ import lk.ijse.ahms.regex.Regex;
 import lk.ijse.ahms.smtp.Mail;
 import lk.ijse.ahms.util.SystemAlert;
 import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +45,7 @@ public class AppointmentFormController {
     public JFXTextField txtrecmail;
     private ObservableList<AppointmentTm> obList = FXCollections.observableArrayList();
     AppointmentBO appointmentBO = (AppointmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.APPOINTMENT);
+    ReportBO reportBO = (ReportBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.REPORT);
 
     public void initialize() {
         cleartable();
@@ -173,15 +170,7 @@ public class AppointmentFormController {
 
     public void allappointmentsOnAction(ActionEvent actionEvent) throws JRException, SQLException {
 
-            InputStream resourceAsStream = getClass().getResourceAsStream("/report/allappointments.jrxml");
-            JasperDesign load = JRXmlLoader.load(resourceAsStream);
-            JasperReport jasperReport = JasperCompileManager.compileReport(load);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(
-                    jasperReport,
-                    null,
-                    DbConnection.getInstance().getConnection());
-
-            JasperViewer.viewReport(jasperPrint, false);
+            reportBO.printAppointment();
 
     }
 
@@ -191,15 +180,7 @@ public class AppointmentFormController {
 
         if (Regex.getEmailPattern().matcher(mail).matches()) {
 
-            InputStream resourceAsStream = getClass().getResourceAsStream("/report/allappointments.jrxml");
-            JasperDesign load = JRXmlLoader.load(resourceAsStream);
-            JasperReport jasperReport = JasperCompileManager.compileReport(load);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(
-                    jasperReport,
-                    null,
-                    DbConnection.getInstance().getConnection());
-
-            JasperViewer.viewReport(jasperPrint, false);
+            JasperPrint jasperPrint = reportBO.printAppointment();
 
             String filePath = "/Users/sameeramadushan/Documents/final project/reports/";
 

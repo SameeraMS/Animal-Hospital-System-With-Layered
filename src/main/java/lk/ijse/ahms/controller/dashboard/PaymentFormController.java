@@ -16,20 +16,15 @@ import javafx.stage.Stage;
 import lk.ijse.ahms.bo.BOFactory;
 import lk.ijse.ahms.bo.custom.*;
 import lk.ijse.ahms.controller.barcode.BarcodeReadController;
-import lk.ijse.ahms.db.DbConnection;
 import lk.ijse.ahms.dto.*;
 import lk.ijse.ahms.dto.tm.CartTm;
 import lk.ijse.ahms.qr.QrScanController;
 import lk.ijse.ahms.smtp.Mail;
 import lk.ijse.ahms.util.SystemAlert;
 import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -69,6 +64,7 @@ public class PaymentFormController {
     PrescriptionBO prescriptionBO = (PrescriptionBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PRESCRIPTION);
     PetOwnerBO petOwnerBO = (PetOwnerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PET_OWNER);
     PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PLACE_ORDER);
+    ReportBO reportBO = (ReportBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.REPORT);
 
 
     public void initialize() {
@@ -349,16 +345,7 @@ public class PaymentFormController {
         hashMap.put("netTotal", total);
         hashMap.put("appfee", appFee);
 
-        InputStream resourceAsStream = getClass().getResourceAsStream("/report/Bill.jrxml");
-        JasperDesign load = JRXmlLoader.load(resourceAsStream);
-
-        JasperReport jasperReport = JasperCompileManager.compileReport(load);
-        JasperPrint jasperPrint = JasperFillManager.fillReport(
-                jasperReport,
-                hashMap,
-                DbConnection.getInstance().getConnection());
-
-        JasperViewer.viewReport(jasperPrint, false);
+        JasperPrint jasperPrint = reportBO.printBill(hashMap);
 
         String filePath = "/Users/sameeramadushan/Documents/final project/reports/";
 
