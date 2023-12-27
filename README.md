@@ -1,6 +1,6 @@
 # Animal-Hospital-Management-System
 
-💠 Developed this JavaFX application as the first semester's final project for the GDSE program at IJSE.
+💠 Refactored this Project with Layered Architecture for Layered Architecture CourseWork.
 
 ## 💻 Features 
 
