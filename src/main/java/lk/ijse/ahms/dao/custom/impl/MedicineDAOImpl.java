@@ -17,10 +17,10 @@ import java.util.List;
 
 public class MedicineDAOImpl implements MedicineDAO {
     @Override
-    public boolean save(Medicine dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Medicine ent) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = SQLUtil.execute("INSERT INTO medicine VALUES(?, ?, ?, ?, ?, ?, ?)",
-                dto.getMedId(),dto.getName(),dto.getType(),dto.getQty(),dto.getPrice(),dto.getDescription(),dto.getExpdate());
+                ent.getMedId(),ent.getName(),ent.getType(),ent.getQty(),ent.getPrice(),ent.getDescription(),ent.getExpdate());
 
         return isSaved;
 
@@ -67,10 +67,10 @@ public class MedicineDAOImpl implements MedicineDAO {
             return null;}
     }
     @Override
-    public boolean update(Medicine dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Medicine ent) throws SQLException, ClassNotFoundException {
 
         boolean isSave = SQLUtil.execute("UPDATE medicine SET name =?, type =?, qty =?, price =?, description =?, exp_date =? WHERE med_id =?",
-                dto.getName(),dto.getType(),dto.getQty(),dto.getPrice(),dto.getDescription(),dto.getExpdate(),dto.getMedId());
+                ent.getName(),ent.getType(),ent.getQty(),ent.getPrice(),ent.getDescription(),ent.getExpdate(),ent.getMedId());
 
         return isSave;
 

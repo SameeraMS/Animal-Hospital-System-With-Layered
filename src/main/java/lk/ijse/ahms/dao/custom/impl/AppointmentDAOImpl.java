@@ -45,17 +45,17 @@ public class AppointmentDAOImpl implements AppointmentDAO {
 
 
     @Override
-    public boolean update(Appointment dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Appointment ent) throws SQLException, ClassNotFoundException {
         return false;
     }
     @Override
-    public boolean save(Appointment dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Appointment ent) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO appointment VALUES(?,?,?,?,?,?,?,?,?,?,?)",
-                dto.getAppointmentId(),dto.getAmount(),dto.getDate(),
-                dto.getTime(),dto.getDescription(),dto.getDoctorId(),
-                dto.getDoctorName(),dto.getPetOwnerId(),dto.getPetOwnerName(),
-                dto.getPetId(),dto.getPetName());
+                ent.getAppointmentId(),ent.getAmount(),ent.getDate(),
+                ent.getTime(),ent.getDescription(),ent.getDoctorId(),
+                ent.getDoctorName(),ent.getPetOwnerId(),ent.getPetOwnerName(),
+                ent.getPetId(),ent.getPetName());
 
     }
 

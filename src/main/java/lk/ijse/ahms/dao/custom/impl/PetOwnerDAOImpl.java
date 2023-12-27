@@ -16,10 +16,10 @@ import java.util.List;
 
 public class PetOwnerDAOImpl implements PetOwnerDAO {
     @Override
-    public boolean save(PetOwner dto) throws SQLException, ClassNotFoundException {
+    public boolean save(PetOwner ent) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO pet_owner VALUES(?, ?, ?, ?)",
-                dto.getOwnerId(),dto.getName(),dto.getEmail(),dto.getTel());
+                ent.getOwnerId(),ent.getName(),ent.getEmail(),ent.getTel());
     }
     @Override
     public List<PetOwner> getAll() throws SQLException, ClassNotFoundException {
@@ -62,10 +62,10 @@ public class PetOwnerDAOImpl implements PetOwnerDAO {
         return SQLUtil.execute("DELETE FROM pet_owner WHERE pet_owner_id =?",id);
     }
     @Override
-    public boolean update(PetOwner dto) throws SQLException, ClassNotFoundException {
+    public boolean update(PetOwner ent) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("UPDATE pet_owner SET name =?, email =?, contact_no =? WHERE pet_owner_id =?",
-                dto.getName(),dto.getEmail(),dto.getTel(),dto.getOwnerId());
+                ent.getName(),ent.getEmail(),ent.getTel(),ent.getOwnerId());
 
     }
     @Override

@@ -15,10 +15,10 @@ import java.util.List;
 
 public class DoctorDAOImpl implements DoctorDAO {
     @Override
-    public boolean save(Doctor dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Doctor ent) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = SQLUtil.execute("INSERT INTO doctor VALUES(?, ?, ?, ?)",
-                dto.getDocId(),dto.getName(),dto.getTel(),dto.getEmail());
+                ent.getDocId(),ent.getName(),ent.getTel(),ent.getEmail());
 
         return isSaved;
 
@@ -59,10 +59,10 @@ public class DoctorDAOImpl implements DoctorDAO {
             return null;}
     }
     @Override
-    public boolean update(Doctor dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Doctor ent) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = SQLUtil.execute("UPDATE doctor SET name =?, email =?, contact_no =? WHERE doc_id =?",
-                dto.getName(),dto.getEmail(),dto.getTel(),dto.getDocId());
+                ent.getName(),ent.getEmail(),ent.getTel(),ent.getDocId());
 
         return isSaved;
 

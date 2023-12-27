@@ -37,11 +37,11 @@ public class PetDAOImpl implements PetDAO {
         return dtoList;
     }
     @Override
-    public boolean save(Pet dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Pet ent) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO pets VALUES(?,?,?,?,?,?)",
-                dto.getPetId(),dto.getName(),dto.getAge(),
-                dto.getGender(),dto.getType(),dto.getOwnerId());
+                ent.getPetId(),ent.getName(),ent.getAge(),
+                ent.getGender(),ent.getType(),ent.getOwnerId());
 
     }
     @Override
@@ -70,11 +70,11 @@ public class PetDAOImpl implements PetDAO {
         return SQLUtil.execute("DELETE FROM pets WHERE pet_id=?", id);
     }
     @Override
-    public boolean update(Pet dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Pet ent) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("UPDATE pets SET name=?, age=?, gender=?, type=?, pet_owner_id=? WHERE pet_id=?",
-                dto.getName(),dto.getAge(),dto.getGender(),
-                dto.getType(),dto.getOwnerId(),dto.getPetId());
+                ent.getName(),ent.getAge(),ent.getGender(),
+                ent.getType(),ent.getOwnerId(),ent.getPetId());
     }
     @Override
     public String generateNextId() throws SQLException, ClassNotFoundException {

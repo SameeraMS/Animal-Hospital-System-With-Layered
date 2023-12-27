@@ -16,10 +16,10 @@ import java.util.List;
 
 public class PrescriptionDAOImpl implements PrescriptionDAO {
     @Override
-    public boolean save(Prescription dto) throws SQLException, ClassNotFoundException {
+    public boolean save(Prescription ent) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("INSERT INTO prescription VALUES(?, ?, ?)",
-                dto.getPrescriptionId(),dto.getDescription(),dto.getAppointmentId());
+                ent.getPrescriptionId(),ent.getDescription(),ent.getAppointmentId());
 
     }
     @Override
@@ -45,10 +45,10 @@ public class PrescriptionDAOImpl implements PrescriptionDAO {
         return SQLUtil.execute("DELETE FROM prescription WHERE presc_id=?", presid);
     }
     @Override
-    public boolean update(Prescription dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Prescription ent) throws SQLException, ClassNotFoundException {
 
         return SQLUtil.execute("UPDATE prescription SET description=?, appointment_id=? WHERE presc_id=?",
-                dto.getDescription(), dto.getAppointmentId(), dto.getPrescriptionId());
+                ent.getDescription(), ent.getAppointmentId(), ent.getPrescriptionId());
     }
     @Override
     public Prescription searchPrescriptionbyAppId(String appId) throws SQLException, ClassNotFoundException {
