@@ -22,20 +22,4 @@ public class Barcode {
     }
 
 
-    /*public static String barcodeRead(BufferedImage read) {
-        try {
-            LuminanceSource source= new BufferedImageLuminanceSource(read);
-            BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
-            Result decode = new MultiFormatReader().decode(binaryBitmap);
-            System.out.println(decode.getText());
-            return decode.getText();
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }finally {
-            System.out.println("----come--");
-        }
-        return "";
-
-    }*/
-
 }

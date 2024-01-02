@@ -14,15 +14,6 @@ public class Barcode_genarate {
     private  BufferedImage img;
     private Image image;
 
-
-    /*public  void createImage() {
-        Barcode_genarate.createImage("ddghtefyukhk.png", "52661");
-        System.out.println("finished");
-    }*/
-
-    /*public static void main(String[] args) {
-        createImage();
-    }*/
     public  void createImage(String image_name,String myString)  {
         try {
             Code128Bean code128 = new Code128Bean();
